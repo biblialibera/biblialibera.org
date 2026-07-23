@@ -1,0 +1,150 @@
+/* ============================================================
+   Biblia Libera — Color tokens
+   Direction A · Edição Crítica: warm paper, ink, oxblood accent.
+   Two themes via prefers-color-scheme; [data-theme] overrides for demos.
+   Every text/background pair meets WCAG AA (>= 4.5:1 for body).
+   ============================================================ */
+:root {
+  /* ---- Base ramp · warm neutrals (paper & ink) ---- */
+  --paper-0:  #faf7f0;  /* page background            */
+  --paper-1:  #f2ece0;  /* raised surface / cards     */
+  --paper-2:  #ebe3d3;  /* hover / sunken             */
+  --ink-0:    #26221c;  /* primary text (ink)         */
+  --ink-1:    #4a4339;  /* strong secondary           */
+  --ink-2:    #6b6155;  /* muted / footnote text      */
+  --ink-3:    #8c8171;  /* faint / captions           */
+  --line-0:   #e6ddcb;  /* border                     */
+  --line-1:   #d8cdb6;  /* strong border / rule       */
+
+  /* ---- Accent ramp · oxblood (rubric red) ---- */
+  --oxblood-0:    #9a3b2e;  /* accent                  */
+  --oxblood-1:    #7d2f24;  /* accent hover (darker)   */
+  --oxblood-2:    #b85a4b;  /* accent light            */
+  --oxblood-tint: #f2e2dc;  /* accent wash background  */
+
+  /* ---- Status ramp · honest, not alarmist ---- */
+  --draft-0:    #8c8171;  --draft-tint:    #efe8da;  --draft-line:    #ddd2bd;
+  --checked-0:  #9a7226;  --checked-tint:  #f4ead2;  --checked-line:  #e6d3a6; /* amber/ochre */
+  --reviewed-0: #4f6b3f;  --reviewed-tint: #e6ecdc;  --reviewed-line: #cdd9bd; /* olive green */
+
+  /* ---- Feedback ---- */
+  --danger-0:  #b3402f;  --danger-tint:  #f6e2dc;
+  --success-0: #4f6b3f;  --success-tint: #e6ecdc;
+  --warning-0: #9a7226;  --warning-tint: #f4ead2;
+  --info-0:    #3f6470;  --info-tint:    #e0ebee;
+
+  /* ============ Semantic aliases (consume these) ============ */
+  --color-bg:              var(--paper-0);
+  --color-surface:         var(--paper-1);
+  --color-surface-raised:  var(--paper-1);
+  --color-surface-sunken:  var(--paper-2);
+
+  --color-text:            var(--ink-0);
+  --color-text-secondary:  var(--ink-1);
+  --color-text-muted:      var(--ink-2);
+  --color-text-faint:      var(--ink-3);
+
+  --color-border:          var(--line-0);
+  --color-border-strong:   var(--line-1);
+
+  --color-accent:          var(--oxblood-0);
+  --color-accent-hover:    var(--oxblood-1);
+  --color-accent-tint:     var(--oxblood-tint);
+  --color-accent-contrast: #ffffff;
+
+  --color-link:            var(--oxblood-0);
+  --color-link-hover:      var(--oxblood-1);
+
+  /* ---- Reading-specific semantics (the heart) ---- */
+  --color-text-verse:      var(--ink-0);
+  --color-verse-number:    var(--oxblood-0);
+  --color-added-word:      var(--ink-0);   /* rendered italic, not recolored */
+  --color-divine-name:     var(--ink-0);   /* rendered small-caps            */
+  --color-footnote-marker: var(--oxblood-0);
+  --color-footnote-text:   var(--ink-2);
+  --color-footnote-rule:   var(--line-1);
+  --color-selection:       #f0d9ba;
+
+  /* ---- Status seal semantics ---- */
+  --color-status-draft:          var(--draft-0);
+  --color-status-draft-bg:       var(--draft-tint);
+  --color-status-draft-border:   var(--draft-line);
+  --color-status-checked:        var(--checked-0);
+  --color-status-checked-bg:     var(--checked-tint);
+  --color-status-checked-border: var(--checked-line);
+  --color-status-reviewed:       var(--reviewed-0);
+  --color-status-reviewed-bg:    var(--reviewed-tint);
+  --color-status-reviewed-border:var(--reviewed-line);
+
+  --color-focus-ring:      var(--oxblood-2);
+  color-scheme: light;
+}
+
+/* ================= Dark theme ================= */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper-0:  #17140f;
+    --paper-1:  #201c15;
+    --paper-2:  #2a251d;
+    --ink-0:    #ece4d5;
+    --ink-1:    #cec4b0;
+    --ink-2:    #a89c88;
+    --ink-3:    #837868;
+    --line-0:   #342e24;
+    --line-1:   #453d30;
+
+    --oxblood-0:    #e0937f;  /* lightened for AA on dark */
+    --oxblood-1:    #ecab99;
+    --oxblood-2:    #c9735d;
+    --oxblood-tint: #33221c;
+
+    --draft-0:    #a89c88;  --draft-tint:    #262019;  --draft-line:    #3a3226;
+    --checked-0:  #d8ad5a;  --checked-tint:  #2c2415;  --checked-line:  #46381f;
+    --reviewed-0: #96b57e;  --reviewed-tint: #1e261a;  --reviewed-line: #34412a;
+
+    --danger-0:  #e58a76;  --danger-tint:  #2e1a15;
+    --success-0: #96b57e;  --success-tint: #1e261a;
+    --warning-0: #d8ad5a;  --warning-tint: #2c2415;
+    --info-0:    #7fb0bd;  --info-tint:    #16262b;
+
+    --color-accent-contrast: #17140f;
+    --color-selection:       #4a3524;
+    --color-focus-ring:      var(--oxblood-2);
+    color-scheme: dark;
+  }
+}
+
+/* ------ Explicit overrides for side-by-side demos & the theme toggle.
+   [data-theme="light"] redeclares the full light palette so a dark-OS
+   user toggling to light gets paper colors (the media block above only
+   applies when no data-theme is set to win over it). ------ */
+[data-theme="light"] {
+  --paper-0:#faf7f0; --paper-1:#f2ece0; --paper-2:#ebe3d3;
+  --ink-0:#26221c; --ink-1:#4a4339; --ink-2:#6b6155; --ink-3:#8c8171;
+  --line-0:#e6ddcb; --line-1:#d8cdb6;
+  --oxblood-0:#9a3b2e; --oxblood-1:#7d2f24; --oxblood-2:#b85a4b; --oxblood-tint:#f2e2dc;
+  --draft-0:#8c8171; --draft-tint:#efe8da; --draft-line:#ddd2bd;
+  --checked-0:#9a7226; --checked-tint:#f4ead2; --checked-line:#e6d3a6;
+  --reviewed-0:#4f6b3f; --reviewed-tint:#e6ecdc; --reviewed-line:#cdd9bd;
+  --danger-0:#b3402f; --danger-tint:#f6e2dc;
+  --success-0:#4f6b3f; --success-tint:#e6ecdc;
+  --warning-0:#9a7226; --warning-tint:#f4ead2;
+  --info-0:#3f6470; --info-tint:#e0ebee;
+  --color-accent-contrast:#ffffff; --color-selection:#f0d9ba;
+  color-scheme: light;
+}
+[data-theme="dark"] {
+  --paper-0:#17140f; --paper-1:#201c15; --paper-2:#2a251d;
+  --ink-0:#ece4d5; --ink-1:#cec4b0; --ink-2:#a89c88; --ink-3:#837868;
+  --line-0:#342e24; --line-1:#453d30;
+  --oxblood-0:#e0937f; --oxblood-1:#ecab99; --oxblood-2:#c9735d; --oxblood-tint:#33221c;
+  --draft-0:#a89c88; --draft-tint:#262019; --draft-line:#3a3226;
+  --checked-0:#d8ad5a; --checked-tint:#2c2415; --checked-line:#46381f;
+  --reviewed-0:#96b57e; --reviewed-tint:#1e261a; --reviewed-line:#34412a;
+  --danger-0:#e58a76; --danger-tint:#2e1a15;
+  --success-0:#96b57e; --success-tint:#1e261a;
+  --warning-0:#d8ad5a; --warning-tint:#2c2415;
+  --info-0:#7fb0bd; --info-tint:#16262b;
+  --color-accent-contrast:#17140f; --color-selection:#4a3524;
+  color-scheme: dark;
+}

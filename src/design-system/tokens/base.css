@@ -1,0 +1,50 @@
+/* ============================================================
+   Biblia Libera — Base element defaults
+   Minimal, token-driven. No framework. AA contrast throughout.
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--color-selection); }
+
+/* Headings default to the serif display voice */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-4);
+}
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+h4 { font-size: var(--text-lg); }
+
+p { margin: 0 0 var(--space-4); }
+
+/* Links — always defined so editor-added links never render browser-blue */
+a { color: var(--color-link); text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; text-decoration-color: color-mix(in srgb, var(--color-link) 45%, transparent); transition: color .12s ease; }
+a:hover { color: var(--color-link-hover); text-decoration-color: currentColor; }
+a:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; border-radius: 2px; }
+
+/* Mono defaults */
+code, kbd, samp, pre { font-family: var(--font-mono); font-size: 0.9em; }
+
+hr { border: none; border-top: var(--border-hair) solid var(--color-border); margin: var(--space-8) 0; }
+
+strong { font-weight: var(--weight-semibold); }
+
+:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }

@@ -1,0 +1,152 @@
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --serif: Georgia, 'Times New Roman', serif;
+
+  font: 18px/145% var(--sans);
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  color: var(--text-h);
+  margin: 0 0 12px;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+a {
+  color: var(--accent);
+}
+
+.landing {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+.hero {
+  padding: 96px 0 64px;
+  text-align: center;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.hero h1 {
+  font-size: 56px;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  font-size: 20px;
+  max-width: 560px;
+  margin: 0 auto 32px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text-h);
+  font-size: 16px;
+}
+
+.button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.section {
+  padding: 48px 0;
+  border-top: 1px solid var(--border);
+}
+
+.registers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.register-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: left;
+}
+
+.register-card p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.footer {
+  padding: 32px 0 0;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  text-align: center;
+}
+
+.footer p {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 56px 0 40px;
+  }
+  .hero h1 {
+    font-size: 36px;
+  }
+}

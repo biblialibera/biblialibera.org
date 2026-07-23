@@ -1,0 +1,46 @@
+/* ============================================================
+   Biblia Libera — Typography tokens
+   Serif for reading (Source Serif 4), sans for UI (Source Sans 3),
+   mono for references & code (IBM Plex Mono).
+   ============================================================ */
+:root {
+  /* ---- Families ---- */
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;      /* biblical text + display */
+  --font-sans:  "Source Sans 3", system-ui, -apple-system, sans-serif;    /* UI, labels, nav         */
+  --font-mono:  "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;/* refs, status, code     */
+
+  /* ---- Type scale (16px root) ---- */
+  --text-xs:   0.75rem;   /* 12 */
+  --text-sm:   0.875rem;  /* 14 */
+  --text-base: 1rem;      /* 16 */
+  --text-md:   1.125rem;  /* 18 */
+  --text-lg:   1.25rem;   /* 20 */
+  --text-xl:   1.5rem;    /* 24 */
+  --text-2xl:  1.875rem;  /* 30 */
+  --text-3xl:  2.375rem;  /* 38 */
+  --text-4xl:  3rem;      /* 48 */
+
+  /* ---- Weights ---- */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ---- Line heights ---- */
+  --leading-tight:   1.15;
+  --leading-snug:    1.32;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.72;
+
+  /* ---- Letter spacing ---- */
+  --tracking-label:  0.09em;   /* uppercase eyebrow labels */
+  --tracking-tight: -0.01em;   /* large display headings   */
+  --tracking-caps:   0.02em;   /* small-caps divine name   */
+
+  /* ---- Reading measure (the #1 criterion) ---- */
+  --reading-size:    1.1875rem; /* 19px */
+  --reading-leading: 1.72;
+  --reading-measure: 34rem;     /* ~66 characters per line  */
+  --verse-number-scale: 0.62em; /* superscript verse number */
+  --footnote-scale:  0.62em;    /* superscript note marker  */
+}

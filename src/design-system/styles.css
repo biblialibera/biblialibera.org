@@ -1,0 +1,9 @@
+/* Biblia Libera — global stylesheet entry.
+   Consumers link ONLY this file. It is a list of @import lines;
+   everything it reaches ships to consumers. No rules live here. */
+@import "./tokens/fonts.css";
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+@import "./tokens/elevation.css";
+@import "./tokens/base.css";
