@@ -1,3 +1,5 @@
+import { Link } from 'react-router'
+
 const GITHUB_URL = 'https://github.com/biblialibera/biblialibera'
 
 export interface SiteFooterProps {
@@ -14,11 +16,11 @@ export function SiteFooter({ year }: SiteFooterProps) {
             Biblia <span className="text-[var(--color-accent)]">Libera</span>
           </div>
           <p className="m-0 max-w-[26rem] font-sans text-[var(--text-sm)] text-[var(--color-text-muted)]">
-            A Bíblia em português de hoje, das línguas originais, aberta e auditável.
+            A Bíblia em português atual, das línguas originais, aberta e auditável.
           </p>
         </div>
         <nav className="flex flex-wrap gap-[var(--space-6)] font-sans text-[var(--text-sm)]">
-          <a href="#ler">Ler</a>
+          <Link to="/ler">Ler</Link>
           <a href={GITHUB_URL} target="_blank" rel="noreferrer">
             GitHub
           </a>
