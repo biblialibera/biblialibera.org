@@ -22,8 +22,8 @@ const WHY_CARDS = [
   },
   {
     meta: 'Traduções modernas',
-    title: 'As boas têm copyright',
-    body: 'As traduções contemporâneas de qualidade são fechadas. Você pode ler, mas não copiar, adaptar nem construir sobre elas.',
+    title: 'As atuais são fechadas',
+    body: 'As traduções contemporâneas de qualidade têm copyright. Você pode ler, mas não copiar, adaptar nem construir sobre elas.',
   },
   {
     meta: 'Dados',
@@ -36,7 +36,7 @@ const PIPELINE_STEPS = [
   { number: '01', title: 'Originais', body: 'O ponto de partida é o texto hebraico e grego, nunca uma tradução intermediária.' },
   { number: '02', title: 'Tradução por IA', body: 'O modelo produz os dois registros a partir dos originais, seguindo um guia de estilo explícito.' },
   { number: '03', title: 'Validação', body: 'Checagens automáticas de formato, referências e consistência entre versículos.' },
-  { number: '04', title: 'Verificação cruzada', body: 'Comparação com o sentido dos originais e entre os dois registros, apontando divergências.' },
+  { number: '04', title: 'Auditoria de sentido', body: 'Cada versículo é auditado contra traduções de referência de domínio público, com o alinhamento calculado em código: reproduzível, aponta divergências para a revisão humana.' },
   { number: '05', title: 'Revisão humana', body: 'Leitura e correção final por pessoas. Só então um livro passa a "revisado".', accent: true },
 ]
 
@@ -62,7 +62,7 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
           A Bíblia em português de hoje, livre para todos
         </h1>
         <p className="mx-auto mb-[var(--space-8)] max-w-[36rem] text-[var(--text-md)] leading-[var(--leading-relaxed)] text-[var(--color-text-secondary)]">
-          Traduzida do hebraico e do grego para o português brasileiro atual, em dois registros da mesma exegese.
+          Traduzida do hebraico e do grego para o português brasileiro atual, em dois registros do mesmo sentido.
           Processo público e auditável. Texto e código abertos.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-[var(--space-3)]">
@@ -153,7 +153,7 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
             Onde estamos, sem maquiar
           </h2>
           <p className="m-0 mb-[var(--space-5)] text-[var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-secondary)]">
-            {translatedCount} de {bookRows.length} livros já traduzidos e verificados no cross-check automático,
+            {translatedCount} de {bookRows.length} livros já traduzidos e verificados na auditoria automática,
             entre protocanônicos, deuterocanônicos e o Novo Testamento. A revisão humana está em andamento; nenhum
             texto circula sem o status declarado.
           </p>
@@ -166,7 +166,7 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
 
         <BookStatusTable
           rows={bookRows}
-          caption={`${bookRows.length} livros (edição católica, deuterocanônicos inclusos) · ${translatedCount} traduzidos e verificados · revisão humana em andamento`}
+          caption={`${bookRows.length} livros (com os deuterocanônicos) · ${translatedCount} traduzidos e verificados · revisão humana em andamento`}
         />
 
         <div className="mt-[var(--space-5)]">
