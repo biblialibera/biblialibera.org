@@ -31,21 +31,20 @@ popover/tooltip, não nota de rodapé de página como em PDF).
 
 ## Fonte do conteúdo
 
-O texto estruturado (original + traduções, com status de revisão por
-versículo) vai ser publicado pelo `open-bible` como uma lib npm, e este site
-instala essa lib como dependência normal. Enquanto ela não existe, o leitor
-trabalha com dados de exemplo hardcoded no próprio site (ex: Judas, Jonas,
-que já estão traduzidos e revisados no `open-bible`) só para validar o fluxo
-de UI; trocar pela lib real é um passo isolado, não deve exigir reescrever o
-leitor.
+A lib npm `biblialibera` já existe e está publicada no npm (texto
+estruturado por livro/registro, status de revisão por livro, notas em array
+separado do texto limpo). O `core.js` do pacote lê os JSON do disco via `fs`, então
+só funciona em Node: nada de importar `biblialibera/<lang>` ou os JSON de
+livro inteiro em código que roda no navegador. O padrão adotado é extrair só
+o trecho necessário para um JSON pequeno em `src/data/` via um script em
+`scripts/` (ver `scripts/extract-demo-passage.mjs`, que alimenta a
+demonstração viva do Salmo 23 na landing). O leitor completo (quando for
+implementado) provavelmente precisa de uma abordagem diferente para navegar
+o livro inteiro sem baixar tudo de uma vez; decidir na hora.
 
-O formato de origem (antes de virar JSON da lib) está documentado em
-`docs/format.md` e `pipeline/parse-translation.js` do `open-bible`: cada
-versículo tem um id (`<Livro>.<capítulo>.<versículo>`, ex: `Jonah.1.3`) e
-texto com marcação de nota (`^[...]`) e palavra adicionada pelo tradutor
-(itálico). O JSON da lib deve preservar isso o suficiente pra UI renderizar
-notas e itálicos corretamente; formato exato da lib é decisão do
-`open-bible`, não deste repo.
+A lib não carrega o texto original (hebraico/grego) ainda, só as traduções
+pt (formal/simples); original é um gap conhecido a fechar antes do leitor
+mostrar as três versões lado a lado.
 
 ## Futuro: comunidade
 

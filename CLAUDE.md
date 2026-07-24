@@ -35,14 +35,67 @@ atualizações do design system, reconvertê-los fielmente ao `.jsx`/`.d.ts` de
 origem (estilos inline com as mesmas CSS vars, mesma API de props), não
 redesenhar por conta própria.
 
+Logo trazido do projeto "Biblia Libera logo concepts" (conceito 3a, "The
+Open Codex"): `BookMark` (ícone linear livro+luz), `SealMark` (selo
+compacto, usado no favicon), `Logo` (lockup completo), em
+`components/core/Logo.tsx`.
+
+**Tema claro/escuro:** `data-theme` precisa ir no `:root` (`<html>`), nunca
+numa div interna. Os aliases semânticos (`--color-bg`, `--color-text`, etc.)
+são declarados só em `:root` referenciando a rampa crua (`--paper-0`,
+`--ink-0`...); um alias declarado em `:root` resolve usando a rampa de
+`:root` no momento em que é computado, então setar `data-theme` numa div
+descendente troca a rampa mas os aliases continuam presos ao valor de
+`:root`. `App.tsx` seta `document.documentElement.dataset.theme` via
+`useEffect`, não um atributo na div wrapper.
+
+## Regras de UI (a partir da landing page)
+
+- **Sem CSS inline.** Componentes novos (fora do `design-system/` portado)
+  usam Tailwind (`className`), nunca `style={{...}}`. Os componentes já
+  portados do design system mantêm o padrão de origem (estilo inline via
+  CSS vars) por fidelidade ao Claude Design; não converter.
+- **Tudo em componente.** Qualquer pedaço de UI reaproveitável ou com lógica
+  própria vira componente testado em `src/components/` (app-level) ou
+  `src/design-system/components/` (portado do design system), não markup
+  solto direto na página.
+- Tailwind lê os tokens do design system via arbitrary values
+  (`bg-[var(--color-bg)]`), não duplica a paleta na config do Tailwind.
+
+**Tailwind + tokens do design system, `src/index.css`:** `@layer` sempre
+perde de CSS sem layer, não importa a especificidade. `tokens/base.css` do
+design system define seletores de elemento (`a`, `body`, `h1`...) que
+precisam perder para utilitários Tailwind (`.no-underline` etc), então ele é
+importado com `layer(base)`. Os outros tokens (cores, tipografia, espaço,
+fontes) são só custom properties, sem conflito, ficam sem layer. Todo
+`@import` (nosso e do Tailwind) tem que ficar contíguo no topo do arquivo,
+sem nenhuma regra solta no meio, senão o bundler acusa CSS inválido.
+
 ## Conteúdo: como chega aqui
 
-Decisão: o `open-bible` vai publicar uma lib npm com o texto estruturado em
-JSON (traduções + original), versionada junto com o avanço das traduções.
-Este site instala essa lib como dependência normal (`npm install`), sem
-submodule e sem build step customizado lendo os arquivos do outro repo
-diretamente. Enquanto essa lib não existe, o leitor usa dados de exemplo
-hardcoded (ver `docs/vision.md`).
+A lib npm `biblialibera` (do `open-bible`, `pipeline/build-package.js`) já
+existe e está publicada no registry do npm: JSON estruturado por
+livro/registro (`data/<lang>/<registro>/<Livro>.json`) mais um `core.js` que
+lê do disco via `fs` (só funciona em Node, nunca no bundle do navegador).
+Instalada como `devDependencies` (`^0.1.0`), não `dependencies`, porque só o
+script de extração roda em Node; ver abaixo.
+
+Padrão para trazer conteúdo real pro site: nunca importar
+`biblialibera/<lang>` nem os JSONs de livro inteiro direto em código que roda
+no navegador (um livro inteiro tem centenas de KB, e ainda inclui `fs`
+transitivamente). Em vez disso, um script Node em `scripts/` lê o pacote e
+gera um JSON pequeno, só com o trecho necessário, em `src/data/`; o
+componente importa esse arquivo gerado.
+
+- `scripts/extract-demo-passage.mjs` → `src/data/psalm23.json`: Salmo 23,
+  vv. 1-4, os dois registros. Usado pela `RegisterDemo` (demo viva na
+  landing).
+- `scripts/extract-book-status.mjs` → `src/data/books.json`: lista de livros
+  com status (`manifest.json` da lib), classificados AT/NT (a classificação
+  é uma constante local, a lib não carrega cânon). Usado pela
+  `BookStatusTable` na landing.
+- `npm run sync-content` regenera os dois; scripts individuais:
+  `sync-demo-passage`, `sync-books`.
 
 ## Fluxo inicial (o que estamos construindo agora)
 

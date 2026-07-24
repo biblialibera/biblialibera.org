@@ -1,0 +1,440 @@
+[
+  {
+    "book": "Gênesis",
+    "ref": "Gn",
+    "canon": "AT",
+    "status": "checked"
+  },
+  {
+    "book": "Êxodo",
+    "ref": "Êx",
+    "canon": "AT",
+    "status": "checked"
+  },
+  {
+    "book": "Levítico",
+    "ref": "Lv",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Números",
+    "ref": "Nm",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Deuteronômio",
+    "ref": "Dt",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Josué",
+    "ref": "Js",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Juízes",
+    "ref": "Jz",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Rute",
+    "ref": "Rt",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "1 Samuel",
+    "ref": "1Sm",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "2 Samuel",
+    "ref": "2Sm",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "1 Reis",
+    "ref": "1Rs",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "2 Reis",
+    "ref": "2Rs",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "1 Crônicas",
+    "ref": "1Cr",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "2 Crônicas",
+    "ref": "2Cr",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Esdras",
+    "ref": "Ed",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Neemias",
+    "ref": "Ne",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Tobias",
+    "ref": "Tb",
+    "canon": "DC",
+    "status": "not-translated"
+  },
+  {
+    "book": "Judite",
+    "ref": "Jt",
+    "canon": "DC",
+    "status": "not-translated"
+  },
+  {
+    "book": "Ester",
+    "ref": "Et",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "1 Macabeus",
+    "ref": "1Mc",
+    "canon": "DC",
+    "status": "not-translated"
+  },
+  {
+    "book": "2 Macabeus",
+    "ref": "2Mc",
+    "canon": "DC",
+    "status": "not-translated"
+  },
+  {
+    "book": "Jó",
+    "ref": "Jó",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Salmos",
+    "ref": "Sl",
+    "canon": "AT",
+    "status": "checked"
+  },
+  {
+    "book": "Provérbios",
+    "ref": "Pv",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Eclesiastes",
+    "ref": "Ec",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Cânticos",
+    "ref": "Ct",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Sabedoria",
+    "ref": "Sb",
+    "canon": "DC",
+    "status": "not-translated"
+  },
+  {
+    "book": "Eclesiástico",
+    "ref": "Eclo",
+    "canon": "DC",
+    "status": "not-translated"
+  },
+  {
+    "book": "Isaías",
+    "ref": "Is",
+    "canon": "AT",
+    "status": "checked"
+  },
+  {
+    "book": "Jeremias",
+    "ref": "Jr",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Lamentações",
+    "ref": "Lm",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Baruc",
+    "ref": "Br",
+    "canon": "DC",
+    "status": "not-translated"
+  },
+  {
+    "book": "Ezequiel",
+    "ref": "Ez",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Daniel",
+    "ref": "Dn",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Oseias",
+    "ref": "Os",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Joel",
+    "ref": "Jl",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Amós",
+    "ref": "Am",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Obadias",
+    "ref": "Ob",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Jonas",
+    "ref": "Jn",
+    "canon": "AT",
+    "status": "checked"
+  },
+  {
+    "book": "Miqueias",
+    "ref": "Mq",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Naum",
+    "ref": "Na",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Habacuque",
+    "ref": "Hc",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Sofonias",
+    "ref": "Sf",
+    "canon": "AT",
+    "status": "checked"
+  },
+  {
+    "book": "Ageu",
+    "ref": "Ag",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Zacarias",
+    "ref": "Zc",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Malaquias",
+    "ref": "Ml",
+    "canon": "AT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Mateus",
+    "ref": "Mt",
+    "canon": "NT",
+    "status": "checked"
+  },
+  {
+    "book": "Marcos",
+    "ref": "Mc",
+    "canon": "NT",
+    "status": "checked"
+  },
+  {
+    "book": "Lucas",
+    "ref": "Lc",
+    "canon": "NT",
+    "status": "checked"
+  },
+  {
+    "book": "João",
+    "ref": "Jo",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Atos",
+    "ref": "At",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Romanos",
+    "ref": "Rm",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "1 Coríntios",
+    "ref": "1Co",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "2 Coríntios",
+    "ref": "2Co",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Gálatas",
+    "ref": "Gl",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Efésios",
+    "ref": "Ef",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Filipenses",
+    "ref": "Fp",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Colossenses",
+    "ref": "Cl",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "1 Tessalonicenses",
+    "ref": "1Ts",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "2 Tessalonicenses",
+    "ref": "2Ts",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "1 Timóteo",
+    "ref": "1Tm",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "2 Timóteo",
+    "ref": "2Tm",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Tito",
+    "ref": "Tt",
+    "canon": "NT",
+    "status": "checked"
+  },
+  {
+    "book": "Filemom",
+    "ref": "Fm",
+    "canon": "NT",
+    "status": "checked"
+  },
+  {
+    "book": "Hebreus",
+    "ref": "Hb",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Tiago",
+    "ref": "Tg",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "1 Pedro",
+    "ref": "1Pe",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "2 Pedro",
+    "ref": "2Pe",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "1 João",
+    "ref": "1Jo",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "2 João",
+    "ref": "2Jo",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "3 João",
+    "ref": "3Jo",
+    "canon": "NT",
+    "status": "not-translated"
+  },
+  {
+    "book": "Judas",
+    "ref": "Jd",
+    "canon": "NT",
+    "status": "checked"
+  },
+  {
+    "book": "Apocalipse",
+    "ref": "Ap",
+    "canon": "NT",
+    "status": "not-translated"
+  }
+]

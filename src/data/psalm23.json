@@ -1,0 +1,56 @@
+{
+  "book": "Ps",
+  "chapter": 23,
+  "status": {
+    "formal": "checked",
+    "simple": "checked"
+  },
+  "formal": [
+    {
+      "verse": 1,
+      "text": "Salmo de Davi. O SENHOR é o meu pastor; nada me faltará.",
+      "footnotes": []
+    },
+    {
+      "verse": 2,
+      "text": "Em pastos verdejantes ele me faz repousar; para águas tranquilas me conduz.",
+      "footnotes": []
+    },
+    {
+      "verse": 3,
+      "text": "Ele restaura a minha alma; guia-me pelas veredas da justiça por amor do seu nome.",
+      "footnotes": []
+    },
+    {
+      "verse": 4,
+      "text": "Mesmo que eu ande pelo vale da sombra da morte, não temerei mal algum, pois tu estás comigo; a tua vara e o teu cajado me consolam.",
+      "footnotes": [
+        "Ou: \"pelo vale da escuridão profunda\"."
+      ]
+    }
+  ],
+  "simple": [
+    {
+      "verse": 1,
+      "text": "Salmo de Davi. O SENHOR é o meu pastor: nada me falta.",
+      "footnotes": []
+    },
+    {
+      "verse": 2,
+      "text": "Ele me faz descansar em pastos verdes. Ele me leva a águas calmas.",
+      "footnotes": []
+    },
+    {
+      "verse": 3,
+      "text": "Ele renova as minhas forças. Ele me guia por caminhos certos, por causa do seu nome.",
+      "footnotes": []
+    },
+    {
+      "verse": 4,
+      "text": "Mesmo que eu ande por um vale escuro como a sombra da morte, não vou ter medo de nada, pois tu estás comigo. A tua vara e o teu cajado me acalmam.",
+      "footnotes": [
+        "Outra tradução possível: \"um vale de escuridão profunda\"."
+      ]
+    }
+  ]
+}
