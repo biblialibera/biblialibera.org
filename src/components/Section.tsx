@@ -18,7 +18,7 @@ const WIDTH = {
 } as const
 
 /**
- * Section — a page section: centered container with consistent vertical
+ * Section: a page section: centered container with consistent vertical
  * padding and, by default, a hairline rule marking the seam with the
  * section above.
  */

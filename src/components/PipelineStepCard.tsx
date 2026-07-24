@@ -10,7 +10,7 @@ export interface PipelineStepCardProps {
   accent?: boolean
 }
 
-/** PipelineStepCard — one numbered step of the translation pipeline: mono step number, title, description. */
+/** PipelineStepCard: one numbered step of the translation pipeline: mono step number, title, description. */
 export function PipelineStepCard({ number, title, children, accent = false }: PipelineStepCardProps) {
   return (
     <Card accent={accent} className="flex h-full flex-col">

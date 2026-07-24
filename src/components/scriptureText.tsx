@@ -15,7 +15,7 @@ export interface RenderedVerse {
 }
 
 /**
- * renderVerseText — turns a bundled Verse's clean text + footnotes array
+ * renderVerseText: turns a bundled Verse's clean text + footnotes array
  * (from the `biblialibera` package: markers and italics already stripped)
  * into JSX: the divine name (SENHOR/DEUS) gets the small-caps treatment via
  * <DivineName>, and each footnote becomes a numbered <FootnoteRef> at the

@@ -7,7 +7,7 @@ export interface SiteHeaderProps {
   onOpenGithub: () => void
 }
 
-/** SiteHeader — sticky top bar: wordmark, theme toggle, GitHub link. */
+/** SiteHeader: sticky top bar: wordmark, theme toggle, GitHub link. */
 export function SiteHeader({ theme, onToggleTheme, onOpenGithub }: SiteHeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-bg)]">

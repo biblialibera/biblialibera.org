@@ -4,7 +4,7 @@ export interface ThemeToggleProps {
 }
 
 /**
- * ThemeToggle — switches the site between light and dark. Shows the icon
+ * ThemeToggle: switches the site between light and dark. Shows the icon
  * for the mode a click would switch to (moon in light mode, sun in dark).
  */
 export function ThemeToggle({ theme, onToggle }: ThemeToggleProps) {

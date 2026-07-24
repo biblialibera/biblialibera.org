@@ -33,7 +33,7 @@ const COLUMNS: DataColumn<BookStatusRow>[] = [
 ]
 
 /**
- * BookStatusTable — the review-status table across the whole canon: livro,
+ * BookStatusTable: the review-status table across the whole canon: livro,
  * referência, cânon, and the honest status per row (the ReviewSeal for
  * translated books, a plain "ainda não traduzido" badge otherwise).
  */

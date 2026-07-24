@@ -16,7 +16,7 @@ const PASSAGES: Record<Register, { verse: number; text: string; footnotes: strin
 const PSALMS_STATUS = psalm23.status
 
 /**
- * RegisterDemo — Salmo 23 side-by-side registers, live from the bundled
+ * RegisterDemo: Salmo 23 side-by-side registers, live from the bundled
  * `biblialibera` package: the reader can switch between formal and simple
  * and see the real translated text, with the note apparatus and the actual
  * review status of the book.

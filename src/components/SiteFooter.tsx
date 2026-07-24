@@ -4,7 +4,7 @@ export interface SiteFooterProps {
   year: number
 }
 
-/** SiteFooter — wordmark, tagline, nav links (ler, GitHub, roadmap, licença) and the copyright line. */
+/** SiteFooter: wordmark, tagline, nav links (ler, GitHub, roadmap, licença) and the copyright line. */
 export function SiteFooter({ year }: SiteFooterProps) {
   return (
     <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
