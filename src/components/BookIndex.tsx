@@ -32,16 +32,18 @@ export function BookIndex({ books = readerIndex }: BookIndexProps) {
           </h2>
           <ul className="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-[var(--space-3)] p-0">
             {group.items.map((book) => (
-              <li key={book.code}>
+              <li key={book.code} className="h-full">
                 <Link
                   to={`/ler/${book.slug}/1`}
-                  className="flex items-center justify-between gap-[var(--space-3)] rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-[var(--space-4)] py-[var(--space-3)] no-underline hover:border-[var(--color-border-strong)]"
+                  className="flex h-full flex-col gap-[var(--space-2)] rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-[var(--space-4)] py-[var(--space-3)] no-underline hover:border-[var(--color-border-strong)]"
                 >
-                  <span className="flex items-baseline gap-[var(--space-2)]">
-                    <span className="font-serif text-[var(--text-lg)] text-[var(--color-text)]">{book.name}</span>
-                    <span className="font-mono text-[var(--text-xs)] text-[var(--color-text-faint)]">{book.abbrev}</span>
+                  <span className="font-serif text-[var(--text-lg)] leading-[var(--leading-tight)] text-[var(--color-text)]">
+                    {book.name}
                   </span>
-                  <ReviewSeal status={book.status.formal} size="sm" />
+                  <span className="mt-auto flex items-center justify-between gap-[var(--space-2)]">
+                    <span className="font-mono text-[var(--text-xs)] text-[var(--color-text-faint)]">{book.abbrev}</span>
+                    <ReviewSeal status={book.status.formal} size="sm" />
+                  </span>
                 </Link>
               </li>
             ))}
