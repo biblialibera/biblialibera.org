@@ -45,7 +45,7 @@
     "book": "Rute",
     "ref": "Rt",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "1 Samuel",
@@ -225,7 +225,7 @@
     "book": "Obadias",
     "ref": "Ob",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Jonas",
@@ -243,13 +243,13 @@
     "book": "Naum",
     "ref": "Na",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Habacuque",
     "ref": "Hc",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Sofonias",
@@ -339,37 +339,37 @@
     "book": "Filipenses",
     "ref": "Fp",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Colossenses",
     "ref": "Cl",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "1 Tessalonicenses",
     "ref": "1Ts",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "2 Tessalonicenses",
     "ref": "2Ts",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "1 Timóteo",
     "ref": "1Tm",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "2 Timóteo",
     "ref": "2Tm",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Tito",
@@ -393,37 +393,37 @@
     "book": "Tiago",
     "ref": "Tg",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "1 Pedro",
     "ref": "1Pe",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "2 Pedro",
     "ref": "2Pe",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "1 João",
     "ref": "1Jo",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "2 João",
     "ref": "2Jo",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "3 João",
     "ref": "3Jo",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Judas",

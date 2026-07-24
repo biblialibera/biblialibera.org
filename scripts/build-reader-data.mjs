@@ -1,26 +1,39 @@
 // Generates the reader's data from the `biblialibera` package: a light index
-// of the translated books plus one file per book carrying both registers,
-// so the reader can lazy-load a single book on demand instead of shipping the
-// whole corpus to the browser. Re-run after updating the `biblialibera`
-// dependency:
+// of the translated books plus one file per book carrying both registers and
+// the original-language text, so the reader can lazy-load a single book on
+// demand instead of shipping the whole corpus to the browser. Re-run after
+// updating the `biblialibera` dependency:
 //
 //   node scripts/build-reader-data.mjs
 //
 // Outputs:
 //   src/data/reader/index.json   one light entry per translated book (no text)
-//   src/data/reader/<CODE>.json  full book, both registers, keyed per chapter
+//   src/data/reader/<CODE>.json  full book: both registers + the original,
+//                                keyed per chapter
 //
 // The manifest is the source of truth for which books exist; canon order and
-// classification come from scripts/canon.mjs.
+// classification come from scripts/canon.mjs; the original text comes from the
+// separate `biblialibera/original` bundle (Hebrew WLC, Greek Nestle 1904, LXX).
 
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import ptManifest from '../node_modules/biblialibera/data/pt/manifest.json' with { type: 'json' };
+import { corpora, getBook } from 'biblialibera/original';
 import { CANON, slugify } from './canon.mjs';
 
 const REGISTERS = ['formal', 'simple'];
 const pkgUrl = (register, code) =>
   new URL(`../node_modules/biblialibera/data/pt/${register}/${code}.json`, import.meta.url);
+
+// Reading direction and pt-BR language label per original corpus; the edition
+// name (for the citation shown in place of the review seal) comes from the
+// package's corpora() metadata.
+const CORPUS_META = {
+  wlc: { language: 'Hebraico', dir: 'rtl' },
+  n4: { language: 'Grego', dir: 'ltr' },
+  lxx: { language: 'Grego', dir: 'ltr' },
+};
+const editionByCorpus = new Map(corpora().map((c) => [c.code, c.name]));
 
 const canonByCode = new Map(CANON.map(([code, name, abbrev, canon]) => [code, { name, abbrev, canon }]));
 
@@ -28,8 +41,20 @@ function readBook(register, code) {
   return JSON.parse(readFileSync(pkgUrl(register, code), 'utf8'));
 }
 
-/** Merge the two registers of one book into { chapter, formal, simple } rows. */
-function mergeChapters(byRegister) {
+/** Original text for a book, keyed by chapter string, plus its metadata. */
+function readOriginal(code) {
+  const book = getBook(code);
+  if (!book) return null;
+  const meta = CORPUS_META[book.corpus];
+  if (!meta) throw new Error(`${code}: unknown corpus ${book.corpus}`);
+  return {
+    info: { corpus: book.corpus, edition: editionByCorpus.get(book.corpus), language: meta.language, dir: meta.dir },
+    byChapter: new Map(book.chapters.map((c) => [String(c.chapter), c.verses])),
+  };
+}
+
+/** Merge the registers and the original of one book into per-chapter rows. */
+function mergeChapters(byRegister, originalByChapter) {
   const chapterNumbers = byRegister.formal.chapters.map((c) => c.chapter);
   return chapterNumbers.map((n) => {
     const row = { chapter: n };
@@ -38,6 +63,8 @@ function mergeChapters(byRegister) {
       if (!chapter) throw new Error(`${byRegister.formal.book}: chapter ${n} missing in ${register}`);
       row[register] = chapter.verses.map(({ verse, text, footnotes }) => ({ verse, text, footnotes }));
     }
+    const original = originalByChapter?.get(String(n)) ?? [];
+    row.original = original.map(({ verse, text }) => ({ verse, text }));
     return row;
   });
 }
@@ -63,13 +90,15 @@ for (const code of translated) {
   }
 
   const byRegister = { formal: readBook('formal', code), simple: readBook('simple', code) };
+  const original = readOriginal(code);
   const book = {
     code,
     name: canonMeta.name,
     abbrev: canonMeta.abbrev,
     slug,
     status,
-    chapters: mergeChapters(byRegister),
+    original: original?.info ?? null,
+    chapters: mergeChapters(byRegister, original?.byChapter),
   };
 
   const bookPath = fileURLToPath(new URL(`${code}.json`, outDir));
@@ -83,6 +112,7 @@ for (const code of translated) {
     canon: canonMeta.canon,
     chapters: meta.chapters,
     status,
+    original: original ? { language: original.info.language } : null,
   });
 }
 

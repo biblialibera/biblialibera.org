@@ -9,6 +9,9 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
     }
   },
   {
@@ -21,6 +24,24 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "rute",
+    "code": "Ruth",
+    "name": "Rute",
+    "abbrev": "Rt",
+    "canon": "AT",
+    "chapters": 4,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
     }
   },
   {
@@ -33,6 +54,9 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
     }
   },
   {
@@ -45,6 +69,24 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "obadias",
+    "code": "Obad",
+    "name": "Obadias",
+    "abbrev": "Ob",
+    "canon": "AT",
+    "chapters": 1,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
     }
   },
   {
@@ -57,6 +99,39 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "naum",
+    "code": "Nah",
+    "name": "Naum",
+    "abbrev": "Na",
+    "canon": "AT",
+    "chapters": 3,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "habacuque",
+    "code": "Hab",
+    "name": "Habacuque",
+    "abbrev": "Hc",
+    "canon": "AT",
+    "chapters": 3,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
     }
   },
   {
@@ -69,6 +144,9 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
     }
   },
   {
@@ -81,6 +159,9 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
     }
   },
   {
@@ -93,6 +174,9 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
     }
   },
   {
@@ -105,6 +189,99 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "filipenses",
+    "code": "Phil",
+    "name": "Filipenses",
+    "abbrev": "Fp",
+    "canon": "NT",
+    "chapters": 4,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "colossenses",
+    "code": "Col",
+    "name": "Colossenses",
+    "abbrev": "Cl",
+    "canon": "NT",
+    "chapters": 4,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "1-tessalonicenses",
+    "code": "1Thess",
+    "name": "1 Tessalonicenses",
+    "abbrev": "1Ts",
+    "canon": "NT",
+    "chapters": 5,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "2-tessalonicenses",
+    "code": "2Thess",
+    "name": "2 Tessalonicenses",
+    "abbrev": "2Ts",
+    "canon": "NT",
+    "chapters": 3,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "1-timoteo",
+    "code": "1Tim",
+    "name": "1 Timóteo",
+    "abbrev": "1Tm",
+    "canon": "NT",
+    "chapters": 6,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "2-timoteo",
+    "code": "2Tim",
+    "name": "2 Timóteo",
+    "abbrev": "2Tm",
+    "canon": "NT",
+    "chapters": 4,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
     }
   },
   {
@@ -117,6 +294,9 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
     }
   },
   {
@@ -129,6 +309,99 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "tiago",
+    "code": "Jas",
+    "name": "Tiago",
+    "abbrev": "Tg",
+    "canon": "NT",
+    "chapters": 5,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "1-pedro",
+    "code": "1Pet",
+    "name": "1 Pedro",
+    "abbrev": "1Pe",
+    "canon": "NT",
+    "chapters": 5,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "2-pedro",
+    "code": "2Pet",
+    "name": "2 Pedro",
+    "abbrev": "2Pe",
+    "canon": "NT",
+    "chapters": 3,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "1-joao",
+    "code": "1John",
+    "name": "1 João",
+    "abbrev": "1Jo",
+    "canon": "NT",
+    "chapters": 5,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "2-joao",
+    "code": "2John",
+    "name": "2 João",
+    "abbrev": "2Jo",
+    "canon": "NT",
+    "chapters": 1,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
+    }
+  },
+  {
+    "slug": "3-joao",
+    "code": "3John",
+    "name": "3 João",
+    "abbrev": "3Jo",
+    "canon": "NT",
+    "chapters": 1,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
     }
   },
   {
@@ -141,6 +414,9 @@
     "status": {
       "formal": "checked",
       "simple": "checked"
+    },
+    "original": {
+      "language": "Grego"
     }
   }
 ]
