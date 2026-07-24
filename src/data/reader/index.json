@@ -1,0 +1,146 @@
+[
+  {
+    "slug": "genesis",
+    "code": "Gen",
+    "name": "Gênesis",
+    "abbrev": "Gn",
+    "canon": "AT",
+    "chapters": 50,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  },
+  {
+    "slug": "exodo",
+    "code": "Exod",
+    "name": "Êxodo",
+    "abbrev": "Êx",
+    "canon": "AT",
+    "chapters": 40,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  },
+  {
+    "slug": "salmos",
+    "code": "Ps",
+    "name": "Salmos",
+    "abbrev": "Sl",
+    "canon": "AT",
+    "chapters": 150,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  },
+  {
+    "slug": "isaias",
+    "code": "Isa",
+    "name": "Isaías",
+    "abbrev": "Is",
+    "canon": "AT",
+    "chapters": 66,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  },
+  {
+    "slug": "jonas",
+    "code": "Jonah",
+    "name": "Jonas",
+    "abbrev": "Jn",
+    "canon": "AT",
+    "chapters": 4,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  },
+  {
+    "slug": "sofonias",
+    "code": "Zeph",
+    "name": "Sofonias",
+    "abbrev": "Sf",
+    "canon": "AT",
+    "chapters": 3,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  },
+  {
+    "slug": "mateus",
+    "code": "Matt",
+    "name": "Mateus",
+    "abbrev": "Mt",
+    "canon": "NT",
+    "chapters": 28,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  },
+  {
+    "slug": "marcos",
+    "code": "Mark",
+    "name": "Marcos",
+    "abbrev": "Mc",
+    "canon": "NT",
+    "chapters": 16,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  },
+  {
+    "slug": "lucas",
+    "code": "Luke",
+    "name": "Lucas",
+    "abbrev": "Lc",
+    "canon": "NT",
+    "chapters": 24,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  },
+  {
+    "slug": "tito",
+    "code": "Titus",
+    "name": "Tito",
+    "abbrev": "Tt",
+    "canon": "NT",
+    "chapters": 3,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  },
+  {
+    "slug": "filemom",
+    "code": "Phlm",
+    "name": "Filemom",
+    "abbrev": "Fm",
+    "canon": "NT",
+    "chapters": 1,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  },
+  {
+    "slug": "judas",
+    "code": "Jude",
+    "name": "Judas",
+    "abbrev": "Jd",
+    "canon": "NT",
+    "chapters": 1,
+    "status": {
+      "formal": "checked",
+      "simple": "checked"
+    }
+  }
+]
