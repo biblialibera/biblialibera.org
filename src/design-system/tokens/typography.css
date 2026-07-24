@@ -8,6 +8,7 @@
   --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;      /* biblical text + display */
   --font-sans:  "Source Sans 3", system-ui, -apple-system, sans-serif;    /* UI, labels, nav         */
   --font-mono:  "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;/* refs, status, code     */
+  --font-original: "Cardo", "Times New Roman", serif;                     /* original Hebrew + Greek */
 
   /* ---- Type scale (16px root) ---- */
   --text-xs:   0.75rem;   /* 12 */
