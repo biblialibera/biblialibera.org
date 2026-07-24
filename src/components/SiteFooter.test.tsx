@@ -1,17 +1,26 @@
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import { SiteFooter } from './SiteFooter'
 
+function renderFooter() {
+  return render(
+    <MemoryRouter>
+      <SiteFooter year={2026} />
+    </MemoryRouter>,
+  )
+}
+
 describe('SiteFooter', () => {
   it('renders the wordmark and tagline', () => {
-    render(<SiteFooter year={2026} />)
+    renderFooter()
     expect(screen.getByText('Biblia')).toBeInTheDocument()
-    expect(screen.getByText(/A Bíblia em português de hoje/)).toBeInTheDocument()
+    expect(screen.getByText(/A Bíblia em português atual/)).toBeInTheDocument()
   })
 
   it('renders the nav links', () => {
-    render(<SiteFooter year={2026} />)
-    expect(screen.getByRole('link', { name: 'Ler' })).toHaveAttribute('href', '#ler')
+    renderFooter()
+    expect(screen.getByRole('link', { name: 'Ler' })).toHaveAttribute('href', '/ler')
     expect(screen.getByRole('link', { name: 'Licença' })).toHaveAttribute(
       'href',
       'https://creativecommons.org/licenses/by/4.0/deed.pt-br',
@@ -19,7 +28,7 @@ describe('SiteFooter', () => {
   })
 
   it('renders the copyright line with the given year', () => {
-    render(<SiteFooter year={2026} />)
+    renderFooter()
     expect(screen.getByText(/© 2026 Lucas Merencia/)).toBeInTheDocument()
   })
 })

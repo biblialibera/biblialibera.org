@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router'
 import { Badge, Button, Card, CardMeta, CardTitle, CodeBlock, Logo } from '../design-system/components/core'
 import { ReviewSeal } from '../design-system/components/reading'
 import type { BookStatusRow } from '../components/BookStatusTable'
@@ -46,8 +47,9 @@ export interface LandingProps {
 }
 
 function Landing({ theme, onToggleTheme }: LandingProps) {
+  const navigate = useNavigate()
   const openGithub = () => window.open(GITHUB_URL, '_blank', 'noopener')
-  const goToLer = () => document.getElementById('ler')?.scrollIntoView({ behavior: 'smooth' })
+  const goToReader = () => navigate('/ler')
 
   return (
     <>
@@ -59,14 +61,14 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
           Tradução aberta · das línguas originais · CC BY 4.0
         </div>
         <h1 className="m-0 mb-[var(--space-5)] font-serif text-[var(--text-4xl)] leading-[var(--leading-tight)] tracking-[var(--tracking-tight)] text-[var(--color-text)]">
-          A Bíblia em português de hoje, livre para todos
+          A Bíblia em português atual, livre para todos
         </h1>
         <p className="mx-auto mb-[var(--space-8)] max-w-[36rem] text-[var(--text-md)] leading-[var(--leading-relaxed)] text-[var(--color-text-secondary)]">
-          Traduzida do hebraico e do grego para o português brasileiro atual, em dois registros do mesmo sentido.
+          Traduzida do hebraico e do grego para o português brasileiro, em dois registros do mesmo sentido.
           Processo público e auditável. Texto e código abertos.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-[var(--space-3)]">
-          <Button variant="primary" size="lg" onClick={goToLer}>
+          <Button variant="primary" size="lg" onClick={goToReader}>
             Ler
           </Button>
           <Button variant="secondary" size="lg" onClick={openGithub}>
@@ -78,7 +80,7 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
         </div>
       </Section>
 
-      <Section id="ler">
+      <Section id="demo">
         <div className="mb-[var(--space-3)] font-sans text-[var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-[var(--color-text-faint)]">
           Demonstração viva
         </div>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router'
 import Landing from './pages/Landing'
+import ReaderChapter from './pages/ReaderChapter'
+import ReaderIndex from './pages/ReaderIndex'
 
 type Theme = 'light' | 'dark'
 
@@ -22,6 +24,8 @@ function App() {
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       <Routes>
         <Route path="/" element={<Landing theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/ler" element={<ReaderIndex theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/ler/:slug/:capitulo" element={<ReaderChapter theme={theme} onToggleTheme={toggleTheme} />} />
       </Routes>
     </div>
   )
