@@ -81,10 +81,12 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
       </Section>
 
       <Section id="demo">
-        <div className="mb-[var(--space-3)] font-sans text-[var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-[var(--color-text-faint)]">
-          Demonstração viva
+        <div className="mx-auto max-w-[var(--reading-measure)]">
+          <div className="mb-[var(--space-3)] font-sans text-[var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-[var(--color-text-faint)]">
+            Demonstração viva
+          </div>
+          <RegisterDemo />
         </div>
-        <RegisterDemo />
       </Section>
 
       <Section>
