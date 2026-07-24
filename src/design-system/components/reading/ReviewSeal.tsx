@@ -19,7 +19,7 @@ const SEALS = {
   },
   checked: {
     label: 'Verificado',
-    desc: 'Passou na auditoria automática',
+    desc: 'Passou na auditoria automática contra outras traduções; ainda sem revisão humana',
     fg: 'var(--color-status-checked)',
     bg: 'var(--color-status-checked-bg)',
     bd: 'var(--color-status-checked-border)',
