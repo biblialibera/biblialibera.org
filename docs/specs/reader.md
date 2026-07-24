@@ -1,6 +1,7 @@
 # Reader (leitor) v1
 
-Status: Approved (2026-07-24)
+Status: Approved (2026-07-24). Extended 2026-07-24 with the original view
+(section (h)) after `biblialibera` 0.2.0 shipped the source texts.
 
 ## (a) Problem & goal
 
@@ -16,8 +17,8 @@ Scope of v1 (decided with the owner):
   Êxodo, Salmos, Isaías, Jonas, Sofonias, Mateus, Marcos, Lucas, Tito,
   Filemom, Judas). The package manifest is the source of truth, so the set
   grows automatically as the dependency is bumped.
-- Two registers only: `formal` and `simple`. The original-language text
-  (Hebrew/Greek) is **not** in the npm package and is out of scope (v2).
+- Two registers, `formal` and `simple`. (The original-language text was out of
+  scope at v1 and is now added, see section (h).)
 - One register at a time, switched with `RegisterToggle` (same interaction as
   the landing demo). No side-by-side view in v1.
 - 100% front-end, static, no backend. Book data is generated at build time
@@ -25,8 +26,8 @@ Scope of v1 (decided with the owner):
   arrives only with the community phase, and only for writes/user data, never
   to serve the text.
 
-Out of scope for v1 (note as v2+): original-language register, full-text
-search, per-verse deep links (`#v3`), SEO/SSR, community features.
+Out of scope (note as later work): full-text search, per-verse deep links
+(`#v3`), SEO/SSR, community features.
 
 ## (b) Developer experience
 
@@ -367,3 +368,37 @@ All resolved with the owner (2026-07-24); recorded here as decisions:
    chapter 1, next at the last chapter). No cross-book roll-over yet.
 3. **Register choice is remembered** across sessions via `localStorage`
    (key `bl.reader.register`), defaulting to `formal`. See Behavior.
+
+## (h) Original view (biblialibera 0.2.0)
+
+0.2.0 ships the source texts as a separate bundle, `biblialibera/original`
+(Node API: `getBook`/`getChapter`/`corpora`), covering three corpora: `wlc`
+(Hebrew, Westminster Leningrad Codex), `n4` (Greek, Nestle 1904), `lxx` (Greek,
+Swete Septuagint). Each translated book maps to exactly one corpus by canon:
+the 10 OT books to `wlc` (RTL), the 18 NT books to `n4` (LTR); no
+deuterocanonical (`lxx`) book is translated yet. Original verses are plain
+(`{chapter, verse, text}`): no footnotes, and their own versification (Hebrew
+numbering can differ from the translation, shown as-is, not force-aligned).
+
+- **Data:** `build-reader-data.mjs` also pulls the original per chapter via
+  `biblialibera/original`, adding to each book file `original: {corpus, edition,
+  language, dir}` and to each chapter `original: [{verse, text}]`. The index
+  gains `original: {language} | null`.
+- **Types:** add `View = Register | 'original'` (the reader's selectable view),
+  `OriginalVerse`, `OriginalInfo`. `readStoredRegister`/`storeRegister` accept
+  `View`. `ReaderChapter` gains `original`, `ReaderBook` gains `original`.
+- **UI:** `RegisterToggle` gets a third option when the book has an original,
+  labelled `Original (${language})` ("Original (Hebraico)" / "Original
+  (Grego)"). `ChapterView` renders the original plain (no `renderVerseText`,
+  which is pt-specific), in a `dir={original.dir}` container using
+  `--font-original` (Cardo, added to the design-system webfonts, covers Hebrew
+  + Greek). In place of the review seal (a translation status, not a source
+  fact) it shows the edition citation (e.g. "Westminster Leningrad Codex"). A
+  chapter with no matching original shows a quiet "não disponível" line.
+- **Tests:** the toggle offers `Original (Hebraico)`; selecting it reports
+  `'original'`; the original view renders the Hebrew text in a `dir="rtl"`
+  container with the edition citation and no seal; `loadBook` carries the
+  original metadata and per-chapter original verses.
+- **Font note:** Cardo is added to `tokens/fonts.css` + `--font-original` in
+  `tokens/typography.css`; like other design-system edits, mirror it back to
+  Claude Design on the next sync.

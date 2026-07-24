@@ -9,6 +9,7 @@ const book: ReaderBook = {
   abbrev: 'Jn',
   slug: 'jonas',
   status: { formal: 'checked', simple: 'checked' },
+  original: { corpus: 'wlc', edition: 'Westminster Leningrad Codex', language: 'Hebraico', dir: 'rtl' },
   chapters: [
     {
       chapter: 1,
@@ -20,44 +21,57 @@ const book: ReaderBook = {
         { verse: 1, text: 'O SENHOR falou com Jonas.', footnotes: [] },
         { verse: 2, text: 'Vá até a cidade de Nínive.', footnotes: [] },
       ],
+      original: [
+        { verse: 1, text: 'וַיְהִי דְּבַר־יְהוָה אֶל־יוֹנָה' },
+        { verse: 2, text: 'קוּם לֵךְ אֶל־נִינְוֵה' },
+      ],
     },
   ],
 }
 
 describe('ChapterView', () => {
   it('renders the chapter heading and the selected register', () => {
-    render(<ChapterView book={book} chapter={1} register="formal" onRegisterChange={() => {}} />)
+    render(<ChapterView book={book} chapter={1} view="formal" onViewChange={() => {}} />)
     expect(screen.getByRole('heading', { name: 'Jonas 1' })).toBeInTheDocument()
     expect(screen.getByText(/Levanta-te e vai a Nínive/)).toBeInTheDocument()
     expect(screen.queryByText(/Vá até a cidade de Nínive/)).not.toBeInTheDocument()
   })
 
   it('swaps the text when the register changes', () => {
-    const { rerender } = render(
-      <ChapterView book={book} chapter={1} register="formal" onRegisterChange={() => {}} />,
-    )
-    rerender(<ChapterView book={book} chapter={1} register="simple" onRegisterChange={() => {}} />)
+    const { rerender } = render(<ChapterView book={book} chapter={1} view="formal" onViewChange={() => {}} />)
+    rerender(<ChapterView book={book} chapter={1} view="simple" onViewChange={() => {}} />)
     expect(screen.getByText(/Vá até a cidade de Nínive/)).toBeInTheDocument()
     expect(screen.queryByText(/Levanta-te e vai a Nínive/)).not.toBeInTheDocument()
   })
 
-  it('reports the register choice from the toggle', () => {
-    const onRegisterChange = vi.fn()
-    render(<ChapterView book={book} chapter={1} register="formal" onRegisterChange={onRegisterChange} />)
-    fireEvent.click(screen.getByText('Simples'))
-    expect(onRegisterChange).toHaveBeenCalledWith('simple')
+  it('offers the original as a third view, labelled with its language', () => {
+    render(<ChapterView book={book} chapter={1} view="formal" onViewChange={() => {}} />)
+    expect(screen.getByRole('radio', { name: 'Original (Hebraico)' })).toBeInTheDocument()
   })
 
-  it('renders footnotes for the chapter, anchored per register', () => {
-    const { container } = render(
-      <ChapterView book={book} chapter={1} register="formal" onRegisterChange={() => {}} />,
-    )
+  it('reports the view choice from the toggle', () => {
+    const onViewChange = vi.fn()
+    render(<ChapterView book={book} chapter={1} view="formal" onViewChange={onViewChange} />)
+    fireEvent.click(screen.getByRole('radio', { name: 'Original (Hebraico)' }))
+    expect(onViewChange).toHaveBeenCalledWith('original')
+  })
+
+  it('renders footnotes for the register, anchored per register', () => {
+    const { container } = render(<ChapterView book={book} chapter={1} view="formal" onViewChange={() => {}} />)
     expect(screen.getByText(/capital da Assíria/)).toBeInTheDocument()
     expect(container.querySelector('a[href="#formal-nota-1"]')).not.toBeNull()
   })
 
-  it('shows the review status seal', () => {
-    render(<ChapterView book={book} chapter={1} register="formal" onRegisterChange={() => {}} />)
+  it('shows the review seal for a register', () => {
+    render(<ChapterView book={book} chapter={1} view="formal" onViewChange={() => {}} />)
     expect(screen.getByText('Verificado')).toBeInTheDocument()
+  })
+
+  it('renders the original text right-to-left with the edition citation and no seal', () => {
+    const { container } = render(<ChapterView book={book} chapter={1} view="original" onViewChange={() => {}} />)
+    expect(screen.getByText('קוּם לֵךְ אֶל־נִינְוֵה')).toBeInTheDocument()
+    expect(container.querySelector('[dir="rtl"]')).not.toBeNull()
+    expect(screen.getByText('Westminster Leningrad Codex')).toBeInTheDocument()
+    expect(screen.queryByText('Verificado')).not.toBeInTheDocument()
   })
 })

@@ -6,7 +6,7 @@ import { ChapterView } from '../components/ChapterView'
 import { Section } from '../components/Section'
 import { SiteFooter } from '../components/SiteFooter'
 import { SiteHeader } from '../components/SiteHeader'
-import type { ReaderBook, Register } from '../components/readerData'
+import type { ReaderBook, View } from '../components/readerData'
 import { bookByCode, bookBySlug, loadBook, navGroups, readStoredRegister, storeRegister } from '../components/readerData'
 
 const GITHUB_URL = 'https://github.com/biblialibera/biblialibera'
@@ -24,7 +24,7 @@ function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
   const code = entry?.code
 
   const [book, setBook] = useState<ReaderBook | null>(null)
-  const [register, setRegister] = useState<Register>(readStoredRegister)
+  const [view, setView] = useState<View>(readStoredRegister)
   const [navOpen, setNavOpen] = useState(false)
 
   // Load the book whenever the book code changes (not on chapter change: the
@@ -50,9 +50,9 @@ function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
   }
 
   const openGithub = () => window.open(GITHUB_URL, '_blank', 'noopener')
-  const changeRegister = (r: Register) => {
-    storeRegister(r)
-    setRegister(r)
+  const changeView = (v: View) => {
+    storeRegister(v)
+    setView(v)
   }
   const goChapter = (n: number) => navigate(`/ler/${entry.slug}/${n}`)
   const goBook = (bookCode: string) => {
@@ -116,7 +116,7 @@ function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
         </div>
 
         {book ? (
-          <ChapterView book={book} chapter={chapter} register={register} onRegisterChange={changeRegister} />
+          <ChapterView book={book} chapter={chapter} view={view} onViewChange={changeView} />
         ) : (
           <div className="mx-auto max-w-[var(--reading-measure)]">
             <h1 className="m-0 font-serif text-[var(--text-2xl)] text-[var(--color-text)]">

@@ -2,6 +2,8 @@ import type { NavGroup } from '../design-system/components/reading'
 import indexData from '../data/reader/index.json'
 
 export type Register = 'formal' | 'simple'
+/** What the reader can show: the two pt registers plus the original text. */
+export type View = Register | 'original'
 export type Status = 'draft' | 'checked' | 'reviewed'
 
 export interface ReaderVerse {
@@ -10,10 +12,26 @@ export interface ReaderVerse {
   footnotes: string[]
 }
 
+export interface OriginalVerse {
+  verse: number
+  text: string
+}
+
+/** Original-language edition metadata for a book (null if none is bundled). */
+export interface OriginalInfo {
+  corpus: string
+  /** Edition citation, e.g. "Westminster Leningrad Codex". */
+  edition: string
+  /** pt-BR language label, e.g. "Hebraico" / "Grego". */
+  language: string
+  dir: 'rtl' | 'ltr'
+}
+
 export interface ReaderChapter {
   chapter: number
   formal: ReaderVerse[]
   simple: ReaderVerse[]
+  original: OriginalVerse[]
 }
 
 export interface ReaderBook {
@@ -22,6 +40,7 @@ export interface ReaderBook {
   abbrev: string
   slug: string
   status: Record<Register, Status>
+  original: OriginalInfo | null
   chapters: ReaderChapter[]
 }
 
@@ -33,6 +52,7 @@ export interface ReaderIndexEntry {
   canon: 'AT' | 'DC' | 'NT'
   chapters: number
   status: Record<Register, Status>
+  original: { language: string } | null
 }
 
 export const readerIndex = indexData as ReaderIndexEntry[]
@@ -81,22 +101,22 @@ export async function loadBook(code: string): Promise<ReaderBook> {
 }
 
 const REGISTER_KEY = 'bl.reader.register'
-const REGISTERS: Register[] = ['formal', 'simple']
+const VIEWS: View[] = ['formal', 'simple', 'original']
 
-/** Remembered register choice; 'formal' when unset/invalid. Guarded for private mode. */
-export function readStoredRegister(): Register {
+/** Remembered view choice; 'formal' when unset/invalid. Guarded for private mode. */
+export function readStoredRegister(): View {
   try {
     const stored = window.localStorage.getItem(REGISTER_KEY)
-    if (stored && (REGISTERS as string[]).includes(stored)) return stored as Register
+    if (stored && (VIEWS as string[]).includes(stored)) return stored as View
   } catch {
     // localStorage can throw (private mode, blocked storage): fall back to default.
   }
   return 'formal'
 }
 
-export function storeRegister(register: Register): void {
+export function storeRegister(view: View): void {
   try {
-    window.localStorage.setItem(REGISTER_KEY, register)
+    window.localStorage.setItem(REGISTER_KEY, view)
   } catch {
     // Ignore: remembering the choice is a nicety, not required for reading.
   }

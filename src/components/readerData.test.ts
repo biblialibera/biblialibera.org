@@ -24,15 +24,18 @@ describe('readerData', () => {
     expect(groups[1].items.map((b) => b.code)).toContain('Mark')
   })
 
-  it('lazy-loads a book with both registers merged per chapter', async () => {
+  it('lazy-loads a book with both registers and the original merged per chapter', async () => {
     const jonah = await loadBook('Jonah')
     expect(jonah.code).toBe('Jonah')
     expect(jonah.chapters).toHaveLength(4)
+    expect(jonah.original?.language).toBe('Hebraico')
+    expect(jonah.original?.dir).toBe('rtl')
     const [first] = jonah.chapters
     expect(first.chapter).toBe(1)
     expect(first.formal[0].verse).toBe(1)
     expect(typeof first.formal[0].text).toBe('string')
     expect(typeof first.simple[0].text).toBe('string')
+    expect(typeof first.original[0].text).toBe('string')
   })
 
   it('rejects an unknown book code', async () => {
