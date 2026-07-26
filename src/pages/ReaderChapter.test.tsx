@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -53,6 +53,29 @@ describe('ReaderChapter', () => {
     renderAt('/ler/jonas/4')
     await untilLoaded()
     expect(screen.getByRole('button', { name: 'Próximo' })).toBeDisabled()
+  })
+
+  it('shows the chapter guide, current chapter marked, before the book loads', () => {
+    renderAt('/ler/jonas/2')
+    const guide = screen.getByRole('navigation', { name: 'Capítulos' })
+    expect(within(guide).getAllByRole('link')).toHaveLength(4)
+    expect(within(guide).getByRole('link', { name: '2' })).toHaveAttribute('aria-current', 'page')
+  })
+
+  it('navigates to the chapter picked in the guide', async () => {
+    const user = userEvent.setup()
+    renderAt('/ler/jonas/1')
+    await untilLoaded()
+
+    const guide = screen.getByRole('navigation', { name: 'Capítulos' })
+    await user.click(within(guide).getByRole('link', { name: '3' }))
+    expect(await screen.findByRole('heading', { name: 'Jonas 3' })).toBeInTheDocument()
+  })
+
+  it('omits the guide for a single-chapter book', async () => {
+    renderAt('/ler/filemom/1')
+    await untilLoaded()
+    expect(screen.queryByRole('navigation', { name: 'Capítulos' })).not.toBeInTheDocument()
   })
 
   it('opens in the remembered register and writes changes back', async () => {
