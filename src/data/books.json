@@ -15,25 +15,25 @@
     "book": "Levítico",
     "ref": "Lv",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Números",
     "ref": "Nm",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Deuteronômio",
     "ref": "Dt",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Josué",
     "ref": "Js",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Juízes",
@@ -87,13 +87,13 @@
     "book": "Esdras",
     "ref": "Ed",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Neemias",
     "ref": "Ne",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Tobias",
@@ -111,7 +111,7 @@
     "book": "Ester",
     "ref": "Et",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "1 Macabeus",
@@ -129,7 +129,7 @@
     "book": "Jó",
     "ref": "Jó",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Salmos",
@@ -147,13 +147,13 @@
     "book": "Eclesiastes",
     "ref": "Ec",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Cânticos",
     "ref": "Ct",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Sabedoria",
@@ -183,7 +183,7 @@
     "book": "Lamentações",
     "ref": "Lm",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Baruc",
@@ -207,19 +207,19 @@
     "book": "Oseias",
     "ref": "Os",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Joel",
     "ref": "Jl",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Amós",
     "ref": "Am",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Obadias",
@@ -237,7 +237,7 @@
     "book": "Miqueias",
     "ref": "Mq",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Naum",
@@ -261,19 +261,19 @@
     "book": "Ageu",
     "ref": "Ag",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Zacarias",
     "ref": "Zc",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Malaquias",
     "ref": "Ml",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Mateus",
@@ -297,43 +297,43 @@
     "book": "João",
     "ref": "Jo",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Atos",
     "ref": "At",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Romanos",
     "ref": "Rm",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "1 Coríntios",
     "ref": "1Co",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "2 Coríntios",
     "ref": "2Co",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Gálatas",
     "ref": "Gl",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Efésios",
     "ref": "Ef",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Filipenses",
@@ -387,7 +387,7 @@
     "book": "Hebreus",
     "ref": "Hb",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Tiago",
@@ -435,6 +435,6 @@
     "book": "Apocalipse",
     "ref": "Ap",
     "canon": "NT",
-    "status": "not-translated"
+    "status": "checked"
   }
 ]
