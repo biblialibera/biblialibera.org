@@ -4,34 +4,23 @@ import { Badge } from '../design-system/components/core'
 import { Footnote, FootnoteList, RegisterToggle, ReviewSeal, VerseBlock } from '../design-system/components/reading'
 import { renderVerseText } from './scriptureText'
 
-type Register = 'formal' | 'simple'
+type View = 'formal' | 'original'
 
 const VERSE_COUNT = psalm23.formal.length
 
-const PASSAGES: Record<Register, { verse: number; text: string; footnotes: string[] }[]> = {
-  formal: psalm23.formal,
-  simple: psalm23.simple,
-}
-
-const PSALMS_STATUS = psalm23.status
+const OPTIONS = [
+  { value: 'formal', label: 'Português' },
+  { value: 'original', label: `Original (${psalm23.originalInfo.language})` },
+]
 
 /**
- * RegisterDemo: Salmo 23 side-by-side registers, live from the bundled
- * `biblialibera` package: the reader can switch between formal and simple
- * and see the real translated text, with the note apparatus and the actual
- * review status of the book.
+ * RegisterDemo: Salmo 23 side-by-side with the original text, live from the
+ * bundled `biblialibera` package: the reader can switch between the pt
+ * translation and the source language and see the real text, with the note
+ * apparatus and the actual review status of the book.
  */
 export function RegisterDemo() {
-  const [register, setRegister] = useState<Register>('formal')
-  const verses = PASSAGES[register]
-
-  let noteNumber = 1
-  const rendered = verses.map((verse) => {
-    const result = renderVerseText(verse.text, verse.footnotes, register, noteNumber)
-    noteNumber += result.notes.length
-    return { verse: verse.verse, ...result }
-  })
-  const notes = rendered.flatMap((v) => v.notes)
+  const [view, setView] = useState<View>('formal')
 
   return (
     <div className="mx-auto max-w-[var(--reading-measure)]">
@@ -42,32 +31,48 @@ export function RegisterDemo() {
         </Badge>
       </div>
       <p className="mb-[var(--space-6)] text-[var(--text-base)] leading-[var(--leading-normal)] text-[var(--color-text-muted)]">
-        O mesmo texto em dois registros, direto do pacote <code>biblialibera</code>. Troque e leia a diferença: o
-        sentido é o mesmo, muda a linguagem.
+        O mesmo texto em português e no original, direto do pacote <code>biblialibera</code>. Troque e compare.
       </p>
 
       <div className="mb-[var(--space-8)] flex flex-wrap items-center justify-between gap-[var(--space-4)] border-b border-[var(--color-border)] pb-[var(--space-5)]">
-        <RegisterToggle value={register} onChange={(value) => setRegister(value as Register)} />
-        <ReviewSeal status={(PSALMS_STATUS[register] as 'draft' | 'checked' | 'reviewed') ?? 'draft'} size="sm" />
-      </div>
-
-      <div key={register}>
-        {rendered.map(({ verse, body }) => (
-          <VerseBlock key={verse} number={verse}>
-            {body}
-          </VerseBlock>
-        ))}
-        {notes.length > 0 && (
-          <FootnoteList>
-            {notes.map((note) => (
-              <Footnote key={note.number} n={note.number} id={`${register}-nota-${note.number}`}>
-                {note.text}
-              </Footnote>
-            ))}
-          </FootnoteList>
+        <RegisterToggle value={view} onChange={(value) => setView(value as View)} options={OPTIONS} />
+        {view === 'original' ? (
+          <Badge>{psalm23.originalInfo.edition}</Badge>
+        ) : (
+          <ReviewSeal status={(psalm23.status.formal as 'draft' | 'checked' | 'reviewed') ?? 'draft'} size="sm" />
         )}
       </div>
 
+      {view === 'original' ? <OriginalPassage /> : <FormalPassage />}
+    </div>
+  )
+}
+
+function FormalPassage() {
+  let noteNumber = 1
+  const rendered = psalm23.formal.map((verse) => {
+    const result = renderVerseText(verse.text, verse.footnotes, 'formal', noteNumber)
+    noteNumber += result.notes.length
+    return { verse: verse.verse, ...result }
+  })
+  const notes = rendered.flatMap((v) => v.notes)
+
+  return (
+    <div>
+      {rendered.map(({ verse, body }) => (
+        <VerseBlock key={verse} number={verse}>
+          {body}
+        </VerseBlock>
+      ))}
+      {notes.length > 0 && (
+        <FootnoteList>
+          {notes.map((note) => (
+            <Footnote key={note.number} n={note.number} id={`formal-nota-${note.number}`}>
+              {note.text}
+            </Footnote>
+          ))}
+        </FootnoteList>
+      )}
       <p className="mt-[var(--space-6)] font-sans text-[var(--text-sm)] leading-[var(--leading-normal)] text-[var(--color-text-faint)]">
         <span className="[font-variant:small-caps] tracking-[var(--tracking-caps)] text-[var(--color-text-muted)]">
           Senhor
@@ -75,6 +80,24 @@ export function RegisterDemo() {
         em versalete marca o nome divino (YHWH). O número em sobrescrito é o versículo. A nota fica à vista: quando o
         original é ambíguo, isso vira nota, nunca resolvemos em silêncio.
       </p>
+    </div>
+  )
+}
+
+function OriginalPassage() {
+  return (
+    <div dir={psalm23.originalInfo.dir} className="font-[family-name:var(--font-original)]">
+      {psalm23.original.map((verse) => (
+        <p
+          key={verse.verse}
+          className="m-0 mb-[var(--space-4)] text-[var(--text-xl)] leading-[var(--leading-relaxed)] text-[var(--color-text-verse)]"
+        >
+          <sup className="me-[0.35em] align-super font-mono text-[var(--text-xs)] text-[var(--color-verse-number)]">
+            {verse.verse}
+          </sup>
+          {verse.text}
+        </p>
+      ))}
     </div>
   )
 }

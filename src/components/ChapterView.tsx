@@ -11,19 +11,18 @@ export interface ChapterViewProps {
 }
 
 /**
- * ChapterView: one chapter of a loaded book in the selected view. The two pt
- * registers (formal/simple) render with the note apparatus and the review
- * seal; the original view renders the source text plain (no divine-name or
- * footnote treatment, which are pt-specific), in its own reading direction
- * and font, with the edition citation in place of the seal.
+ * ChapterView: one chapter of a loaded book in the selected view. The pt
+ * text renders with the note apparatus and the review seal; the original
+ * view renders the source text plain (no divine-name or footnote treatment,
+ * which are pt-specific), in its own reading direction and font, with the
+ * edition citation in place of the seal.
  */
 export function ChapterView({ book, chapter, view, onViewChange }: ChapterViewProps) {
   const current = book.chapters.find((c) => c.chapter === chapter)
   const original = book.original
 
   const options = [
-    { value: 'formal', label: 'Formal' },
-    { value: 'simple', label: 'Simples' },
+    { value: 'formal', label: 'Português' },
     ...(original ? [{ value: 'original', label: `Original (${original.language})` }] : []),
   ]
 

@@ -2,8 +2,7 @@
   "book": "Ps",
   "chapter": 23,
   "status": {
-    "formal": "checked",
-    "simple": "checked"
+    "formal": "checked"
   },
   "formal": [
     {
@@ -29,28 +28,28 @@
       ]
     }
   ],
-  "simple": [
+  "original": [
     {
       "verse": 1,
-      "text": "Salmo de Davi. O SENHOR é o meu pastor: nada me falta.",
-      "footnotes": []
+      "text": "מִזְמ֥וֹר לְדָוִ֑ד יְהוָ֥ה רֹ֝עִ֗י לֹ֣א אֶחְסָֽר׃"
     },
     {
       "verse": 2,
-      "text": "Ele me faz descansar em pastos verdes. Ele me leva a águas calmas.",
-      "footnotes": []
+      "text": "בִּנְא֣וֹת דֶּ֭שֶׁא יַרְבִּיצֵ֑נִי עַל־מֵ֖י מְנֻח֣וֹת יְנַהֲלֵֽנִי׃"
     },
     {
       "verse": 3,
-      "text": "Ele renova as minhas forças. Ele me guia por caminhos certos, por causa do seu nome.",
-      "footnotes": []
+      "text": "נַפְשִׁ֥י יְשׁוֹבֵ֑ב יַֽנְחֵ֥נִי בְמַעְגְּלֵי־צֶ֝֗דֶק לְמַ֣עַן שְׁמֽוֹ׃"
     },
     {
       "verse": 4,
-      "text": "Mesmo que eu ande por um vale escuro como a sombra da morte, não vou ter medo de nada, pois tu estás comigo. A tua vara e o teu cajado me acalmam.",
-      "footnotes": [
-        "Outra tradução possível: \"um vale de escuridão profunda\"."
-      ]
+      "text": "גַּ֤ם כִּֽי־אֵלֵ֨ךְ בְּגֵ֪יא צַלְמָ֡וֶת לֹא־אִ֘ירָ֤א רָ֗ע כִּי־אַתָּ֥ה עִמָּדִ֑י שִׁבְטְךָ֥ וּ֝מִשְׁעַנְתֶּ֗ךָ הֵ֣מָּה יְנַֽחֲמֻֽנִי׃"
     }
-  ]
+  ],
+  "originalInfo": {
+    "corpus": "wlc",
+    "edition": "Westminster Leningrad Codex",
+    "language": "Hebraico",
+    "dir": "rtl"
+  }
 }

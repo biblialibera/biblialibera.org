@@ -26,7 +26,7 @@ function ReaderIndex({ theme, onToggleTheme }: ReaderIndexProps) {
             Escolha um livro
           </h1>
           <p className="m-0 text-[var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-secondary)]">
-            Os livros já traduzidos, em dois registros do mesmo sentido. Cada um mostra o status honesto da revisão.
+            Os livros já traduzidos, com o texto original ao lado. Cada um mostra o status honesto da revisão.
           </p>
         </div>
         <BookIndex />

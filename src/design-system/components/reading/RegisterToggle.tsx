@@ -15,12 +15,12 @@ export interface RegisterToggleProps extends Omit<HTMLAttributes<HTMLDivElement>
 }
 
 const DEFAULT_OPTIONS: RegisterOption[] = [
-  { value: 'formal', label: 'Formal' },
-  { value: 'simple', label: 'Simples' },
+  { value: 'formal', label: 'Português' },
+  { value: 'original', label: 'Original' },
 ]
 
 /**
- * RegisterToggle — switch between the formal and simple registers.
+ * RegisterToggle — switch between the pt translation and the original text.
  * The switch is obvious and reversible; the reading position is preserved
  * by the host (the toggle only reports the choice).
  */

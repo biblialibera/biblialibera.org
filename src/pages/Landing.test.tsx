@@ -37,11 +37,11 @@ describe('Landing', () => {
     expect(onToggleTheme).toHaveBeenCalledOnce()
   })
 
-  it('lets the visitor switch the demo to the simple register', async () => {
+  it('lets the visitor switch the demo to the original text', async () => {
     const user = userEvent.setup()
     renderLanding({ theme: 'light', onToggleTheme: () => {} })
-    await user.click(screen.getByRole('radio', { name: 'Simples' }))
-    expect(screen.getByText(/nada me falta\./)).toBeInTheDocument()
+    await user.click(screen.getByRole('radio', { name: /Original/ }))
+    expect(screen.getByText(/לְדָוִ֑ד/)).toBeInTheDocument()
   })
 
   it('sends the hero Ler button to the reader', async () => {

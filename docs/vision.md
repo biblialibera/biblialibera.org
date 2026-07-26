@@ -4,26 +4,22 @@
 
 O site do Biblia Libera, com duas partes:
 
-1. **Landing page**: apresenta o projeto (o que é, por quê, os dois
-   registros de tradução), com link para o repositório onde a tradução
-   acontece (`open-bible`).
+1. **Landing page**: apresenta o projeto (o que é, por quê, a tradução e o
+   texto original), com link para o repositório onde a tradução acontece
+   (`open-bible`).
 2. **Leitor**: onde a Bíblia de fato é lida.
 
 ## O leitor
 
-Mostra o texto de um capítulo em três versões:
+Mostra o texto de um capítulo em duas versões, com um toggle:
 
-- **Formal**: português contemporâneo formal.
-- **Simples**: vocabulário acessível, frases curtas.
+- **Português**: tradução em português contemporâneo formal.
 - **Original**: hebraico (WLC) ou grego (Nestle 1904/Septuaginta), conforme o
   livro.
 
-Formal e simples vêm do mesmo texto-fonte e da mesma base exegética,
-diferindo em registro, não em interpretação (ver `docs/` do `open-bible`).
-
-Navegação entre as três é o ponto em aberto de UX: pode ser abas, um toggle,
-ou lado a lado dependendo do espaço de tela. Decidir na hora de implementar o
-leitor, não precisa fechar isso agora.
+Havia também um registro "Simples" (vocabulário acessível, frases curtas),
+removido do site após revisão do conteúdo produzido; a tradução formal segue
+como única versão em português por ora.
 
 Cada versículo carrega notas (rodapé) onde o original é ambíguo; a UI precisa
 exibir isso sem poluir a leitura corrida (ex: número sobrescrito com
@@ -42,9 +38,8 @@ demonstração viva do Salmo 23 na landing). O leitor completo (quando for
 implementado) provavelmente precisa de uma abordagem diferente para navegar
 o livro inteiro sem baixar tudo de uma vez; decidir na hora.
 
-A lib não carrega o texto original (hebraico/grego) ainda, só as traduções
-pt (formal/simples); original é um gap conhecido a fechar antes do leitor
-mostrar as três versões lado a lado.
+A lib carrega o texto original (hebraico/grego) via `biblialibera/original`,
+usado pelo leitor e pela demo da landing.
 
 ## Futuro: comunidade
 

@@ -21,7 +21,7 @@ function renderAt(path: string) {
 
 // The chapter text only appears once the book chunk has loaded; the register
 // toggle is a loaded-only marker (the loading placeholder has no toggle).
-const untilLoaded = () => screen.findByRole('radio', { name: 'Formal' })
+const untilLoaded = () => screen.findByRole('radio', { name: 'Português' })
 
 describe('ReaderChapter', () => {
   it('lazy-loads and renders the requested chapter', async () => {
@@ -56,13 +56,13 @@ describe('ReaderChapter', () => {
   })
 
   it('opens in the remembered register and writes changes back', async () => {
-    window.localStorage.setItem('bl.reader.register', 'simple')
+    window.localStorage.setItem('bl.reader.register', 'original')
     const user = userEvent.setup()
     renderAt('/ler/jonas/1')
     await untilLoaded()
-    expect(screen.getByRole('radio', { name: 'Simples' })).toHaveAttribute('aria-checked', 'true')
+    expect(screen.getByRole('radio', { name: /Original/ })).toHaveAttribute('aria-checked', 'true')
 
-    await user.click(screen.getByRole('radio', { name: 'Formal' }))
+    await user.click(screen.getByRole('radio', { name: 'Português' }))
     expect(window.localStorage.getItem('bl.reader.register')).toBe('formal')
   })
 })

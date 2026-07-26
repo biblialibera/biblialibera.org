@@ -7,18 +7,18 @@ describe('RegisterDemo', () => {
   it('shows the formal register by default', () => {
     render(<RegisterDemo />)
     expect(screen.getByText(/nada me faltará/)).toBeInTheDocument()
-    expect(screen.getByRole('radio', { name: 'Formal' })).toHaveAttribute('aria-checked', 'true')
+    expect(screen.getByRole('radio', { name: 'Português' })).toHaveAttribute('aria-checked', 'true')
   })
 
-  it('switches to the simple register and back', async () => {
+  it('switches to the original text and back', async () => {
     const user = userEvent.setup()
     render(<RegisterDemo />)
 
-    await user.click(screen.getByRole('radio', { name: 'Simples' }))
-    expect(screen.getByText(/nada me falta\./)).toBeInTheDocument()
+    await user.click(screen.getByRole('radio', { name: /Original/ }))
+    expect(screen.getByText(/לְדָוִ֑ד/)).toBeInTheDocument()
     expect(screen.queryByText(/nada me faltará/)).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('radio', { name: 'Formal' }))
+    await user.click(screen.getByRole('radio', { name: 'Português' }))
     expect(screen.getByText(/nada me faltará/)).toBeInTheDocument()
   })
 

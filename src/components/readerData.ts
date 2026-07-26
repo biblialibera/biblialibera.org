@@ -1,8 +1,8 @@
 import type { NavGroup } from '../design-system/components/reading'
 import indexData from '../data/reader/index.json'
 
-export type Register = 'formal' | 'simple'
-/** What the reader can show: the two pt registers plus the original text. */
+export type Register = 'formal'
+/** What the reader can show: the pt register plus the original text. */
 export type View = Register | 'original'
 export type Status = 'draft' | 'checked' | 'reviewed'
 
@@ -30,7 +30,6 @@ export interface OriginalInfo {
 export interface ReaderChapter {
   chapter: number
   formal: ReaderVerse[]
-  simple: ReaderVerse[]
   original: OriginalVerse[]
 }
 
@@ -101,7 +100,7 @@ export async function loadBook(code: string): Promise<ReaderBook> {
 }
 
 const REGISTER_KEY = 'bl.reader.register'
-const VIEWS: View[] = ['formal', 'simple', 'original']
+const VIEWS: View[] = ['formal', 'original']
 
 /** Remembered view choice; 'formal' when unset/invalid. Guarded for private mode. */
 export function readStoredRegister(): View {

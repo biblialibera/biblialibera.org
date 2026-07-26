@@ -8,7 +8,7 @@ const book: ReaderBook = {
   name: 'Jonas',
   abbrev: 'Jn',
   slug: 'jonas',
-  status: { formal: 'checked', simple: 'checked' },
+  status: { formal: 'checked' },
   original: { corpus: 'wlc', edition: 'Westminster Leningrad Codex', language: 'Hebraico', dir: 'rtl' },
   chapters: [
     {
@@ -16,10 +16,6 @@ const book: ReaderBook = {
       formal: [
         { verse: 1, text: 'A palavra do SENHOR veio a Jonas.', footnotes: [] },
         { verse: 2, text: 'Levanta-te e vai a Nínive.', footnotes: ['Nínive: capital da Assíria.'] },
-      ],
-      simple: [
-        { verse: 1, text: 'O SENHOR falou com Jonas.', footnotes: [] },
-        { verse: 2, text: 'Vá até a cidade de Nínive.', footnotes: [] },
       ],
       original: [
         { verse: 1, text: 'וַיְהִי דְּבַר־יְהוָה אֶל־יוֹנָה' },
@@ -37,14 +33,14 @@ describe('ChapterView', () => {
     expect(screen.queryByText(/Vá até a cidade de Nínive/)).not.toBeInTheDocument()
   })
 
-  it('swaps the text when the register changes', () => {
+  it('swaps the text when the view changes', () => {
     const { rerender } = render(<ChapterView book={book} chapter={1} view="formal" onViewChange={() => {}} />)
-    rerender(<ChapterView book={book} chapter={1} view="simple" onViewChange={() => {}} />)
-    expect(screen.getByText(/Vá até a cidade de Nínive/)).toBeInTheDocument()
+    rerender(<ChapterView book={book} chapter={1} view="original" onViewChange={() => {}} />)
+    expect(screen.getByText('קוּם לֵךְ אֶל־נִינְוֵה')).toBeInTheDocument()
     expect(screen.queryByText(/Levanta-te e vai a Nínive/)).not.toBeInTheDocument()
   })
 
-  it('offers the original as a third view, labelled with its language', () => {
+  it('offers the original as a second view, labelled with its language', () => {
     render(<ChapterView book={book} chapter={1} view="formal" onViewChange={() => {}} />)
     expect(screen.getByRole('radio', { name: 'Original (Hebraico)' })).toBeInTheDocument()
   })

@@ -35,7 +35,7 @@ const WHY_CARDS = [
 
 const PIPELINE_STEPS = [
   { number: '01', title: 'Originais', body: 'O ponto de partida é o texto hebraico e grego, nunca uma tradução intermediária.' },
-  { number: '02', title: 'Tradução por IA', body: 'O modelo produz os dois registros a partir dos originais, seguindo um guia de estilo explícito.' },
+  { number: '02', title: 'Tradução por IA', body: 'O modelo produz a tradução a partir dos originais, seguindo um guia de estilo explícito.' },
   { number: '03', title: 'Validação', body: 'Checagens automáticas de formato, referências e consistência entre versículos.' },
   { number: '04', title: 'Auditoria de sentido', body: 'Cada versículo é auditado contra traduções de referência de domínio público, com o alinhamento calculado em código: reproduzível, aponta divergências para a revisão humana.' },
   { number: '05', title: 'Revisão humana', body: 'Leitura e correção final por pessoas. Só então um livro passa a "revisado".', accent: true },
@@ -64,7 +64,7 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
           A Bíblia em português atual, livre para todos
         </h1>
         <p className="mx-auto mb-[var(--space-8)] max-w-[36rem] text-[var(--text-md)] leading-[var(--leading-relaxed)] text-[var(--color-text-secondary)]">
-          Traduzida do hebraico e do grego para o português brasileiro, em dois registros do mesmo sentido.
+          Traduzida do hebraico e do grego para o português brasileiro, com o texto original ao lado.
           Processo público e auditável. Texto e código abertos.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-[var(--space-3)]">
@@ -76,7 +76,7 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
           </Button>
         </div>
         <div className="mt-[var(--space-8)] font-mono text-[var(--text-xs)] tracking-[0.02em] text-[var(--color-text-faint)]">
-          {translatedCount} livros verificados · 2 registros · licença CC BY 4.0
+          {translatedCount} livros verificados · texto original ao lado · licença CC BY 4.0
         </div>
       </Section>
 

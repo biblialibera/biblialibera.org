@@ -21,9 +21,8 @@ export interface RenderedVerse {
  * <DivineName>, and each footnote becomes a numbered <FootnoteRef> at the
  * end of the verse, since the package does not carry the original inline
  * marker position. `nextNumber` lets footnote numbers keep counting across
- * the verses of a passage; `idPrefix` scopes anchor ids (e.g. "formal" vs
- * "simple") so both registers can render on the same page without
- * collisions.
+ * the verses of a passage; `idPrefix` scopes anchor ids so multiple views
+ * can render on the same page without collisions.
  */
 export function renderVerseText(text: string, footnotes: string[], idPrefix: string, nextNumber: number): RenderedVerse {
   const body: ReactNode[] = text

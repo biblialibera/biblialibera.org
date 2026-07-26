@@ -88,8 +88,8 @@ gera um JSON pequeno, só com o trecho necessário, em `src/data/`; o
 componente importa esse arquivo gerado.
 
 - `scripts/extract-demo-passage.mjs` → `src/data/psalm23.json`: Salmo 23,
-  vv. 1-4, os dois registros. Usado pela `RegisterDemo` (demo viva na
-  landing).
+  vv. 1-4, tradução formal e original. Usado pela `RegisterDemo` (demo viva
+  na landing).
 - `scripts/extract-book-status.mjs` → `src/data/books.json`: lista de livros
   com status (`manifest.json` da lib), classificados AT/NT (a classificação
   é uma constante local, a lib não carrega cânon). Usado pela
@@ -99,10 +99,10 @@ componente importa esse arquivo gerado.
 
 ## Fluxo inicial (o que estamos construindo agora)
 
-1. Landing page (feita): apresenta o projeto, os dois registros (formal,
-   simples) e o texto original, com link para o repositório de tradução.
-2. Leitor: mostra um livro/capítulo nas três versões (formal, simples,
-   original), com navegação entre elas. Ainda não implementado.
+1. Landing page (feita): apresenta o projeto, a tradução formal e o texto
+   original, com link para o repositório de tradução.
+2. Leitor (feito): mostra um livro/capítulo em português (formal) ou no
+   original, com um toggle entre as duas.
 3. Comunidade (futuro, não implementar agora): sugestões e anotações de
    usuários, com status inicial baixo, promovidas conforme reputação até
    poderem ser aceitas diretamente. Ver `docs/vision.md` para o racional;

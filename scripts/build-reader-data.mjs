@@ -1,15 +1,15 @@
 // Generates the reader's data from the `biblialibera` package: a light index
-// of the translated books plus one file per book carrying both registers and
-// the original-language text, so the reader can lazy-load a single book on
-// demand instead of shipping the whole corpus to the browser. Re-run after
+// of the translated books plus one file per book carrying the formal register
+// and the original-language text, so the reader can lazy-load a single book
+// on demand instead of shipping the whole corpus to the browser. Re-run after
 // updating the `biblialibera` dependency:
 //
 //   node scripts/build-reader-data.mjs
 //
 // Outputs:
 //   src/data/reader/index.json   one light entry per translated book (no text)
-//   src/data/reader/<CODE>.json  full book: both registers + the original,
-//                                keyed per chapter
+//   src/data/reader/<CODE>.json  full book: the formal register + the
+//                                original, keyed per chapter
 //
 // The manifest is the source of truth for which books exist; canon order and
 // classification come from scripts/canon.mjs; the original text comes from the
@@ -21,7 +21,6 @@ import ptManifest from '../node_modules/biblialibera/data/pt/manifest.json' with
 import { corpora, getBook } from 'biblialibera/original';
 import { CANON, slugify } from './canon.mjs';
 
-const REGISTERS = ['formal', 'simple'];
 const pkgUrl = (register, code) =>
   new URL(`../node_modules/biblialibera/data/pt/${register}/${code}.json`, import.meta.url);
 
@@ -53,19 +52,15 @@ function readOriginal(code) {
   };
 }
 
-/** Merge the registers and the original of one book into per-chapter rows. */
-function mergeChapters(byRegister, originalByChapter) {
-  const chapterNumbers = byRegister.formal.chapters.map((c) => c.chapter);
-  return chapterNumbers.map((n) => {
-    const row = { chapter: n };
-    for (const register of REGISTERS) {
-      const chapter = byRegister[register].chapters.find((c) => c.chapter === n);
-      if (!chapter) throw new Error(`${byRegister.formal.book}: chapter ${n} missing in ${register}`);
-      row[register] = chapter.verses.map(({ verse, text, footnotes }) => ({ verse, text, footnotes }));
-    }
+/** Merge the formal register and the original of one book into per-chapter rows. */
+function mergeChapters(formalBook, originalByChapter) {
+  return formalBook.chapters.map(({ chapter: n, verses }) => {
     const original = originalByChapter?.get(String(n)) ?? [];
-    row.original = original.map(({ verse, text }) => ({ verse, text }));
-    return row;
+    return {
+      chapter: n,
+      formal: verses.map(({ verse, text, footnotes }) => ({ verse, text, footnotes })),
+      original: original.map(({ verse, text }) => ({ verse, text })),
+    };
   });
 }
 
@@ -82,14 +77,12 @@ const index = [];
 for (const code of translated) {
   const meta = manifestByCode.get(code);
   const canonMeta = canonByCode.get(code);
-  const status = { formal: meta.status.formal, simple: meta.status.simple };
+  const status = { formal: meta.status.formal };
   const slug = slugify(canonMeta.name);
 
-  for (const register of REGISTERS) {
-    if (!meta.status[register]) throw new Error(`${code}: register ${register} not in manifest`);
-  }
+  if (!meta.status.formal) throw new Error(`${code}: register formal not in manifest`);
 
-  const byRegister = { formal: readBook('formal', code), simple: readBook('simple', code) };
+  const formalBook = readBook('formal', code);
   const original = readOriginal(code);
   const book = {
     code,
@@ -98,7 +91,7 @@ for (const code of translated) {
     slug,
     status,
     original: original?.info ?? null,
-    chapters: mergeChapters(byRegister, original?.byChapter),
+    chapters: mergeChapters(formalBook, original?.byChapter),
   };
 
   const bookPath = fileURLToPath(new URL(`${code}.json`, outDir));
