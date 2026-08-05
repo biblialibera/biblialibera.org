@@ -84,12 +84,110 @@
     }
   },
   {
+    "slug": "juizes",
+    "code": "Judg",
+    "name": "Juízes",
+    "abbrev": "Jz",
+    "canon": "AT",
+    "chapters": 21,
+    "status": {
+      "formal": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
     "slug": "rute",
     "code": "Ruth",
     "name": "Rute",
     "abbrev": "Rt",
     "canon": "AT",
     "chapters": 4,
+    "status": {
+      "formal": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "1-samuel",
+    "code": "1Sam",
+    "name": "1 Samuel",
+    "abbrev": "1Sm",
+    "canon": "AT",
+    "chapters": 31,
+    "status": {
+      "formal": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "2-samuel",
+    "code": "2Sam",
+    "name": "2 Samuel",
+    "abbrev": "2Sm",
+    "canon": "AT",
+    "chapters": 24,
+    "status": {
+      "formal": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "1-reis",
+    "code": "1Kgs",
+    "name": "1 Reis",
+    "abbrev": "1Rs",
+    "canon": "AT",
+    "chapters": 22,
+    "status": {
+      "formal": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "2-reis",
+    "code": "2Kgs",
+    "name": "2 Reis",
+    "abbrev": "2Rs",
+    "canon": "AT",
+    "chapters": 25,
+    "status": {
+      "formal": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "1-cronicas",
+    "code": "1Chr",
+    "name": "1 Crônicas",
+    "abbrev": "1Cr",
+    "canon": "AT",
+    "chapters": 29,
+    "status": {
+      "formal": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "2-cronicas",
+    "code": "2Chr",
+    "name": "2 Crônicas",
+    "abbrev": "2Cr",
+    "canon": "AT",
+    "chapters": 36,
     "status": {
       "formal": "checked"
     },
@@ -168,6 +266,20 @@
     }
   },
   {
+    "slug": "proverbios",
+    "code": "Prov",
+    "name": "Provérbios",
+    "abbrev": "Pv",
+    "canon": "AT",
+    "chapters": 31,
+    "status": {
+      "formal": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
     "slug": "eclesiastes",
     "code": "Eccl",
     "name": "Eclesiastes",
@@ -210,12 +322,54 @@
     }
   },
   {
+    "slug": "jeremias",
+    "code": "Jer",
+    "name": "Jeremias",
+    "abbrev": "Jr",
+    "canon": "AT",
+    "chapters": 52,
+    "status": {
+      "formal": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
     "slug": "lamentacoes",
     "code": "Lam",
     "name": "Lamentações",
     "abbrev": "Lm",
     "canon": "AT",
     "chapters": 5,
+    "status": {
+      "formal": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "ezequiel",
+    "code": "Ezek",
+    "name": "Ezequiel",
+    "abbrev": "Ez",
+    "canon": "AT",
+    "chapters": 48,
+    "status": {
+      "formal": "checked"
+    },
+    "original": {
+      "language": "Hebraico"
+    }
+  },
+  {
+    "slug": "daniel",
+    "code": "Dan",
+    "name": "Daniel",
+    "abbrev": "Dn",
+    "canon": "AT",
+    "chapters": 12,
     "status": {
       "formal": "checked"
     },

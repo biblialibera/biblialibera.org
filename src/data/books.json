@@ -39,7 +39,7 @@
     "book": "Juízes",
     "ref": "Jz",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Rute",
@@ -51,37 +51,37 @@
     "book": "1 Samuel",
     "ref": "1Sm",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "2 Samuel",
     "ref": "2Sm",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "1 Reis",
     "ref": "1Rs",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "2 Reis",
     "ref": "2Rs",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "1 Crônicas",
     "ref": "1Cr",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "2 Crônicas",
     "ref": "2Cr",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Esdras",
@@ -141,7 +141,7 @@
     "book": "Provérbios",
     "ref": "Pv",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Eclesiastes",
@@ -177,7 +177,7 @@
     "book": "Jeremias",
     "ref": "Jr",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Lamentações",
@@ -195,13 +195,13 @@
     "book": "Ezequiel",
     "ref": "Ez",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Daniel",
     "ref": "Dn",
     "canon": "AT",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Oseias",
