@@ -94,8 +94,38 @@ componente importa esse arquivo gerado.
   com status (`manifest.json` da lib), classificados AT/NT (a classificação
   é uma constante local, a lib não carrega cânon). Usado pela
   `BookStatusTable` na landing.
-- `npm run sync-content` regenera os dois; scripts individuais:
-  `sync-demo-passage`, `sync-books`.
+- `npm run sync-content` regenera todos; scripts individuais:
+  `sync-demo-passage`, `sync-books`, `sync-reader`, `sync-themes`.
+
+## Índice temático (`/temas`)
+
+Diferente do resto do conteúdo, o índice temático **não** vem do `open-bible`:
+é curadoria escrita aqui, em `src/data/themes.source.json` (38 temas, cada um
+com uma lista de passagens). `scripts/build-themes.mjs` resolve as referências
+contra `src/data/reader/` e gera o que o site carrega:
+
+- `src/data/themes/index.json` — um registro leve por tema (sem texto)
+- `src/data/themes/<slug>.json` — as passagens do tema, com o texto
+
+**Cada passagem carrega um `anchor`: as palavras iniciais da passagem, copiadas
+do próprio texto.** O script exige que a passagem resolvida *comece* com ele e
+falha se não começar. Isso não é enfeite: o Antigo Testamento aqui segue a
+numeração hebraica (massorética), então referência decorada de edição em inglês
+cai no versículo errado (Sl 51:10 é 51:12 aqui, Joel tem quatro capítulos,
+Malaquias três). Sem os anchors, um bump do `biblialibera` que renumere
+versículos reaponta o índice inteiro em silêncio. Conter o anchor não basta:
+tem que ser o começo, senão um deslocamento de um versículo continua passando.
+
+Para acrescentar um tema: escreva a referência, rode `npm run sync-themes`, e
+copie de volta como anchor as palavras iniciais que ele reportar.
+
+O índice foi montado com auxílio de IA e ainda **não passou por revisão
+humana**; a página `/temas` diz isso ao visitante, e a promessa de honestidade
+do projeto (os `ReviewSeal` do leitor) depende de continuar dizendo.
+
+Não há busca ainda: por ora `/temas` só lista os temas e `/temas/:slug` mostra
+as passagens. A busca sobre as passagens curadas está pronta mas guardada num
+`git stash` ("themes view with thematic search"), fora do escopo por enquanto.
 
 ## Fluxo inicial (o que estamos construindo agora)
 
@@ -103,7 +133,9 @@ componente importa esse arquivo gerado.
    original, com link para o repositório de tradução.
 2. Leitor (feito): mostra um livro/capítulo em português (formal) ou no
    original, com um toggle entre as duas.
-3. Comunidade (futuro, não implementar agora): sugestões e anotações de
+3. Índice temático (feito): `/temas` lista os temas e `/temas/:slug` mostra as
+   passagens de um tema. O `SiteHeader` leva para lá.
+4. Comunidade (futuro, não implementar agora): sugestões e anotações de
    usuários, com status inicial baixo, promovidas conforme reputação até
    poderem ser aceitas diretamente. Ver `docs/vision.md` para o racional;
    não há modelo de dados ou UI definidos ainda, é intencional.

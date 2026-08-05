@@ -50,6 +50,7 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
   const navigate = useNavigate()
   const openGithub = () => window.open(GITHUB_URL, '_blank', 'noopener')
   const goToReader = () => navigate('/ler')
+  const goToThemes = () => navigate('/temas')
 
   return (
     <>
@@ -70,6 +71,9 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
         <div className="flex flex-wrap items-center justify-center gap-[var(--space-3)]">
           <Button variant="primary" size="lg" onClick={goToReader}>
             Ler
+          </Button>
+          <Button variant="secondary" size="lg" onClick={goToThemes}>
+            Temas
           </Button>
           <Button variant="secondary" size="lg" onClick={openGithub}>
             Ver no GitHub

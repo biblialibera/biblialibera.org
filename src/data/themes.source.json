@@ -1,0 +1,1338 @@
+{
+  "themes": [
+    {
+      "slug": "amor",
+      "name": "Amor",
+      "summary": "O mandamento que resume todos os outros, e o que ele custa na prática.",
+      "passages": [
+        {
+          "ref": "1Cor 13:4-7",
+          "anchor": "O amor é paciente, o amor",
+          "endAnchor": "tudo suporta, tudo"
+        },
+        {
+          "ref": "John 13:34-35",
+          "anchor": "Um mandamento novo eu lhes dou:",
+          "endAnchor": "Nisto todos saberão"
+        },
+        {
+          "ref": "1John 4:18-21",
+          "anchor": "No amor não há medo; antes,",
+          "endAnchor": "E dele temos este"
+        },
+        {
+          "ref": "Rom 12:9-13",
+          "anchor": "O amor seja sem hipocrisia. Detestem",
+          "endAnchor": "Repartam com os santos"
+        },
+        {
+          "ref": "Matt 22:36-40",
+          "anchor": "\"Mestre, qual é o grande mandamento",
+          "endAnchor": "Destes dois mandamentos"
+        },
+        {
+          "ref": "Song 8:6-7",
+          "anchor": "Ponha-me como anel de selar sobre",
+          "endAnchor": "Águas caudalosas"
+        }
+      ]
+    },
+    {
+      "slug": "ansiedade",
+      "name": "Ansiedade e preocupação",
+      "summary": "Para quando o amanhã pesa mais do que o dia de hoje.",
+      "passages": [
+        {
+          "ref": "Matt 6:25-27",
+          "anchor": "Por isso lhes digo: não andem",
+          "endAnchor": "Quem de vocês, por"
+        },
+        {
+          "ref": "Matt 6:31-34",
+          "anchor": "Portanto, não andem preocupados, dizendo: 'O",
+          "endAnchor": "Portanto, não se preocupem"
+        },
+        {
+          "ref": "Phil 4:6-7",
+          "anchor": "Não se preocupem com nada; antes,",
+          "endAnchor": "E a paz de Deus, que"
+        },
+        {
+          "ref": "1Pet 5:6-7",
+          "anchor": "Humilhem-se, portanto, sob a poderosa mão",
+          "endAnchor": "lançando sobre ele"
+        },
+        {
+          "ref": "Ps 94:19",
+          "anchor": "Quando as preocupações se multiplicavam dentro"
+        },
+        {
+          "ref": "Isa 41:10",
+          "anchor": "não temas, pois estou contigo; não"
+        }
+      ]
+    },
+    {
+      "slug": "medo",
+      "name": "Medo e coragem",
+      "summary": "O que a Escritura diz a quem está com medo.",
+      "passages": [
+        {
+          "ref": "Josh 1:9",
+          "anchor": "Não fui eu que te ordenei?"
+        },
+        {
+          "ref": "Ps 27:1",
+          "anchor": "De Davi. O SENHOR é a minha"
+        },
+        {
+          "ref": "Isa 43:1-3",
+          "anchor": "Mas agora assim diz o SENHOR,",
+          "endAnchor": "Pois eu sou o SENHOR,"
+        },
+        {
+          "ref": "2Tim 1:7",
+          "anchor": "Pois Deus não nos deu um"
+        },
+        {
+          "ref": "Ps 56:4-5",
+          "anchor": "No dia em que tenho medo,",
+          "endAnchor": "Em Deus, cuja palavra"
+        },
+        {
+          "ref": "Deut 31:6",
+          "anchor": "Sejam fortes e corajosos; não tenham"
+        }
+      ]
+    },
+    {
+      "slug": "morte-e-luto",
+      "name": "Morte e luto",
+      "summary": "Diante da perda: lamento, promessa e esperança.",
+      "passages": [
+        {
+          "ref": "Ps 23:1-6",
+          "anchor": "Salmo de Davi. O SENHOR é",
+          "endAnchor": "Certamente o bem"
+        },
+        {
+          "ref": "John 11:25-26",
+          "anchor": "Jesus lhe disse: \"Eu sou a",
+          "endAnchor": "e todo aquele que"
+        },
+        {
+          "ref": "1Thess 4:13-14",
+          "anchor": "Não queremos, porém, irmãos, que vocês",
+          "endAnchor": "Pois, se cremos que"
+        },
+        {
+          "ref": "1Cor 15:54-57",
+          "anchor": "E, quando este corpo corruptível se",
+          "endAnchor": "Mas graças a Deus,"
+        },
+        {
+          "ref": "Eccl 3:1-4",
+          "anchor": "Para tudo há um tempo marcado,",
+          "endAnchor": "tempo de chorar e"
+        },
+        {
+          "ref": "Rev 21:3-4",
+          "anchor": "E ouvi uma voz forte, vinda do trono, que dizia",
+          "endAnchor": "Ele enxugará dos"
+        }
+      ]
+    },
+    {
+      "slug": "consolo",
+      "name": "Consolo na dor",
+      "summary": "Quem chora, e quem se aproxima de quem chora.",
+      "passages": [
+        {
+          "ref": "2Cor 1:3-5",
+          "anchor": "Bendito seja o Deus e Pai",
+          "endAnchor": "Porque, assim como"
+        },
+        {
+          "ref": "Matt 5:4",
+          "anchor": "Felizes os que choram, porque serão"
+        },
+        {
+          "ref": "Ps 34:19",
+          "anchor": "O SENHOR está perto dos que"
+        },
+        {
+          "ref": "Isa 61:1-3",
+          "anchor": "O Espírito do Senhor DEUS está",
+          "endAnchor": "para dispor aos que"
+        },
+        {
+          "ref": "Rom 12:15",
+          "anchor": "Alegrem-se com os que se alegram;"
+        },
+        {
+          "ref": "Ps 147:3",
+          "anchor": "Ele sara os de coração quebrantado"
+        }
+      ]
+    },
+    {
+      "slug": "perdao",
+      "name": "Perdão",
+      "summary": "Receber perdão e conceder perdão, que raramente vêm separados.",
+      "passages": [
+        {
+          "ref": "Matt 6:14-15",
+          "anchor": "Pois, se vocês perdoarem aos homens",
+          "endAnchor": "mas, se não perdoarem"
+        },
+        {
+          "ref": "Matt 18:21-22",
+          "anchor": "Então Pedro se aproximou e lhe",
+          "endAnchor": "Jesus lhe disse: \"Não"
+        },
+        {
+          "ref": "Col 3:13",
+          "anchor": "suportando uns aos outros e perdoando-se"
+        },
+        {
+          "ref": "Luke 23:34",
+          "anchor": "Jesus dizia: \"Pai, perdoa a eles,"
+        },
+        {
+          "ref": "1John 1:9",
+          "anchor": "Se confessarmos os nossos pecados, ele"
+        },
+        {
+          "ref": "Eph 4:31-32",
+          "anchor": "Toda amargura, cólera, ira, gritaria e",
+          "endAnchor": "Sejam bondosos uns"
+        }
+      ]
+    },
+    {
+      "slug": "esperanca",
+      "name": "Esperança",
+      "summary": "O que sustenta quando o presente não basta.",
+      "passages": [
+        {
+          "ref": "Rom 15:13",
+          "anchor": "Que o Deus da esperança encha"
+        },
+        {
+          "ref": "Lam 3:22-24",
+          "anchor": "as bondades leais do SENHOR não",
+          "endAnchor": "\"O SENHOR é a minha"
+        },
+        {
+          "ref": "Rom 8:24-25",
+          "anchor": "Pois na esperança fomos salvos. Ora,",
+          "endAnchor": "Mas, se esperamos"
+        },
+        {
+          "ref": "Heb 11:1",
+          "anchor": "Ora, a fé é a garantia das"
+        },
+        {
+          "ref": "Ps 130:5-6",
+          "anchor": "Eu espero no SENHOR; a minha",
+          "endAnchor": "A minha alma aguarda"
+        },
+        {
+          "ref": "Jer 29:11",
+          "anchor": "Porque eu sei os planos que"
+        }
+      ]
+    },
+    {
+      "slug": "fe",
+      "name": "Fé",
+      "summary": "Confiar no que ainda não se vê.",
+      "passages": [
+        {
+          "ref": "Heb 11:1-3",
+          "anchor": "Ora, a fé é a garantia das",
+          "endAnchor": "Pela fé entendemos"
+        },
+        {
+          "ref": "Mark 9:23-24",
+          "anchor": "Jesus lhe disse: \"'Se você pode'?",
+          "endAnchor": "Imediatamente o pai"
+        },
+        {
+          "ref": "Jas 2:14-17",
+          "anchor": "De que serve, meus irmãos, se",
+          "endAnchor": "Assim também a fé,"
+        },
+        {
+          "ref": "Eph 2:8-9",
+          "anchor": "Porque pela graça vocês foram salvos,",
+          "endAnchor": "Não vem de obras,"
+        },
+        {
+          "ref": "Matt 17:20",
+          "anchor": "Ele lhes disse: \"Por causa da"
+        },
+        {
+          "ref": "Hab 2:4",
+          "anchor": "Eis o soberbo: a sua alma"
+        }
+      ]
+    },
+    {
+      "slug": "oracao",
+      "name": "Oração",
+      "summary": "Como orar, e o que fazer quando não sai palavra.",
+      "passages": [
+        {
+          "ref": "Matt 6:5-8",
+          "anchor": "E, quando vocês orarem, não sejam",
+          "endAnchor": "Não sejam como eles,"
+        },
+        {
+          "ref": "Matt 6:9-13",
+          "anchor": "Portanto, orem assim: Pai nosso, que",
+          "endAnchor": "e não nos leves à"
+        },
+        {
+          "ref": "Rom 8:26-27",
+          "anchor": "Da mesma forma, também o Espírito",
+          "endAnchor": "E aquele que sonda"
+        },
+        {
+          "ref": "1Thess 5:16-18",
+          "anchor": "Alegrem-se sempre. Orem sem cessar. Em",
+          "endAnchor": "Em tudo deem graças,"
+        },
+        {
+          "ref": "Jas 5:13-16",
+          "anchor": "Algum de vocês está sofrendo? Ore.",
+          "endAnchor": "Confessem, pois, os"
+        },
+        {
+          "ref": "Luke 18:1-8",
+          "anchor": "Contava-lhes também uma parábola sobre o",
+          "endAnchor": "Eu digo a vocês que"
+        }
+      ]
+    },
+    {
+      "slug": "gratidao",
+      "name": "Gratidão",
+      "summary": "Reconhecer o que foi recebido.",
+      "passages": [
+        {
+          "ref": "1Thess 5:16-18",
+          "anchor": "Alegrem-se sempre. Orem sem cessar. Em",
+          "endAnchor": "Em tudo deem graças,"
+        },
+        {
+          "ref": "Ps 100:1-5",
+          "anchor": "Salmo de ação de graças. Aclamem",
+          "endAnchor": "Pois o SENHOR é bom;"
+        },
+        {
+          "ref": "Col 3:15-17",
+          "anchor": "E a paz de Cristo governe",
+          "endAnchor": "E tudo o que fizerem,"
+        },
+        {
+          "ref": "Phil 4:11-13",
+          "anchor": "Não digo isto por causa de",
+          "endAnchor": "Tudo posso naquele"
+        },
+        {
+          "ref": "Luke 17:15-19",
+          "anchor": "Um deles, vendo que estava curado,",
+          "endAnchor": "E lhe disse: \"Levante-se"
+        },
+        {
+          "ref": "Ps 103:1-5",
+          "anchor": "De Davi. Bendiga ao SENHOR, minha",
+          "endAnchor": "que sacia de bens"
+        }
+      ]
+    },
+    {
+      "slug": "paciencia",
+      "name": "Paciência",
+      "summary": "A virtude lenta, e por que ela é tratada como força.",
+      "passages": [
+        {
+          "ref": "Jas 5:7-8",
+          "anchor": "Sejam, pois, pacientes, irmãos, até a",
+          "endAnchor": "Sejam também vocês"
+        },
+        {
+          "ref": "Eccl 7:8-9",
+          "anchor": "Melhor é o fim de uma coisa",
+          "endAnchor": "Não se apresse a"
+        },
+        {
+          "ref": "Gal 5:22-23",
+          "anchor": "Mas o fruto do Espírito é",
+          "endAnchor": "mansidão, domínio"
+        },
+        {
+          "ref": "Rom 12:12",
+          "anchor": "Alegrem-se na esperança, perseverem na tribulação,"
+        },
+        {
+          "ref": "Prov 14:29",
+          "anchor": "Quem demora a irar-se tem muito"
+        },
+        {
+          "ref": "2Pet 3:8-9",
+          "anchor": "Não ignorem, porém, esta única coisa,",
+          "endAnchor": "O Senhor não demora"
+        }
+      ]
+    },
+    {
+      "slug": "humildade",
+      "name": "Humildade",
+      "summary": "A medida certa de si mesmo.",
+      "passages": [
+        {
+          "ref": "Phil 2:3-8",
+          "anchor": "Nada façam por ambição egoísta nem",
+          "endAnchor": "humilhou-se a si"
+        },
+        {
+          "ref": "Mic 6:8",
+          "anchor": "Ele te declarou, ó ser humano,"
+        },
+        {
+          "ref": "Jas 4:6-10",
+          "anchor": "Ele, porém, dá graça maior; por",
+          "endAnchor": "Humilhem-se diante"
+        },
+        {
+          "ref": "Matt 23:11-12",
+          "anchor": "O maior entre vocês será o",
+          "endAnchor": "Quem se exaltar será"
+        },
+        {
+          "ref": "Prov 11:2",
+          "anchor": "Veio a arrogância, e veio também"
+        },
+        {
+          "ref": "Luke 14:7-11",
+          "anchor": "Observando como os convidados escolhiam os",
+          "endAnchor": "Porque todo aquele"
+        }
+      ]
+    },
+    {
+      "slug": "orgulho",
+      "name": "Orgulho",
+      "summary": "O que a Escritura diz sobre a arrogância.",
+      "passages": [
+        {
+          "ref": "Prov 16:18-19",
+          "anchor": "A soberba vem antes da ruína,",
+          "endAnchor": "Melhor ser humilde"
+        },
+        {
+          "ref": "Jas 4:6",
+          "anchor": "Ele, porém, dá graça maior; por"
+        },
+        {
+          "ref": "Obad 1:3-4",
+          "anchor": "A soberba do teu coração te",
+          "endAnchor": "Ainda que subas ao"
+        },
+        {
+          "ref": "Rom 12:3",
+          "anchor": "Pois, pela graça que me foi"
+        },
+        {
+          "ref": "1Cor 8:1-2",
+          "anchor": "Quanto às carnes sacrificadas aos ídolos:",
+          "endAnchor": "Se alguém julga ter"
+        },
+        {
+          "ref": "Gal 6:3-4",
+          "anchor": "Pois, se alguém pensa ser alguma",
+          "endAnchor": "Examine cada um a"
+        }
+      ]
+    },
+    {
+      "slug": "ira",
+      "name": "Ira",
+      "summary": "A raiva, o seu lugar e o seu prazo.",
+      "passages": [
+        {
+          "ref": "Eph 4:26-27",
+          "anchor": "Fiquem irados, mas não pequem; não",
+          "endAnchor": "e não deem lugar"
+        },
+        {
+          "ref": "Jas 1:19-20",
+          "anchor": "Saibam disto, meus amados irmãos: todo",
+          "endAnchor": "pois a ira do homem"
+        },
+        {
+          "ref": "Prov 15:1",
+          "anchor": "A resposta branda faz recuar a"
+        },
+        {
+          "ref": "Prov 29:11",
+          "anchor": "O insensato põe para fora todo"
+        },
+        {
+          "ref": "Matt 5:21-24",
+          "anchor": "Vocês ouviram que foi dito aos",
+          "endAnchor": "deixe a sua oferta"
+        },
+        {
+          "ref": "Ps 37:8",
+          "anchor": "Deixe a ira e abandone o"
+        }
+      ]
+    },
+    {
+      "slug": "palavras",
+      "name": "Palavras e a língua",
+      "summary": "O peso do que se diz.",
+      "passages": [
+        {
+          "ref": "Jas 3:2-6",
+          "anchor": "Pois todos tropeçamos em muitas coisas.",
+          "endAnchor": "A língua também é"
+        },
+        {
+          "ref": "Prov 18:21",
+          "anchor": "A morte e a vida estão no"
+        },
+        {
+          "ref": "Eph 4:29",
+          "anchor": "Nenhuma palavra podre saia da boca"
+        },
+        {
+          "ref": "Prov 12:18",
+          "anchor": "Há quem fale sem pensar, e"
+        },
+        {
+          "ref": "Matt 12:36-37",
+          "anchor": "Eu lhes digo que, no dia do",
+          "endAnchor": "pois pelas suas palavras"
+        },
+        {
+          "ref": "Prov 25:11",
+          "anchor": "Maçãs de ouro em bandejas de"
+        }
+      ]
+    },
+    {
+      "slug": "sabedoria",
+      "name": "Sabedoria",
+      "summary": "Onde procurar quando falta discernimento.",
+      "passages": [
+        {
+          "ref": "Jas 1:5-6",
+          "anchor": "Se a algum de vocês falta",
+          "endAnchor": "Mas peça com fé, sem"
+        },
+        {
+          "ref": "Prov 3:5-8",
+          "anchor": "Confie no SENHOR de todo o",
+          "endAnchor": "Isso será saúde para"
+        },
+        {
+          "ref": "Prov 9:10",
+          "anchor": "O princípio da sabedoria é o"
+        },
+        {
+          "ref": "Eccl 7:11-12",
+          "anchor": "Boa é a sabedoria junto com",
+          "endAnchor": "Pois estar à sombra"
+        },
+        {
+          "ref": "Jas 3:17-18",
+          "anchor": "Mas a sabedoria que vem do",
+          "endAnchor": "E o fruto da justiça"
+        },
+        {
+          "ref": "1Cor 1:25-27",
+          "anchor": "Porque a loucura de Deus é",
+          "endAnchor": "Mas Deus escolheu"
+        }
+      ]
+    },
+    {
+      "slug": "dinheiro",
+      "name": "Dinheiro e riqueza",
+      "summary": "O que o dinheiro promete e o que ele não entrega.",
+      "passages": [
+        {
+          "ref": "1Tim 6:6-10",
+          "anchor": "Mas a piedade com contentamento é",
+          "endAnchor": "Pois o amor ao dinheiro"
+        },
+        {
+          "ref": "Matt 6:19-21",
+          "anchor": "Não acumulem para vocês tesouros na",
+          "endAnchor": "Pois onde estiver"
+        },
+        {
+          "ref": "Matt 6:24",
+          "anchor": "Ninguém pode servir a dois senhores:"
+        },
+        {
+          "ref": "Prov 11:28",
+          "anchor": "Quem confia na sua riqueza cairá,"
+        },
+        {
+          "ref": "Eccl 5:9-11",
+          "anchor": "Quem ama o dinheiro não se",
+          "endAnchor": "Doce é o sono do"
+        },
+        {
+          "ref": "Luke 12:15-21",
+          "anchor": "E lhes disse: \"Atenção! Guardem-se de",
+          "endAnchor": "Assim é quem ajunta"
+        }
+      ]
+    },
+    {
+      "slug": "generosidade",
+      "name": "Generosidade",
+      "summary": "Dar, e o modo de dar.",
+      "passages": [
+        {
+          "ref": "2Cor 9:6-8",
+          "anchor": "Lembrem-se disto: quem semeia com avareza",
+          "endAnchor": "E Deus tem poder"
+        },
+        {
+          "ref": "Acts 20:35",
+          "anchor": "Em tudo lhes mostrei que, trabalhando"
+        },
+        {
+          "ref": "Prov 19:17",
+          "anchor": "Quem se compadece do pobre empresta"
+        },
+        {
+          "ref": "Luke 6:38",
+          "anchor": "deem, e será dado a vocês:"
+        },
+        {
+          "ref": "Matt 6:2-4",
+          "anchor": "Portanto, quando você der esmola, não",
+          "endAnchor": "para que a sua esmola"
+        },
+        {
+          "ref": "1Tim 6:17-19",
+          "anchor": "Aos ricos deste mundo, ordene que",
+          "endAnchor": "acumulando para si"
+        }
+      ]
+    },
+    {
+      "slug": "trabalho",
+      "name": "Trabalho",
+      "summary": "O ofício de cada dia como coisa séria.",
+      "passages": [
+        {
+          "ref": "Col 3:23-24",
+          "anchor": "Tudo o que fizerem, façam de",
+          "endAnchor": "sabendo que receberão"
+        },
+        {
+          "ref": "Eccl 3:12-13",
+          "anchor": "Sei que não há nada melhor",
+          "endAnchor": "E também que, quando"
+        },
+        {
+          "ref": "2Thess 3:10-12",
+          "anchor": "De fato, quando estávamos com vocês,",
+          "endAnchor": "A esses tais ordenamos"
+        },
+        {
+          "ref": "Prov 6:6-11",
+          "anchor": "Vá até a formiga, preguiçoso; observe",
+          "endAnchor": "e a sua pobreza virá"
+        },
+        {
+          "ref": "Gen 2:15",
+          "anchor": "O SENHOR Deus tomou o homem"
+        },
+        {
+          "ref": "Eccl 9:10",
+          "anchor": "Tudo o que a sua mão encontrar"
+        }
+      ]
+    },
+    {
+      "slug": "descanso",
+      "name": "Descanso",
+      "summary": "O direito de parar.",
+      "passages": [
+        {
+          "ref": "Matt 11:28-30",
+          "anchor": "Venham a mim, todos vocês que",
+          "endAnchor": "pois o meu jugo é"
+        },
+        {
+          "ref": "Gen 2:2-3",
+          "anchor": "No sétimo dia Deus concluiu a",
+          "endAnchor": "Deus abençoou o sétimo"
+        },
+        {
+          "ref": "Exod 20:8-10",
+          "anchor": "Lembra-te do dia de sábado, para",
+          "endAnchor": "mas o sétimo dia"
+        },
+        {
+          "ref": "Ps 127:1-2",
+          "anchor": "Cântico de peregrinação. De Salomão. Se",
+          "endAnchor": "Em vão vocês madrugam"
+        },
+        {
+          "ref": "Mark 6:31",
+          "anchor": "Ele lhes disse: \"Venham, vocês sozinhos,"
+        },
+        {
+          "ref": "Heb 4:9-11",
+          "anchor": "Resta, portanto, um repouso sabático para",
+          "endAnchor": "Portanto, façamos"
+        }
+      ]
+    },
+    {
+      "slug": "casamento",
+      "name": "Casamento",
+      "summary": "A aliança entre duas pessoas.",
+      "passages": [
+        {
+          "ref": "Gen 2:23-24",
+          "anchor": "E o homem disse: \"Esta, sim,",
+          "endAnchor": "Por isso o homem"
+        },
+        {
+          "ref": "Eph 5:25-28",
+          "anchor": "Maridos, amem as suas esposas, assim",
+          "endAnchor": "Assim também os maridos"
+        },
+        {
+          "ref": "1Cor 13:4-7",
+          "anchor": "O amor é paciente, o amor",
+          "endAnchor": "tudo suporta, tudo"
+        },
+        {
+          "ref": "Eccl 4:9-12",
+          "anchor": "Melhor é serem dois do que",
+          "endAnchor": "E, se alguém atacar"
+        },
+        {
+          "ref": "Mark 10:6-9",
+          "anchor": "Mas, desde o princípio da criação,",
+          "endAnchor": "Portanto, o que Deus"
+        },
+        {
+          "ref": "Prov 31:10-12",
+          "anchor": "Uma mulher de valor, quem a",
+          "endAnchor": "Ela lhe faz bem, e"
+        }
+      ]
+    },
+    {
+      "slug": "filhos",
+      "name": "Pais e filhos",
+      "summary": "Criar, corrigir e não exasperar.",
+      "passages": [
+        {
+          "ref": "Prov 22:6",
+          "anchor": "Instrua o menino segundo o caminho"
+        },
+        {
+          "ref": "Eph 6:1-4",
+          "anchor": "Filhos, obedeçam aos seus pais no",
+          "endAnchor": "E vocês, pais, não"
+        },
+        {
+          "ref": "Deut 6:6-7",
+          "anchor": "E estas palavras que hoje te",
+          "endAnchor": "Tu as incutirás nos"
+        },
+        {
+          "ref": "Col 3:20-21",
+          "anchor": "Filhos, obedeçam aos seus pais em",
+          "endAnchor": "Pais, não irritem"
+        },
+        {
+          "ref": "Ps 127:3-5",
+          "anchor": "Os filhos são herança do SENHOR;",
+          "endAnchor": "Feliz é o homem que"
+        },
+        {
+          "ref": "Prov 29:17",
+          "anchor": "Corrija o seu filho, e ele"
+        }
+      ]
+    },
+    {
+      "slug": "amizade",
+      "name": "Amizade",
+      "summary": "Os que ficam.",
+      "passages": [
+        {
+          "ref": "Prov 17:17",
+          "anchor": "O amigo ama em todo tempo,"
+        },
+        {
+          "ref": "Prov 18:24",
+          "anchor": "Há quem tenha muitos companheiros para"
+        },
+        {
+          "ref": "Eccl 4:9-12",
+          "anchor": "Melhor é serem dois do que",
+          "endAnchor": "E, se alguém atacar"
+        },
+        {
+          "ref": "John 15:13-15",
+          "anchor": "Ninguém tem amor maior do que",
+          "endAnchor": "Já não os chamo de"
+        },
+        {
+          "ref": "Prov 27:5-6",
+          "anchor": "Melhor é a repreensão aberta do",
+          "endAnchor": "Fiéis são as feridas"
+        },
+        {
+          "ref": "Prov 27:17",
+          "anchor": "O ferro afia o ferro, e o"
+        }
+      ]
+    },
+    {
+      "slug": "justica",
+      "name": "Justiça e os pobres",
+      "summary": "A obrigação para com quem tem menos.",
+      "passages": [
+        {
+          "ref": "Mic 6:8",
+          "anchor": "Ele te declarou, ó ser humano,"
+        },
+        {
+          "ref": "Isa 1:16-17",
+          "anchor": "Lavem-se, purifiquem-se, tirem de diante dos",
+          "endAnchor": "aprendam a fazer"
+        },
+        {
+          "ref": "Prov 31:8-9",
+          "anchor": "Abra a sua boca em favor",
+          "endAnchor": "Abra a sua boca, julgue"
+        },
+        {
+          "ref": "Jas 2:1-6",
+          "anchor": "Meus irmãos, não tenham a fé",
+          "endAnchor": "Vocês, porém, desonraram"
+        },
+        {
+          "ref": "Matt 25:35-40",
+          "anchor": "Porque tive fome, e vocês me",
+          "endAnchor": "O Rei lhes responderá:"
+        },
+        {
+          "ref": "Amos 5:23-24",
+          "anchor": "Afasta de mim o ruído dos",
+          "endAnchor": "Mas corra o direito"
+        }
+      ]
+    },
+    {
+      "slug": "estrangeiro",
+      "name": "O estrangeiro e o hospitaleiro",
+      "summary": "Quem chega de fora.",
+      "passages": [
+        {
+          "ref": "Lev 19:33-34",
+          "anchor": "Quando um estrangeiro morar contigo, na",
+          "endAnchor": "O estrangeiro que"
+        },
+        {
+          "ref": "Heb 13:1-2",
+          "anchor": "Permaneça o amor fraternal. Não se",
+          "endAnchor": "Não se esqueçam da"
+        },
+        {
+          "ref": "Deut 10:18-19",
+          "anchor": "que faz justiça ao órfão e",
+          "endAnchor": "Amem, pois, o estrangeiro"
+        },
+        {
+          "ref": "Matt 25:35",
+          "anchor": "Porque tive fome, e vocês me"
+        },
+        {
+          "ref": "Rom 12:13",
+          "anchor": "Repartam com os santos aquilo de"
+        },
+        {
+          "ref": "Exod 22:20",
+          "anchor": "Não maltratarás o estrangeiro nem o"
+        }
+      ]
+    },
+    {
+      "slug": "sofrimento",
+      "name": "Sofrimento",
+      "summary": "Quando a dor não tem explicação à mão.",
+      "passages": [
+        {
+          "ref": "Rom 5:3-5",
+          "anchor": "E não somente isso: também nos gloriamos nas tribulações",
+          "endAnchor": "E a esperança não"
+        },
+        {
+          "ref": "Job 1:20-21",
+          "anchor": "Então Jó se levantou, rasgou o",
+          "endAnchor": "E disse: \"Nu saí do"
+        },
+        {
+          "ref": "2Cor 4:16-18",
+          "anchor": "Por isso não desanimamos; ao contrário,",
+          "endAnchor": "já que não fixamos"
+        },
+        {
+          "ref": "1Pet 4:12-13",
+          "anchor": "Amados, não se admirem do fogo",
+          "endAnchor": "mas, na medida em"
+        },
+        {
+          "ref": "Ps 22:2-3",
+          "anchor": "Deus meu, Deus meu, por que",
+          "endAnchor": "Meu Deus, clamo de"
+        },
+        {
+          "ref": "Rom 8:18",
+          "anchor": "Considero, pois, que os sofrimentos do"
+        }
+      ]
+    },
+    {
+      "slug": "tentacao",
+      "name": "Tentação",
+      "summary": "A saída que existe.",
+      "passages": [
+        {
+          "ref": "1Cor 10:12-13",
+          "anchor": "Portanto, quem pensa estar de pé,",
+          "endAnchor": "Nenhuma tentação"
+        },
+        {
+          "ref": "Jas 1:13-15",
+          "anchor": "Ninguém, ao ser tentado, diga: \"É",
+          "endAnchor": "Depois, o desejo, tendo"
+        },
+        {
+          "ref": "Matt 26:41",
+          "anchor": "Vigiem e orem, para que não"
+        },
+        {
+          "ref": "Heb 4:15-16",
+          "anchor": "Pois não temos um sumo sacerdote",
+          "endAnchor": "Aproximemo-nos, portanto,"
+        },
+        {
+          "ref": "Matt 4:1-4",
+          "anchor": "Então Jesus foi levado pelo Espírito",
+          "endAnchor": "Ele respondeu: \"Está"
+        },
+        {
+          "ref": "Prov 4:14-15",
+          "anchor": "Não entre na vereda dos ímpios",
+          "endAnchor": "Evite-o, não passe"
+        }
+      ]
+    },
+    {
+      "slug": "arrependimento",
+      "name": "Arrependimento",
+      "summary": "Voltar atrás, que é sempre possível.",
+      "passages": [
+        {
+          "ref": "Ps 51:3-6",
+          "anchor": "Tem misericórdia de mim, ó Deus, segundo a tua bondade leal",
+          "endAnchor": "Contra ti, só contra"
+        },
+        {
+          "ref": "Ps 51:12-14",
+          "anchor": "Cria em mim um coração puro,",
+          "endAnchor": "Devolve-me a alegria"
+        },
+        {
+          "ref": "1John 1:8-9",
+          "anchor": "Se dissermos que não temos pecado,",
+          "endAnchor": "Se confessarmos os"
+        },
+        {
+          "ref": "Luke 15:17-24",
+          "anchor": "Caindo em si, disse: 'Quantos empregados",
+          "endAnchor": "porque este meu filho"
+        },
+        {
+          "ref": "Acts 3:19",
+          "anchor": "Arrependam-se, portanto, e convertam-se, para que"
+        },
+        {
+          "ref": "Joel 2:12-13",
+          "anchor": "Ainda agora, declara o SENHOR, voltem-se",
+          "endAnchor": "Rasguem o coração,"
+        }
+      ]
+    },
+    {
+      "slug": "paz",
+      "name": "Paz",
+      "summary": "A paz que não depende das circunstâncias.",
+      "passages": [
+        {
+          "ref": "John 14:27",
+          "anchor": "Deixo-lhes a paz, dou-lhes a minha"
+        },
+        {
+          "ref": "Phil 4:6-7",
+          "anchor": "Não se preocupem com nada; antes,",
+          "endAnchor": "E a paz de Deus, que"
+        },
+        {
+          "ref": "Matt 5:9",
+          "anchor": "Felizes os que promovem a paz,"
+        },
+        {
+          "ref": "Rom 12:17-18",
+          "anchor": "Não retribuam a ninguém mal por",
+          "endAnchor": "Se possível, no que"
+        },
+        {
+          "ref": "Isa 26:3",
+          "anchor": "Aquele cuja mente está firme, tu"
+        },
+        {
+          "ref": "Col 3:15",
+          "anchor": "E a paz de Cristo governe"
+        }
+      ]
+    },
+    {
+      "slug": "alegria",
+      "name": "Alegria",
+      "summary": "A alegria como coisa cultivada, não só sentida.",
+      "passages": [
+        {
+          "ref": "Phil 4:4-5",
+          "anchor": "Alegrem-se sempre no Senhor. Novamente direi:",
+          "endAnchor": "A cordialidade de"
+        },
+        {
+          "ref": "Ps 16:11",
+          "anchor": "Tu me farás conhecer o caminho"
+        },
+        {
+          "ref": "Neh 8:10",
+          "anchor": "E ele lhes disse: \"Vão, comam"
+        },
+        {
+          "ref": "John 15:11",
+          "anchor": "Eu lhes falei estas coisas para que a minha alegria esteja em vocês"
+        },
+        {
+          "ref": "Gal 5:22-23",
+          "anchor": "Mas o fruto do Espírito é",
+          "endAnchor": "mansidão, domínio"
+        },
+        {
+          "ref": "Prov 17:22",
+          "anchor": "O coração alegre é bom remédio,"
+        }
+      ]
+    },
+    {
+      "slug": "solidao",
+      "name": "Solidão",
+      "summary": "Estar só, e não estar só.",
+      "passages": [
+        {
+          "ref": "Gen 2:18",
+          "anchor": "Disse o SENHOR Deus: \"Não é"
+        },
+        {
+          "ref": "Ps 25:16-18",
+          "anchor": "Volta-te para mim e tem compaixão de mim, pois estou sozinho",
+          "endAnchor": "Olha para a minha"
+        },
+        {
+          "ref": "Heb 13:5-6",
+          "anchor": "Seja o modo de viver de vocês",
+          "endAnchor": "De modo que podemos"
+        },
+        {
+          "ref": "Ps 68:7",
+          "anchor": "Deus faz o solitário morar em"
+        },
+        {
+          "ref": "Matt 28:20",
+          "anchor": "ensinando-os a obedecer a tudo o"
+        },
+        {
+          "ref": "Eccl 4:9-12",
+          "anchor": "Melhor é serem dois do que",
+          "endAnchor": "E, se alguém atacar"
+        }
+      ]
+    },
+    {
+      "slug": "doenca",
+      "name": "Doença e cura",
+      "summary": "O corpo que falha.",
+      "passages": [
+        {
+          "ref": "Jas 5:14-16",
+          "anchor": "Algum de vocês está doente? Chame",
+          "endAnchor": "Confessem, pois, os"
+        },
+        {
+          "ref": "Ps 41:4-5",
+          "anchor": "O SENHOR o sustentará no leito",
+          "endAnchor": "Eu disse: \"SENHOR, tem"
+        },
+        {
+          "ref": "Mark 5:34",
+          "anchor": "Jesus lhe disse: \"Filha, a sua"
+        },
+        {
+          "ref": "Isa 53:4-5",
+          "anchor": "Certamente ele tomou sobre si as",
+          "endAnchor": "Mas ele foi traspassado"
+        },
+        {
+          "ref": "2Cor 12:8-10",
+          "anchor": "Três vezes roguei ao Senhor a",
+          "endAnchor": "Por isso sinto prazer"
+        },
+        {
+          "ref": "Matt 9:35",
+          "anchor": "Jesus percorria todas as cidades e"
+        }
+      ]
+    },
+    {
+      "slug": "criacao",
+      "name": "Criação",
+      "summary": "O mundo como obra, não como acaso.",
+      "passages": [
+        {
+          "ref": "Gen 1:1-5",
+          "anchor": "No princípio, Deus criou os céus",
+          "endAnchor": "Deus chamou à luz"
+        },
+        {
+          "ref": "Ps 19:2-5",
+          "anchor": "Os céus declaram a glória de",
+          "endAnchor": "Mas a sua mensagem"
+        },
+        {
+          "ref": "Ps 8:4-6",
+          "anchor": "Quando contemplo os teus céus, obra",
+          "endAnchor": "Tu o fizeste um pouco"
+        },
+        {
+          "ref": "Job 38:4-7",
+          "anchor": "Onde estavas tu quando lancei os",
+          "endAnchor": "quando as estrelas"
+        },
+        {
+          "ref": "Col 1:16-17",
+          "anchor": "porque nele foram criadas todas as",
+          "endAnchor": "Ele é antes de todas"
+        },
+        {
+          "ref": "Ps 104:24",
+          "anchor": "Como são muitas as tuas obras,"
+        }
+      ]
+    },
+    {
+      "slug": "servir",
+      "name": "Servir e liderar",
+      "summary": "A autoridade virada do avesso.",
+      "passages": [
+        {
+          "ref": "Mark 10:42-45",
+          "anchor": "Jesus os chamou e lhes disse:",
+          "endAnchor": "pois o próprio Filho"
+        },
+        {
+          "ref": "John 13:12-15",
+          "anchor": "Depois de lavar os pés deles,",
+          "endAnchor": "Pois eu lhes dei"
+        },
+        {
+          "ref": "Phil 2:3-4",
+          "anchor": "Nada façam por ambição egoísta nem",
+          "endAnchor": "Cada um cuide não"
+        },
+        {
+          "ref": "Gal 5:13-14",
+          "anchor": "Vocês, irmãos, foram chamados para a",
+          "endAnchor": "Pois toda a Lei se"
+        },
+        {
+          "ref": "1Pet 5:2-3",
+          "anchor": "pastoreiem o rebanho de Deus que",
+          "endAnchor": "nem como quem domina"
+        },
+        {
+          "ref": "Matt 20:26-28",
+          "anchor": "Entre vocês não é assim: quem",
+          "endAnchor": "assim como o Filho"
+        }
+      ]
+    },
+    {
+      "slug": "verdade",
+      "name": "Verdade e mentira",
+      "summary": "Falar a verdade, inclusive quando custa.",
+      "passages": [
+        {
+          "ref": "Eph 4:25",
+          "anchor": "Por isso, tendo deixado a mentira,"
+        },
+        {
+          "ref": "Prov 12:22",
+          "anchor": "Lábios mentirosos são abominação para o"
+        },
+        {
+          "ref": "John 8:31-32",
+          "anchor": "Jesus, então, dizia aos judeus que",
+          "endAnchor": "e conhecerão a verdade,"
+        },
+        {
+          "ref": "Col 3:9-10",
+          "anchor": "Não mintam uns aos outros, visto",
+          "endAnchor": "e se revestiram do"
+        },
+        {
+          "ref": "Zech 8:16-17",
+          "anchor": "Estas são as coisas que vocês",
+          "endAnchor": "Não tramem no coração"
+        },
+        {
+          "ref": "Prov 19:5",
+          "anchor": "A testemunha falsa não ficará impune, e quem respira mentiras não escapará."
+        }
+      ]
+    },
+    {
+      "slug": "perseveranca",
+      "name": "Perseverança",
+      "summary": "Continuar quando o começo já passou.",
+      "passages": [
+        {
+          "ref": "Heb 12:1-3",
+          "anchor": "Portanto, também nós, tendo ao nosso",
+          "endAnchor": "Considerem, pois, aquele"
+        },
+        {
+          "ref": "Gal 6:9-10",
+          "anchor": "E não desanimemos de fazer o",
+          "endAnchor": "Portanto, enquanto"
+        },
+        {
+          "ref": "Jas 1:2-4",
+          "anchor": "Considerem motivo de toda alegria, meus",
+          "endAnchor": "E a perseverança"
+        },
+        {
+          "ref": "Rom 5:3-5",
+          "anchor": "E não somente isso: também nos gloriamos nas tribulações",
+          "endAnchor": "E a esperança não"
+        },
+        {
+          "ref": "2Tim 4:7-8",
+          "anchor": "Combati o bom combate, completei a",
+          "endAnchor": "Desde já está reservada"
+        },
+        {
+          "ref": "Isa 40:30-31",
+          "anchor": "Até os jovens se cansam e",
+          "endAnchor": "mas os que esperam"
+        }
+      ]
+    },
+    {
+      "slug": "julgar",
+      "name": "Julgar os outros",
+      "summary": "A trave e o cisco.",
+      "passages": [
+        {
+          "ref": "Matt 7:1-5",
+          "anchor": "Não julguem, para que vocês não",
+          "endAnchor": "Hipócrita! Tire primeiro"
+        },
+        {
+          "ref": "Rom 14:10-13",
+          "anchor": "Mas você, por que julga o",
+          "endAnchor": "Portanto, não julguemos"
+        },
+        {
+          "ref": "Jas 4:11-12",
+          "anchor": "Não falem mal uns dos outros,",
+          "endAnchor": "Um só é o legislador"
+        },
+        {
+          "ref": "John 8:7",
+          "anchor": "Como insistissem em perguntar-lhe, ele se"
+        },
+        {
+          "ref": "Luke 6:37",
+          "anchor": "Não julguem, e vocês não serão"
+        },
+        {
+          "ref": "Rom 2:1",
+          "anchor": "Portanto, você não tem defesa, ó"
+        }
+      ]
+    },
+    {
+      "slug": "unidade",
+      "name": "Unidade",
+      "summary": "O que mantém as pessoas juntas.",
+      "passages": [
+        {
+          "ref": "Eph 4:1-6",
+          "anchor": "Portanto, eu, o prisioneiro no Senhor,",
+          "endAnchor": "um só Deus e Pai"
+        },
+        {
+          "ref": "Ps 133:1-3",
+          "anchor": "Cântico de peregrinação. De Davi. Como",
+          "endAnchor": "É como o orvalho"
+        },
+        {
+          "ref": "1Cor 12:12-14",
+          "anchor": "Pois, assim como o corpo é",
+          "endAnchor": "Pois também o corpo"
+        },
+        {
+          "ref": "Col 3:12-14",
+          "anchor": "Portanto, revistam-se, como escolhidos de Deus,",
+          "endAnchor": "E, acima de tudo isto,"
+        },
+        {
+          "ref": "John 17:20-21",
+          "anchor": "Não rogo somente por estes, mas",
+          "endAnchor": "para que todos sejam"
+        },
+        {
+          "ref": "Rom 15:5-7",
+          "anchor": "Que o Deus da perseverança e",
+          "endAnchor": "Por isso, acolham-se"
+        }
+      ]
+    }
+  ]
+}
