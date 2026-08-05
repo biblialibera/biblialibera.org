@@ -17,6 +17,12 @@ export function SiteHeader({ theme, onToggleTheme, onOpenGithub }: SiteHeaderPro
           <Logo size={28} tagline={false} />
         </Link>
         <div className="flex items-center gap-[var(--space-2)]">
+          <Link
+            to="/temas"
+            className="inline-flex h-[38px] items-center rounded-[var(--radius-md)] border border-[var(--color-border)] px-[var(--space-3)] font-sans text-[var(--text-sm)] font-semibold text-[var(--color-text-secondary)] no-underline transition-colors duration-150 hover:bg-[var(--color-surface-sunken)]"
+          >
+            Temas
+          </Link>
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />
           <Button variant="secondary" size="sm" onClick={onOpenGithub}>
             GitHub

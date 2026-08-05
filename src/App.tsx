@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router'
 import Landing from './pages/Landing'
 import ReaderChapter from './pages/ReaderChapter'
 import ReaderIndex from './pages/ReaderIndex'
+import ThemeDetail from './pages/ThemeDetail'
+import Themes from './pages/Themes'
 
 type Theme = 'light' | 'dark'
 
@@ -26,6 +28,8 @@ function App() {
         <Route path="/" element={<Landing theme={theme} onToggleTheme={toggleTheme} />} />
         <Route path="/ler" element={<ReaderIndex theme={theme} onToggleTheme={toggleTheme} />} />
         <Route path="/ler/:slug/:capitulo" element={<ReaderChapter theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/temas" element={<Themes theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/temas/:slug" element={<ThemeDetail theme={theme} onToggleTheme={toggleTheme} />} />
       </Routes>
     </div>
   )

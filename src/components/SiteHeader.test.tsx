@@ -15,7 +15,7 @@ function renderHeader(props: Partial<Parameters<typeof SiteHeader>[0]> = {}) {
 describe('SiteHeader', () => {
   it('renders the wordmark linking home', () => {
     renderHeader()
-    expect(screen.getByRole('link')).toHaveAttribute('href', '/')
+    expect(screen.getByRole('link', { name: 'Biblia Libera, início' })).toHaveAttribute('href', '/')
     expect(screen.getByText('Biblia')).toBeInTheDocument()
   })
 
@@ -33,5 +33,10 @@ describe('SiteHeader', () => {
     renderHeader({ onOpenGithub })
     await user.click(screen.getByRole('button', { name: 'GitHub' }))
     expect(onOpenGithub).toHaveBeenCalledOnce()
+  })
+
+  it('links to the thematic index', () => {
+    renderHeader()
+    expect(screen.getByRole('link', { name: 'Temas' })).toHaveAttribute('href', '/temas')
   })
 })
