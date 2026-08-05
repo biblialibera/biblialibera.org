@@ -38,10 +38,10 @@ const renderList = () =>
   )
 
 describe('PassageList', () => {
-  it('links each reference to the chapter in the reader', () => {
+  it('links each reference to its own verses in the reader', () => {
     renderList()
-    expect(screen.getByRole('link', { name: 'Josué 1:9' })).toHaveAttribute('href', '/ler/josue/1')
-    expect(screen.getByRole('link', { name: 'Salmos 23:1-2' })).toHaveAttribute('href', '/ler/salmos/23')
+    expect(screen.getByRole('link', { name: 'Josué 1:9' })).toHaveAttribute('href', '/ler/josue/1#v9')
+    expect(screen.getByRole('link', { name: 'Salmos 23:1-2' })).toHaveAttribute('href', '/ler/salmos/23#v1-2')
   })
 
   it('renders every verse with its number', () => {

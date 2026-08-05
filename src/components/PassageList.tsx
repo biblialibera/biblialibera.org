@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import { VerseBlock } from '../design-system/components/reading'
 import type { ThemePassage } from './themeData'
+import { passagePath } from './verseSelection'
 
 export interface PassageListProps {
   passages: ThemePassage[]
@@ -8,9 +9,11 @@ export interface PassageListProps {
 
 /**
  * PassageList: the passages of a theme, each headed by its reference, which
- * links into the reader at the chapter the passage comes from. The text is
- * rendered plain (no divine-name or footnote apparatus): this is an index that
- * points at the reading, not a substitute for it.
+ * links into the reader with the passage's own verses already selected and
+ * highlighted, so the link a reader copies from here points at the passage
+ * rather than at the chapter around it. The text is rendered plain (no
+ * divine-name or footnote apparatus): this is an index that points at the
+ * reading, not a substitute for it.
  */
 export function PassageList({ passages }: PassageListProps) {
   return (
@@ -18,7 +21,7 @@ export function PassageList({ passages }: PassageListProps) {
       {passages.map((passage) => (
         <li key={passage.reference}>
           <Link
-            to={`/ler/${passage.bookSlug}/${passage.chapter}`}
+            to={passagePath(passage.bookSlug, passage.chapter, passage.start, passage.end)}
             className="font-sans text-[var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-[var(--color-accent)] no-underline hover:underline"
           >
             {passage.reference}

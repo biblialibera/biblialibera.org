@@ -127,12 +127,46 @@ Não há busca ainda: por ora `/temas` só lista os temas e `/temas/:slug` mostr
 as passagens. A busca sobre as passagens curadas está pronta mas guardada num
 `git stash` ("themes view with thematic search"), fora do escopo por enquanto.
 
+## Versículos linkáveis (`#v...`)
+
+O leitor guarda o versículo ou intervalo selecionado no hash da URL: `#v16`,
+`#v16-18`. Toda posição de leitura vira link compartilhável, e `/temas/:slug`
+aponta cada passagem direto para os seus versículos (`passagePath`), não só
+para o capítulo.
+
+`src/components/verseSelection.ts` concentra a lógica pura (parse, formato,
+máquina de estados da seleção); `verseInteraction.ts` devolve as props que
+tornam um versículo clicável, usadas pelos dois registros (o texto em pt
+passa pelo `VerseBlock` do design system, o original é um `<p>` próprio com
+fonte e direção dele).
+
+Pontos que não são óbvios e quebram se mexidos sem cuidado:
+
+- **O hash é compartilhado com as notas de rodapé.** Por isso as âncoras das
+  notas têm prefixo: `fn-<registro>-<n>` para a nota e `fnref-<registro>-<n>`
+  para o marcador ao qual ela volta. `parseVerseHash` devolve três coisas
+  diferentes: um intervalo, `null` (a URL diz que nada está selecionado) e
+  `undefined` (a URL aponta para outra coisa, então mantenha a seleção atual).
+  Sem esse `undefined`, clicar numa nota apagaria a passagem destacada. Ao
+  renomear âncoras, procure por ids antigos no repo inteiro: a `RegisterDemo`
+  da landing também emite notas.
+- **Seleção navega com `replace: true`.** Clicar versículo a versículo não
+  pode encher o histórico e prender o botão voltar.
+- **Toque não tem shift.** Clique = um versículo, shift+clique estende a
+  partir da âncora; no toque, tocar fora da seleção estende e tocar dentro
+  colapsa para aquele versículo, que é a única saída de um intervalo sem
+  modificador.
+- **O destaque é `box-shadow`, não padding**, para selecionar um versículo
+  nunca reposicionar a coluna ao redor.
+- O efeito que rola até a passagem depende do livro carregado e do registro,
+  nunca da seleção: senão cada clique arrastaria a página.
+
 ## Fluxo inicial (o que estamos construindo agora)
 
 1. Landing page (feita): apresenta o projeto, a tradução formal e o texto
    original, com link para o repositório de tradução.
 2. Leitor (feito): mostra um livro/capítulo em português (formal) ou no
-   original, com um toggle entre as duas.
+   original, com um toggle entre as duas, e com versículos linkáveis.
 3. Índice temático (feito): `/temas` lista os temas e `/temas/:slug` mostra as
    passagens de um tema. O `SiteHeader` leva para lá.
 4. Comunidade (futuro, não implementar agora): sugestões e anotações de

@@ -18,7 +18,9 @@ describe('ThemeDetail', () => {
   it('lazy-loads the theme and renders its passages', async () => {
     renderAt('/temas/medo')
     expect(screen.getByRole('heading', { level: 1, name: 'Medo e coragem' })).toBeInTheDocument()
-    await waitFor(() => expect(screen.getByRole('link', { name: 'Josué 1:9' })).toHaveAttribute('href', '/ler/josue/1'))
+    await waitFor(() =>
+      expect(screen.getByRole('link', { name: 'Josué 1:9' })).toHaveAttribute('href', '/ler/josue/1#v9'),
+    )
   })
 
   it('renders the verse text of a passage', async () => {

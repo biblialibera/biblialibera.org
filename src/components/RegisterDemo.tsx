@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import psalm23 from '../data/psalm23.json'
 import { Badge } from '../design-system/components/core'
-import { Footnote, FootnoteList, RegisterToggle, ReviewSeal, VerseBlock } from '../design-system/components/reading'
-import { renderVerseText } from './scriptureText'
+import { RegisterToggle, ReviewSeal, VerseBlock } from '../design-system/components/reading'
+import { PassageFootnotes } from './PassageFootnotes'
+import { renderPassage } from './scriptureText'
 
 type View = 'formal' | 'original'
 
@@ -49,13 +50,7 @@ export function RegisterDemo() {
 }
 
 function FormalPassage() {
-  let noteNumber = 1
-  const rendered = psalm23.formal.map((verse) => {
-    const result = renderVerseText(verse.text, verse.footnotes, 'formal', noteNumber)
-    noteNumber += result.notes.length
-    return { verse: verse.verse, ...result }
-  })
-  const notes = rendered.flatMap((v) => v.notes)
+  const { rendered, notes } = renderPassage(psalm23.formal, 'formal')
 
   return (
     <div>
@@ -64,15 +59,7 @@ function FormalPassage() {
           {body}
         </VerseBlock>
       ))}
-      {notes.length > 0 && (
-        <FootnoteList>
-          {notes.map((note) => (
-            <Footnote key={note.number} n={note.number} id={`formal-nota-${note.number}`}>
-              {note.text}
-            </Footnote>
-          ))}
-        </FootnoteList>
-      )}
+      <PassageFootnotes notes={notes} idPrefix="formal" />
       <p className="mt-[var(--space-6)] font-sans text-[var(--text-sm)] leading-[var(--leading-normal)] text-[var(--color-text-faint)]">
         <span className="[font-variant:small-caps] tracking-[var(--tracking-caps)] text-[var(--color-text-muted)]">
           Senhor

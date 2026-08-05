@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Navigate, Link, useNavigate, useParams } from 'react-router'
+import { useEffect, useRef, useState } from 'react'
+import { Navigate, Link, useLocation, useNavigate, useParams } from 'react-router'
 import { Button } from '../design-system/components/core'
 import { BookNav } from '../design-system/components/reading'
 import { ChapterView } from '../components/ChapterView'
@@ -8,8 +8,22 @@ import { SiteFooter } from '../components/SiteFooter'
 import { SiteHeader } from '../components/SiteHeader'
 import type { ReaderBook, View } from '../components/readerData'
 import { bookByCode, bookBySlug, loadBook, navGroups, readStoredRegister, storeRegister } from '../components/readerData'
+import type { SelectionState, VerseClick } from '../components/verseSelection'
+import {
+  EMPTY_SELECTION,
+  formatVerseHash,
+  nextSelection,
+  parseVerseHash,
+  rangesEqual,
+  verseElementId,
+} from '../components/verseSelection'
 
 const GITHUB_URL = 'https://github.com/biblialibera/biblialibera'
+
+function selectionFromHash(hash: string): SelectionState {
+  const range = parseVerseHash(hash) ?? null
+  return range ? { range, anchor: range.start } : EMPTY_SELECTION
+}
 
 export interface ReaderChapterProps {
   theme: 'light' | 'dark'
@@ -18,6 +32,7 @@ export interface ReaderChapterProps {
 
 function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
   const { slug, capitulo } = useParams()
+  const location = useLocation()
   const navigate = useNavigate()
   const entry = slug ? bookBySlug(slug) : undefined
   const chapter = Number(capitulo)
@@ -26,6 +41,7 @@ function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
   const [book, setBook] = useState<ReaderBook | null>(null)
   const [view, setView] = useState<View>(readStoredRegister)
   const [navOpen, setNavOpen] = useState(false)
+  const [selection, setSelection] = useState<SelectionState>(() => selectionFromHash(location.hash))
 
   // Load the book whenever the book code changes (not on chapter change: the
   // whole book is already in memory once loaded).
@@ -39,10 +55,43 @@ function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
     }
   }, [code])
 
-  // Chapter change starts a fresh read from the top.
+  // The hash owns the selection, so back/forward and pasted links both work. A
+  // hash that is not a verse reference (a footnote anchor, or the marker a note
+  // links back to) leaves the selection alone instead of clearing it.
   useEffect(() => {
+    const parsed = parseVerseHash(location.hash)
+    if (parsed === undefined) return
+    setSelection((current) => (rangesEqual(current.range, parsed) ? current : selectionFromHash(location.hash)))
+  }, [location.hash])
+
+  // The router's hash, not window.location.hash: a plain <a href="#fn-1"> does
+  // not go through the router, so the two drift apart the moment a reader
+  // follows a footnote. Held in a ref because both scroll effects want the
+  // current value without wanting to re-run when it changes.
+  const hashRef = useRef(location.hash)
+  hashRef.current = location.hash
+
+  // Chapter change starts a fresh read from the top, unless the URL points at
+  // a verse: that passage is what the reader came for.
+  useEffect(() => {
+    if (parseVerseHash(hashRef.current)) return
     window.scrollTo(0, 0)
   }, [code, chapter])
+
+  // Bring the linked passage into view once its text is on the page, once per
+  // chapter arrival. Toggling the register must not re-scroll: someone who
+  // opened #v1 and read down to verse 90 would be thrown back to the top of
+  // the passage every time they compared it with the original.
+  const scrolledFor = useRef<string | null>(null)
+  useEffect(() => {
+    if (!book) return
+    const key = `${book.code}/${chapter}`
+    if (scrolledFor.current === key) return
+    scrolledFor.current = key
+    const target = parseVerseHash(hashRef.current)
+    if (!target) return
+    document.getElementById(verseElementId(target.start))?.scrollIntoView?.({ block: 'center' })
+  }, [book, chapter])
 
   if (!entry) return <Navigate to="/ler" replace />
   if (!Number.isInteger(chapter) || chapter < 1 || chapter > entry.chapters) {
@@ -58,6 +107,13 @@ function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
   const goBook = (bookCode: string) => {
     const target = bookByCode(bookCode)
     if (target) navigate(`/ler/${target.slug}/1`)
+  }
+  // Selections replace the current history entry: browsing verses should not
+  // bury the previous page under a trail of back-button steps.
+  const selectVerse = (verse: number, click: VerseClick) => {
+    const next = nextSelection(selection, verse, click)
+    setSelection(next)
+    navigate({ pathname: location.pathname, hash: formatVerseHash(next.range) }, { replace: true })
   }
 
   return (
@@ -116,7 +172,14 @@ function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
         </div>
 
         {book ? (
-          <ChapterView book={book} chapter={chapter} view={view} onViewChange={changeView} />
+          <ChapterView
+            book={book}
+            chapter={chapter}
+            view={view}
+            onViewChange={changeView}
+            selection={selection.range}
+            onSelectVerse={selectVerse}
+          />
         ) : (
           <div className="mx-auto max-w-[var(--reading-measure)]">
             <h1 className="m-0 font-serif text-[var(--text-2xl)] text-[var(--color-text)]">

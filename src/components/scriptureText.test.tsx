@@ -22,8 +22,26 @@ describe('renderVerseText', () => {
 
   it('renders one FootnoteRef per footnote, numbered from nextNumber', () => {
     render(<Verse text="Texto com nota." footnotes={['Primeira nota.', 'Segunda nota.']} nextNumber={3} />)
-    expect(screen.getByRole('link', { name: 'nota 3' })).toHaveAttribute('href', '#formal-nota-3')
-    expect(screen.getByRole('link', { name: 'nota 4' })).toHaveAttribute('href', '#formal-nota-4')
+    expect(screen.getByRole('link', { name: 'nota 3' })).toHaveAttribute('href', '#fn-formal-3')
+    expect(screen.getByRole('link', { name: 'nota 4' })).toHaveAttribute('href', '#fn-formal-4')
+  })
+
+  // The verse selection lives in the same hash, so a footnote anchor has to be
+  // impossible to read as a verse reference.
+  it('prefixes footnote anchors so they cannot be mistaken for a verse', () => {
+    render(<Verse text="Texto com nota." footnotes={['Nota.']} idPrefix="original" />)
+    const href = screen.getByRole('link', { name: 'nota 1' }).getAttribute('href')
+    expect(href).toBe('#fn-original-1')
+    expect(href).not.toMatch(/^#v/)
+  })
+
+  // The note at the foot of the chapter links back here, so the marker needs an
+  // anchor of its own.
+  it('anchors the inline marker so a note can link back to it', () => {
+    const { container } = render(<Verse text="Texto com nota." footnotes={['Nota.']} nextNumber={2} />)
+    const anchor = container.querySelector('#fnref-formal-2')
+    expect(anchor).not.toBeNull()
+    expect(anchor?.querySelector('a[href="#fn-formal-2"]')).not.toBeNull()
   })
 
   it('returns the footnote numbers and texts for the caller to render a FootnoteList', () => {
