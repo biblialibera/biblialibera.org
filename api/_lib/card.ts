@@ -13,8 +13,8 @@
  * an SVG string.
  */
 
-import type { Status } from './passage.ts'
-import { truncate } from './passage.ts'
+import type { Status } from './passage.js'
+import { truncate } from './passage.js'
 
 const PAPER = '#faf7f0'
 const INK = '#26221c'

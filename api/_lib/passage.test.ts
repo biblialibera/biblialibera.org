@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
-import type { ChapterText } from './passage.ts'
-import { buildPassage, loadChapter, truncate } from './passage.ts'
+import type { ChapterText } from './passage.js'
+import { buildPassage, loadChapter, truncate } from './passage.js'
 
 const CHAPTER: ChapterText = {
   book: 'João',

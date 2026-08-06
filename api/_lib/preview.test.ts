@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
-import type { ChapterText } from './passage.ts'
-import { cardContentFor, defaultPreview, renderPreviewHtml, resolvePreview } from './preview.ts'
+import type { ChapterText } from './passage.js'
+import { cardContentFor, defaultPreview, renderPreviewHtml, resolvePreview } from './preview.js'
 
 const ORIGIN = 'https://biblialibera.org'
 

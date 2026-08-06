@@ -8,11 +8,11 @@
  * same page competing in an index.
  */
 
-import type { VerseRange } from '../../src/components/verseSelection.ts'
-import { formatVerseParam } from '../../src/components/verseSelection.ts'
-import type { CardContent } from './card.ts'
-import type { Fetch } from './passage.ts'
-import { buildPassage, loadChapter, truncate } from './passage.ts'
+import type { VerseRange } from '../../src/components/verseSelection.js'
+import { formatVerseParam } from '../../src/components/verseSelection.js'
+import type { CardContent } from './card.js'
+import type { Fetch } from './passage.js'
+import { buildPassage, loadChapter, truncate } from './passage.js'
 import themeSource from '../../src/data/themes.source.json' with { type: 'json' }
 
 /** How much of a passage the unfurled description shows before it is cut. */

@@ -8,8 +8,8 @@
  * same files off the disk.
  */
 
-import type { VerseRange } from '../../src/components/verseSelection.ts'
-import { passageReference } from '../../src/components/verseSelection.ts'
+import type { VerseRange } from '../../src/components/verseSelection.js'
+import { passageReference } from '../../src/components/verseSelection.js'
 
 export type Status = 'draft' | 'checked' | 'reviewed'
 

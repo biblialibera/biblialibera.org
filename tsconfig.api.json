@@ -6,12 +6,11 @@
     "types": ["node"],
     "skipLibCheck": true,
 
-    /* Bundler mode: Vercel compiles these with esbuild, and the local card
-       preview runs them through Node's type stripping, so imports carry their
-       .ts extension. */
+    /* Vercel compiles each file on its own and lets Node resolve the imports
+       at runtime, so every relative import here carries the .js extension of
+       the compiled file, never .ts. See api/_lib/handlers.test.ts. */
     "module": "esnext",
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",

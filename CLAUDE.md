@@ -221,6 +221,23 @@ link velho escreveu.
 
 Pontos que quebram sem aviso se mexidos:
 
+- **Import relativo dentro de `api/` termina em `.js`, nunca `.ts`.** A Vercel
+  não empacota essas funções: compila arquivo a arquivo e deixa o Node
+  resolver em runtime, então `./passage.ts` aponta para um arquivo que não
+  existe do outro lado e a função dá `ERR_MODULE_NOT_FOUND` em toda
+  invocação. Foi assim que o primeiro deploy quebrou, com a suíte inteira
+  verde: TypeScript e Vitest resolvem `./x.js` de volta para `x.ts`, só o
+  runtime percebe. `api/_lib/handlers.test.ts` checa os specifiers como
+  texto, que é o único jeito de pegar isso sem deploiar.
+- **As funções exportam `export default { fetch }`**, não uma função solta.
+  `export default async function handler(request)` é a assinatura antiga do
+  Node: a Vercel chama com `(req, res)`, `req.url` vira caminho relativo e
+  `new URL()` estoura. O mesmo teste trava o formato do export.
+- **Todo `.ts` direto em `api/` vira uma função** (rota pública). Helper e
+  teste ficam em `api/_lib/`: qualquer coisa sob diretório com underscore é
+  ignorada pela Vercel.
+- `npm run preview-og` roda com `tsx` e não com `node` por causa disso: com
+  os specifiers em `.js`, o type stripping do Node não acha os `.ts`.
 - **As fontes são baixadas do Google na hora de renderizar**, com subset pelo
   `&text=`: Satori só lê ttf/otf/woff, e três famílias inteiras comeriam o
   orçamento de 500KB. Pedir sem user-agent de navegador é o que faz o Google

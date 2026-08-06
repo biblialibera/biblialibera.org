@@ -5,38 +5,33 @@
  * (`?kind=reader&slug=joao&chapter=3&v=16-18`), never carrying the verse text
  * itself: WhatsApp caches a preview image by URL, and the text has to stay a
  * function of the data rather than of whatever a stale link happens to spell.
+ *
+ * Exported as `{ fetch }`, the Web Handler form. A bare `export default
+ * function handler(...)` is the older Node signature, and Vercel then calls it
+ * with (req, res) instead of a Request: `req.url` is a path, `new URL()` of it
+ * throws, and the function crashes on every invocation. The `fetch` export also
+ * answers every method in one place, which matters because some unfurlers send
+ * HEAD before they send GET.
  */
 
 import { ImageResponse } from '@vercel/og'
 import type { ReactElement } from 'react'
-import { parseVerseQuery } from '../src/components/verseSelection.ts'
-import { cardElement, loadCardFonts } from './_lib/card.ts'
-import { cardContentFor } from './_lib/preview.ts'
+import { cardElement, loadCardFonts } from './_lib/card.js'
+import { cardContentFor } from './_lib/preview.js'
+import { previewRequestFrom } from './_lib/request.js'
 
-export default async function handler(request: Request): Promise<Response> {
-  const url = new URL(request.url)
-  const host = request.headers.get('x-forwarded-host') ?? request.headers.get('host')
-  const proto = request.headers.get('x-forwarded-proto') ?? 'https'
+export default {
+  async fetch(request: Request): Promise<Response> {
+    const content = await cardContentFor(previewRequestFrom(request), fetch)
+    const fonts = await loadCardFonts(content)
 
-  const content = await cardContentFor(
-    {
-      origin: host ? `${proto}://${host}` : url.origin,
-      kind: url.searchParams.get('kind'),
-      slug: url.searchParams.get('slug'),
-      chapter: url.searchParams.get('chapter'),
-      verses: parseVerseQuery(url.search),
-    },
-    fetch,
-  )
-
-  const fonts = await loadCardFonts(content)
-
-  return new ImageResponse(cardElement(content) as unknown as ReactElement, {
-    width: 1200,
-    height: 630,
-    fonts,
-    headers: {
-      'cache-control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800',
-    },
-  })
+    return new ImageResponse(cardElement(content) as unknown as ReactElement, {
+      width: 1200,
+      height: 630,
+      fonts,
+      headers: {
+        'cache-control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800',
+      },
+    })
+  },
 }
