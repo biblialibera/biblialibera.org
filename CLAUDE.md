@@ -107,6 +107,15 @@ contra `src/data/reader/` e gera o que o site carrega:
 - `src/data/themes/index.json` — um registro leve por tema (sem texto)
 - `src/data/themes/<slug>.json` — as passagens do tema, com o texto
 
+`src/data/themes/` é gerado e está no `.gitignore`: só a fonte curada é
+versionada. Os hooks `predev`/`pretest`/`prebuild` no `package.json` rodam
+`sync-themes` (~1s), então clone novo, teste e deploy regeneram sozinhos.
+
+O texto dos versículos fica embutido nesses arquivos de propósito: cada tema
+vira um chunk de ~2.5 KB carregado sob demanda. Guardar só a referência e
+resolver no navegador exigiria baixar os livros inteiros do leitor, mediana de
+1.4 MB por tema, para mostrar umas vinte linhas.
+
 **Cada passagem carrega um `anchor`: as palavras iniciais da passagem, copiadas
 do próprio texto.** O script exige que a passagem resolvida *comece* com ele e
 falha se não começar. Isso não é enfeite: o Antigo Testamento aqui segue a
