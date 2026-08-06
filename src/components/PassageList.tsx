@@ -21,7 +21,7 @@ export function PassageList({ passages }: PassageListProps) {
       {passages.map((passage) => (
         <li key={passage.reference}>
           <Link
-            to={passagePath(passage.bookSlug, passage.chapter, passage.start, passage.end)}
+            to={passagePath(passage.bookSlug, passage.chapter, { start: passage.start, end: passage.end })}
             className="font-sans text-[var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-[var(--color-accent)] no-underline hover:underline"
           >
             {passage.reference}

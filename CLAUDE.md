@@ -143,13 +143,26 @@ Não há busca ainda: por ora `/temas` só lista os temas e `/temas/:slug` mostr
 as passagens. A busca sobre as passagens curadas está pronta mas guardada num
 `git stash` ("themes view with thematic search"), fora do escopo por enquanto.
 
-## Versículos linkáveis (`#v...`)
+## Versículos linkáveis (`?v=...`)
 
-O leitor guarda o versículo ou intervalo selecionado no hash da URL: `#v16`,
-`#v16-18`. Toda posição de leitura vira link compartilhável, e `/temas/:slug`
+O leitor guarda o versículo ou intervalo selecionado na query da URL: `?v=16`,
+`?v=16-18`. Toda posição de leitura vira link compartilhável, e `/temas/:slug`
 aponta cada passagem direto para os seus versículos (`passagePath`), não só
-para o capítulo. O link que sai do botão Compartilhar usa a query
-(`sharePath`, `?v=16-18`) em vez do hash; ver "Preview de link".
+para o capítulo.
+
+**Query e não hash, que é onde isso começou:** o hash nunca sai do navegador,
+então o crawler que monta o preview receberia só o capítulo e o card citaria a
+passagem errada. Na query, a URL da barra de endereços é a URL que vale copiar,
+sem botão no meio. Existe uma forma só: `passagePath` é o que o índice temático
+linka, o que o botão Compartilhar entrega e o que a barra de endereços mostra.
+
+O preço disso é o pulo de âncora do navegador: `#v16` trazia a passagem para a
+tela de graça, e agora nada faz isso além do efeito que rola até ela. Esse
+efeito não é enfeite, é o que faz "abrir o link e cair no versículo".
+
+Links antigos com `#v16` continuam funcionando: `parseLegacyVerseHash` lê a
+forma antiga uma vez, na chegada, e o leitor reescreve a URL para a query com
+`replace`. É por isso que as âncoras de nota mantêm o prefixo `fn-`.
 
 `src/components/verseSelection.ts` concentra a lógica pura (parse, formato,
 máquina de estados da seleção); `verseInteraction.ts` devolve as props que
@@ -159,14 +172,15 @@ fonte e direção dele).
 
 Pontos que não são óbvios e quebram se mexidos sem cuidado:
 
-- **O hash é compartilhado com as notas de rodapé.** Por isso as âncoras das
-  notas têm prefixo: `fn-<registro>-<n>` para a nota e `fnref-<registro>-<n>`
-  para o marcador ao qual ela volta. `parseVerseHash` devolve três coisas
-  diferentes: um intervalo, `null` (a URL diz que nada está selecionado) e
-  `undefined` (a URL aponta para outra coisa, então mantenha a seleção atual).
-  Sem esse `undefined`, clicar numa nota apagaria a passagem destacada. Ao
-  renomear âncoras, procure por ids antigos no repo inteiro: a `RegisterDemo`
-  da landing também emite notas.
+- **As notas ficam no hash, a seleção na query**, então uma não alcança mais a
+  outra: seguir uma nota não tem como apagar a passagem destacada. As âncoras
+  continuam prefixadas (`fn-<registro>-<n>` para a nota, `fnref-<registro>-<n>`
+  para o marcador de volta) porque um `#v2` ainda é lido na chegada como link
+  antigo: uma nota que parecesse um versículo moveria o destaque ao ser
+  seguida. Ao renomear âncoras, procure ids antigos no repo inteiro: a
+  `RegisterDemo` da landing também emite notas.
+- **Selecionar troca a query e derruba o hash junto**, para a URL que o leitor
+  vai copiar não carregar a nota que ele abriu cinco minutos atrás.
 - **Seleção navega com `replace: true`.** Clicar versículo a versículo não
   pode encher o histórico e prender o botão voltar.
 - **Toque não tem shift.** Clique = um versículo, shift+clique estende a
@@ -191,14 +205,11 @@ Colar um link do leitor num chat mostra um card com a passagem: referência,
 texto, selo de revisão. É a razão de existirem `api/preview.ts` (as meta tags)
 e `api/og.ts` (a imagem, 1200x630, via `@vercel/og`/Satori).
 
-**O hash não chega ao servidor.** Por isso o link compartilhado leva a
-passagem na query (`/ler/joao/3?v=16-18`) e não no hash: `#v16-18` é fragmento
-de navegador e o crawler receberia só o capítulo. O leitor continua usando o
-hash enquanto se lê; ao chegar por um link compartilhado ele adota o `?v=` e
-devolve a seleção para o hash com `replace`, para as duas formas nunca estarem
-na tela ao mesmo tempo dizendo o que está selecionado. `verseSelection.ts`
-tem as duas (`parseVerseHash`, `parseVerseQuery`) e é importado tanto pelo
-site quanto por `api/`: os dois lados precisam concordar até nos casos
+**O hash não chega ao servidor**, e é por isso que a seleção mora na query
+(ver "Versículos linkáveis"). Qualquer URL do leitor, copiada da barra de
+endereços ou saída do botão Compartilhar, já é uma URL que desenrola.
+`verseSelection.ts` é importado tanto pelo site quanto por `api/`: os dois
+lados precisam concordar sobre o que `?v=` significa até nos casos
 malformados, então esse módulo não importa nada.
 
 **Só crawler passa por função.** O `vercel.json` casa o user-agent
