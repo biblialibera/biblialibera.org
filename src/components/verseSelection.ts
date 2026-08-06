@@ -7,6 +7,14 @@
  * prefixed `fn-`: `parseVerseHash` can then tell "the URL says no verses are
  * selected" apart from "the URL is pointing at something else entirely", and
  * jumping to a footnote no longer wipes the highlight.
+ *
+ * A link handed to someone else carries the same passage in the query instead
+ * (`?v=16-18`): the hash is a browser-only fragment, so a link preview crawler
+ * would only ever see the bare chapter. `parseVerseQuery` reads that form back,
+ * and the reader converts it to the hash form on arrival so the two never
+ * describe the selection at the same time. The functions under `api/` import
+ * this module too, which is why it stays free of imports: both sides have to
+ * agree on what `?v=` means down to the malformed cases.
  */
 
 export interface VerseRange {
@@ -31,6 +39,9 @@ export interface VerseClick {
 }
 
 const VERSE_HASH = /^v(\d+)(?:-(\d+))?$/
+const VERSE_PARAM = /^(\d+)(?:-(\d+))?$/
+/** The query parameter a shared link carries the passage in. */
+export const VERSE_PARAM_KEY = 'v'
 
 export const EMPTY_SELECTION: SelectionState = { range: null, anchor: null }
 
@@ -67,6 +78,28 @@ export function parseVerseHash(hash: string): VerseRange | null | undefined {
   const match = VERSE_HASH.exec(raw)
   if (!match) return undefined
 
+  return rangeFromMatch(match)
+}
+
+/**
+ * The range named by a `?v=16-18` query, or null when there is none.
+ *
+ * Shared links carry the passage here rather than in the hash: a hash never
+ * leaves the browser, so a link preview server has no way of knowing which
+ * verses the link is about. Takes the whole query string (`location.search`).
+ */
+export function parseVerseQuery(search: string): VerseRange | null {
+  const raw = new URLSearchParams(search).get(VERSE_PARAM_KEY)
+  if (raw === null) return null
+
+  const match = VERSE_PARAM.exec(raw)
+  if (!match) return null
+
+  return rangeFromMatch(match)
+}
+
+/** Shared by both forms: `[, start, end?]` from either pattern to a range. */
+function rangeFromMatch(match: RegExpExecArray): VerseRange | null {
   const start = Number(match[1])
   const end = match[2] === undefined ? start : Number(match[2])
   // A digit run long enough to overflow parses as Infinity, and a chapter has
@@ -82,6 +115,20 @@ export function parseVerseHash(hash: string): VerseRange | null | undefined {
 export function formatVerseHash(range: VerseRange | null): string {
   if (!range) return ''
   return range.start === range.end ? `#v${range.start}` : `#v${range.start}-${range.end}`
+}
+
+/** The `v` query value for a selection, e.g. `16` or `16-18`. */
+export function formatVerseParam(range: VerseRange): string {
+  return range.start === range.end ? `${range.start}` : `${range.start}-${range.end}`
+}
+
+/**
+ * The path a reader shares: the same chapter the hash form points at, with the
+ * passage moved into the query so a crawler can see it.
+ */
+export function sharePath(bookSlug: string, chapter: number, range: VerseRange | null): string {
+  const base = `/ler/${bookSlug}/${chapter}`
+  return range ? `${base}?${VERSE_PARAM_KEY}=${formatVerseParam(range)}` : base
 }
 
 export function isVerseSelected(range: VerseRange | null, verse: number): boolean {
@@ -114,6 +161,15 @@ export function nextSelection(state: SelectionState, verse: number, click: Verse
   }
 
   return { range: { start: verse, end: verse }, anchor: verse }
+}
+
+/**
+ * How a passage is written out: "João 3:16", "João 3:16-18", "João 3" when
+ * nothing is selected. Same shape the thematic index uses for its references.
+ */
+export function passageReference(bookName: string, chapter: number, range: VerseRange | null): string {
+  if (!range) return `${bookName} ${chapter}`
+  return `${bookName} ${chapter}:${formatVerseParam(range)}`
 }
 
 /** The reader path for a passage, with its verses selected. */

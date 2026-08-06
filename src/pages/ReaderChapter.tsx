@@ -4,17 +4,21 @@ import { Button } from '../design-system/components/core'
 import { BookNav } from '../design-system/components/reading'
 import { ChapterView } from '../components/ChapterView'
 import { Section } from '../components/Section'
+import { SharePassage } from '../components/SharePassage'
 import { SiteFooter } from '../components/SiteFooter'
 import { SiteHeader } from '../components/SiteHeader'
 import type { ReaderBook, View } from '../components/readerData'
 import { bookByCode, bookBySlug, loadBook, navGroups, readStoredRegister, storeRegister } from '../components/readerData'
-import type { SelectionState, VerseClick } from '../components/verseSelection'
+import type { SelectionState, VerseClick, VerseRange } from '../components/verseSelection'
 import {
   EMPTY_SELECTION,
   formatVerseHash,
   nextSelection,
   parseVerseHash,
+  parseVerseQuery,
+  passageReference,
   rangesEqual,
+  sharePath,
   verseElementId,
 } from '../components/verseSelection'
 
@@ -64,17 +68,32 @@ function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
     setSelection((current) => (rangesEqual(current.range, parsed) ? current : selectionFromHash(location.hash)))
   }, [location.hash])
 
-  // The router's hash, not window.location.hash: a plain <a href="#fn-1"> does
-  // not go through the router, so the two drift apart the moment a reader
-  // follows a footnote. Held in a ref because both scroll effects want the
-  // current value without wanting to re-run when it changes.
-  const hashRef = useRef(location.hash)
-  hashRef.current = location.hash
+  // A link someone was handed carries its passage in `?v=16-18`, since a hash
+  // never leaves the browser and the preview server would see a bare chapter.
+  // Adopt it and hand the selection straight back to the hash, so the two forms
+  // are never both on screen claiming to say what is selected. The hash wins if
+  // it somehow names verses too: it is the one the reader has been clicking.
+  useEffect(() => {
+    const shared = parseVerseQuery(location.search)
+    if (!shared) return
+
+    const range = parseVerseHash(location.hash) ?? shared
+    navigate({ pathname: location.pathname, hash: formatVerseHash(range) }, { replace: true })
+  }, [location.search, location.hash, location.pathname, navigate])
+
+  // The passage the URL points at, from the router's location rather than from
+  // window.location: a plain <a href="#fn-1"> does not go through the router, so
+  // the two drift apart the moment a reader follows a footnote. Held in a ref
+  // because both scroll effects want the current value without wanting to re-run
+  // when it changes, and it reads the query as well as the hash so an arriving
+  // shared link scrolls even if the book loads before the hash is rewritten.
+  const linkedRef = useRef<VerseRange | null>(null)
+  linkedRef.current = parseVerseHash(location.hash) ?? parseVerseQuery(location.search)
 
   // Chapter change starts a fresh read from the top, unless the URL points at
   // a verse: that passage is what the reader came for.
   useEffect(() => {
-    if (parseVerseHash(hashRef.current)) return
+    if (linkedRef.current) return
     window.scrollTo(0, 0)
   }, [code, chapter])
 
@@ -88,7 +107,7 @@ function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
     const key = `${book.code}/${chapter}`
     if (scrolledFor.current === key) return
     scrolledFor.current = key
-    const target = parseVerseHash(hashRef.current)
+    const target = linkedRef.current
     if (!target) return
     document.getElementById(verseElementId(target.start))?.scrollIntoView?.({ block: 'center' })
   }, [book, chapter])
@@ -157,6 +176,10 @@ function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
             </div>
           </div>
           <div className="flex items-center gap-[var(--space-2)]">
+            <SharePassage
+              url={`${window.location.origin}${sharePath(entry.slug, chapter, selection.range)}`}
+              reference={passageReference(entry.name, chapter, selection.range)}
+            />
             <Button variant="secondary" size="sm" disabled={chapter <= 1} onClick={() => goChapter(chapter - 1)}>
               Anterior
             </Button>
