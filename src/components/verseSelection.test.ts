@@ -3,85 +3,76 @@ import {
   EMPTY_SELECTION,
   footnoteElementId,
   footnoteRefElementId,
-  formatVerseHash,
   formatVerseParam,
   isVerseSelected,
   nextSelection,
-  parseVerseHash,
+  parseLegacyVerseHash,
   parseVerseQuery,
   passagePath,
   passageReference,
   rangesEqual,
-  sharePath,
   verseElementId,
+  verseSearch,
 } from './verseSelection'
 
-describe('parseVerseHash', () => {
-  it('reads a single verse', () => {
-    expect(parseVerseHash('#v16')).toEqual({ start: 16, end: 16 })
-  })
 
-  it('reads a range', () => {
-    expect(parseVerseHash('#v16-18')).toEqual({ start: 16, end: 18 })
+// The selection used to live in the hash. Links handed out back then still
+// have to land on their passage, so the reader reads this form once on arrival
+// and rewrites the URL into the query form.
+describe('parseLegacyVerseHash', () => {
+  it('reads a single verse and a range', () => {
+    expect(parseLegacyVerseHash('#v16')).toEqual({ start: 16, end: 16 })
+    expect(parseLegacyVerseHash('#v16-18')).toEqual({ start: 16, end: 18 })
   })
 
   it('works without the leading hash', () => {
-    expect(parseVerseHash('v3-4')).toEqual({ start: 3, end: 4 })
+    expect(parseLegacyVerseHash('v3-4')).toEqual({ start: 3, end: 4 })
   })
 
   it('normalises a backwards range', () => {
-    expect(parseVerseHash('#v18-16')).toEqual({ start: 16, end: 18 })
+    expect(parseLegacyVerseHash('#v18-16')).toEqual({ start: 16, end: 18 })
   })
 
-  it('reports an empty hash as no selection', () => {
-    expect(parseVerseHash('')).toBeNull()
-    expect(parseVerseHash('#')).toBeNull()
+  it('finds no passage in an empty hash', () => {
+    expect(parseLegacyVerseHash('')).toBeNull()
+    expect(parseLegacyVerseHash('#')).toBeNull()
   })
 
-  it('reports verse zero as no selection rather than a range', () => {
-    expect(parseVerseHash('#v0')).toBeNull()
-    expect(parseVerseHash('#v0-3')).toBeNull()
+  // Following a note must never be mistaken for selecting a verse, which is
+  // what the fn- prefix on those anchors is for.
+  it('finds no passage in a footnote anchor or any other', () => {
+    expect(parseLegacyVerseHash('#fn-formal-1')).toBeNull()
+    expect(parseLegacyVerseHash('#fnref-original-12')).toBeNull()
+    expect(parseLegacyVerseHash('#conteudo')).toBeNull()
+    expect(parseLegacyVerseHash('#v16x')).toBeNull()
+    expect(parseLegacyVerseHash('#v')).toBeNull()
   })
 
-  // A long enough digit run parses as Infinity, which would otherwise survive
-  // into a range and come back out as "#v2-Infinity".
-  it('reports a number no chapter could hold as no selection', () => {
-    const huge = '9'.repeat(400)
-    expect(parseVerseHash(`#v${huge}`)).toBeNull()
-    expect(parseVerseHash(`#v2-${huge}`)).toBeNull()
-    expect(parseVerseHash('#v99999999999999999999')).toBeNull()
-  })
-
-  // The whole reason footnotes are prefixed: jumping to a note must not be
-  // read as "the reader deselected the passage".
-  it('leaves the selection alone for a footnote anchor', () => {
-    expect(parseVerseHash('#fn-formal-1')).toBeUndefined()
-    expect(parseVerseHash('#fn-original-12')).toBeUndefined()
-  })
-
-  it('leaves the selection alone for any other anchor', () => {
-    expect(parseVerseHash('#conteudo')).toBeUndefined()
-    expect(parseVerseHash('#v16x')).toBeUndefined()
-    expect(parseVerseHash('#v')).toBeUndefined()
+  it('applies the same guards as the query form', () => {
+    expect(parseLegacyVerseHash('#v0')).toBeNull()
+    expect(parseLegacyVerseHash('#v0-3')).toBeNull()
+    expect(parseLegacyVerseHash(`#v${'9'.repeat(400)}`)).toBeNull()
   })
 })
 
-describe('formatVerseHash', () => {
+describe('verseSearch', () => {
   it('collapses a one-verse range', () => {
-    expect(formatVerseHash({ start: 9, end: 9 })).toBe('#v9')
+    expect(verseSearch({ start: 9, end: 9 })).toBe('?v=9')
   })
 
   it('writes a range', () => {
-    expect(formatVerseHash({ start: 1, end: 4 })).toBe('#v1-4')
+    expect(verseSearch({ start: 1, end: 4 })).toBe('?v=1-4')
   })
 
-  it('drops the hash when nothing is selected', () => {
-    expect(formatVerseHash(null)).toBe('')
+  // Not `?v=`: an empty parameter left behind is one more thing in a URL
+  // people are meant to copy, and it would come back as no selection anyway.
+  it('drops the parameter when nothing is selected', () => {
+    expect(verseSearch(null)).toBe('')
   })
 
-  it('round-trips through parseVerseHash', () => {
+  it('round-trips through parseVerseQuery', () => {
     for (const range of [{ start: 1, end: 1 }, { start: 2, end: 7 }, { start: 150, end: 176 }]) {
-      expect(parseVerseHash(formatVerseHash(range))).toEqual(range)
+      expect(parseVerseQuery(verseSearch(range))).toEqual(range)
     }
   })
 })
@@ -189,19 +180,18 @@ describe('nextSelection with a finger', () => {
 })
 
 describe('element ids', () => {
-  it('names a verse so that #v16 resolves as a plain anchor', () => {
+  it('names a verse, which is what the reader scrolls to', () => {
     expect(verseElementId(16)).toBe('v16')
-    expect(formatVerseHash({ start: 16, end: 16 })).toBe(`#${verseElementId(16)}`)
   })
 
   it('prefixes footnotes so they never parse as verses', () => {
     expect(footnoteElementId('formal', 3)).toBe('fn-formal-3')
-    expect(parseVerseHash(`#${footnoteElementId('formal', 3)}`)).toBeUndefined()
+    expect(parseLegacyVerseHash(`#${footnoteElementId('formal', 3)}`)).toBeNull()
   })
 
   it('prefixes the way-back marker so it never parses as a verse either', () => {
     expect(footnoteRefElementId('formal', 3)).toBe('fnref-formal-3')
-    expect(parseVerseHash(`#${footnoteRefElementId('formal', 3)}`)).toBeUndefined()
+    expect(parseLegacyVerseHash(`#${footnoteRefElementId('formal', 3)}`)).toBeNull()
   })
 
   it('keeps the note and its marker on distinct anchors', () => {
@@ -210,12 +200,22 @@ describe('element ids', () => {
 })
 
 describe('passagePath', () => {
-  it('points at a single verse', () => {
-    expect(passagePath('josue', 1, 9, 9)).toBe('/ler/josue/1#v9')
+  // One URL form: what the thematic index links to, what the share button
+  // hands over and what the address bar shows are the same string, so a URL
+  // copied from any of them unfurls into the passage it names.
+  it('carries the passage where a preview crawler can see it', () => {
+    expect(passagePath('josue', 1, { start: 9, end: 9 })).toBe('/ler/josue/1?v=9')
+    expect(passagePath('salmos', 23, { start: 1, end: 4 })).toBe('/ler/salmos/23?v=1-4')
   })
 
-  it('points at a range', () => {
-    expect(passagePath('salmos', 23, 1, 4)).toBe('/ler/salmos/23#v1-4')
+  it('points at the chapter alone when nothing is selected', () => {
+    expect(passagePath('joao', 3, null)).toBe('/ler/joao/3')
+  })
+
+  it('round-trips: the path a link carries selects the same verses on arrival', () => {
+    const range = { start: 16, end: 18 }
+    const [, search] = passagePath('joao', 3, range).split('?')
+    expect(parseVerseQuery(`?${search}`)).toEqual(range)
   })
 })
 
@@ -263,24 +263,6 @@ describe('formatVerseParam', () => {
   it('round-trips through the query', () => {
     const range = { start: 16, end: 18 }
     expect(parseVerseQuery(`?v=${formatVerseParam(range)}`)).toEqual(range)
-  })
-})
-
-describe('sharePath', () => {
-  // The passage travels in the query rather than the hash for one reason: a
-  // crawler unfurling the link never receives the hash.
-  it('carries the passage where a preview server can see it', () => {
-    expect(sharePath('joao', 3, { start: 16, end: 18 })).toBe('/ler/joao/3?v=16-18')
-    expect(sharePath('joao', 3, { start: 16, end: 16 })).toBe('/ler/joao/3?v=16')
-  })
-
-  it('shares the chapter when nothing is selected', () => {
-    expect(sharePath('joao', 3, null)).toBe('/ler/joao/3')
-  })
-
-  it('points at the same chapter as the reading form', () => {
-    const [path] = sharePath('salmos', 23, { start: 1, end: 4 }).split('?')
-    expect(passagePath('salmos', 23, 1, 4).startsWith(path)).toBe(true)
   })
 })
 

@@ -29,7 +29,12 @@ function LocationProbe() {
     <>
       <span data-testid="hash">{location.hash}</span>
       <span data-testid="search">{location.search}</span>
-      <button type="button" onClick={() => navigate({ pathname: location.pathname, hash: '#fn-formal-1' })}>
+      {/* A footnote is a plain <a href="#fn-...">, and a fragment link keeps
+          the rest of the URL, so the query rides along untouched. */}
+      <button
+        type="button"
+        onClick={() => navigate({ pathname: location.pathname, search: location.search, hash: '#fn-formal-1' })}
+      >
         ir para a nota
       </button>
       <button type="button" onClick={() => navigate(-1)}>
@@ -77,13 +82,13 @@ describe('ReaderChapter verse links', () => {
   })
 
   it('highlights the verse a shared link points at', async () => {
-    const { container } = renderAt('/ler/jonas/1#v2')
+    const { container } = renderAt('/ler/jonas/1?v=2')
     await untilLoaded()
     expectSelected(container, [2])
   })
 
   it('highlights every verse of a shared range', async () => {
-    const { container } = renderAt('/ler/jonas/1#v2-4')
+    const { container } = renderAt('/ler/jonas/1?v=2-4')
     await untilLoaded()
     expectSelected(container, [2, 3, 4])
   })
@@ -92,7 +97,7 @@ describe('ReaderChapter verse links', () => {
     const { container } = renderAt('/ler/jonas/1')
     await untilLoaded()
     fireEvent.click(verse(container, 3))
-    await waitFor(() => expect(hash()).toBe('#v3'))
+    await waitFor(() => expect(search()).toBe('?v=3'))
     expectSelected(container, [3])
   })
 
@@ -100,42 +105,42 @@ describe('ReaderChapter verse links', () => {
     const { container } = renderAt('/ler/jonas/1')
     await untilLoaded()
     fireEvent.click(verse(container, 3))
-    await waitFor(() => expect(hash()).toBe('#v3'))
+    await waitFor(() => expect(search()).toBe('?v=3'))
 
     fireEvent.click(verse(container, 5), { shiftKey: true })
-    await waitFor(() => expect(hash()).toBe('#v3-5'))
+    await waitFor(() => expect(search()).toBe('?v=3-5'))
     expectSelected(container, [3, 4, 5])
   })
 
   it('extends backwards from the verse that was clicked first', async () => {
-    const { container } = renderAt('/ler/jonas/1#v5')
+    const { container } = renderAt('/ler/jonas/1?v=5')
     await untilLoaded()
     fireEvent.click(verse(container, 3), { shiftKey: true })
-    await waitFor(() => expect(hash()).toBe('#v3-5'))
+    await waitFor(() => expect(search()).toBe('?v=3-5'))
   })
 
   // The verse the reader picked first stays the pivot, so widening the range
   // the other way re-measures from it rather than from whichever end the hash
   // happens to name first.
-  it('keeps extending from the first verse after a round trip through the hash', async () => {
-    const { container } = renderAt('/ler/jonas/1#v5')
+  it('keeps extending from the first verse after a round trip through the URL', async () => {
+    const { container } = renderAt('/ler/jonas/1?v=5')
     await untilLoaded()
 
     fireEvent.click(verse(container, 3), { shiftKey: true })
-    await waitFor(() => expect(hash()).toBe('#v3-5'))
+    await waitFor(() => expect(search()).toBe('?v=3-5'))
 
     fireEvent.click(verse(container, 6), { shiftKey: true })
-    await waitFor(() => expect(hash()).toBe('#v5-6'))
+    await waitFor(() => expect(search()).toBe('?v=5-6'))
     expectSelected(container, [5, 6])
   })
 
   it('drops the hash when the selected verse is clicked again', async () => {
-    const { container } = renderAt('/ler/jonas/1#v3')
+    const { container } = renderAt('/ler/jonas/1?v=3')
     await untilLoaded()
     expectSelected(container, [3])
 
     fireEvent.click(verse(container, 3))
-    await waitFor(() => expect(hash()).toBe(''))
+    await waitFor(() => expect(search()).toBe(''))
     expectSelected(container, [])
   })
 
@@ -158,20 +163,20 @@ describe('ReaderChapter verse links', () => {
     })
 
     it('still extends the range', async () => {
-      const { container } = renderAt('/ler/jonas/1#v3')
+      const { container } = renderAt('/ler/jonas/1?v=3')
       await untilLoaded()
 
       fireEvent.click(verse(container, 5), { shiftKey: true })
-      await waitFor(() => expect(hash()).toBe('#v3-5'))
+      await waitFor(() => expect(search()).toBe('?v=3-5'))
       expectSelected(container, [3, 4, 5])
     })
 
     it('still ignores the click that ends a drag to copy', async () => {
-      const { container } = renderAt('/ler/jonas/1#v3')
+      const { container } = renderAt('/ler/jonas/1?v=3')
       await untilLoaded()
 
       fireEvent.click(verse(container, 5))
-      await waitFor(() => expect(hash()).toBe('#v3'))
+      await waitFor(() => expect(search()).toBe('?v=3'))
       expectSelected(container, [3])
     })
   })
@@ -180,7 +185,7 @@ describe('ReaderChapter verse links', () => {
   // from painting its own selection across the verses it spans, which it does
   // on mousedown, well before the click.
   it('keeps the browser from selecting the text a shift-click spans', async () => {
-    const { container } = renderAt('/ler/jonas/1#v3')
+    const { container } = renderAt('/ler/jonas/1?v=3')
     await untilLoaded()
 
     const extend = createEvent.mouseDown(verse(container, 5), { shiftKey: true })
@@ -192,11 +197,12 @@ describe('ReaderChapter verse links', () => {
     expect(plain.defaultPrevented).toBe(false)
   })
 
-  // The footnote anchors share the hash with the verse selection, which is why
-  // they are prefixed: reading a note must not silently drop the passage the
-  // reader is about to share.
+  // The selection is in the query and a note is in the hash, so they cannot
+  // reach each other any more. This is the guarantee that used to depend on the
+  // fn- prefix alone: reading a note must not drop the passage the reader is
+  // about to share.
   it('keeps the selection when the hash jumps to a footnote', async () => {
-    const { container } = renderAt('/ler/jonas/1#v2-4')
+    const { container } = renderAt('/ler/jonas/1?v=2-4')
     await untilLoaded()
 
     fireEvent.click(screen.getByRole('button', { name: 'ir para a nota' }))
@@ -204,13 +210,13 @@ describe('ReaderChapter verse links', () => {
     expectSelected(container, [2, 3, 4])
   })
 
-  it('follows the hash when history moves to another selection', async () => {
-    const { container } = renderAt('/ler/jonas/1#v2', '/ler/jonas/1#v4-5')
+  it('follows the query when history moves to another selection', async () => {
+    const { container } = renderAt('/ler/jonas/1?v=2', '/ler/jonas/1?v=4-5')
     await untilLoaded()
     expectSelected(container, [4, 5])
 
     fireEvent.click(screen.getByRole('button', { name: 'voltar' }))
-    await waitFor(() => expect(hash()).toBe('#v2'))
+    await waitFor(() => expect(search()).toBe('?v=2'))
     expectSelected(container, [2])
   })
 
@@ -221,27 +227,27 @@ describe('ReaderChapter verse links', () => {
     await untilLoaded()
 
     fireEvent.click(verse(container, 3))
-    await waitFor(() => expect(hash()).toBe('#v3'))
+    await waitFor(() => expect(search()).toBe('?v=3'))
     fireEvent.click(verse(container, 5))
-    await waitFor(() => expect(hash()).toBe('#v5'))
+    await waitFor(() => expect(search()).toBe('?v=5'))
 
     fireEvent.click(screen.getByRole('button', { name: 'voltar' }))
     await screen.findByText('Índice do leitor')
   })
 
   it('clears the selection when the reader moves to another chapter', async () => {
-    const { container } = renderAt('/ler/jonas/1#v2')
+    const { container } = renderAt('/ler/jonas/1?v=2')
     await untilLoaded()
     expectSelected(container, [2])
 
     fireEvent.click(screen.getByRole('button', { name: 'Próximo' }))
     await waitFor(() => expect(screen.getByRole('heading', { name: 'Jonas 2' })).toBeInTheDocument())
-    expect(hash()).toBe('')
+    expect(search()).toBe('')
     expectSelected(container, [])
   })
 
   it('ignores a verse the chapter does not have instead of failing to render', async () => {
-    const { container } = renderAt('/ler/jonas/1#v900')
+    const { container } = renderAt('/ler/jonas/1?v=900')
     await untilLoaded()
     expect(screen.getByRole('heading', { name: 'Jonas 1' })).toBeInTheDocument()
     expectSelected(container, [])
@@ -257,7 +263,7 @@ describe('ReaderChapter scrolling', () => {
   })
 
   it('opens a shared link on the passage instead of the top of the chapter', async () => {
-    const { container } = renderAt('/ler/jonas/1#v4-5')
+    const { container } = renderAt('/ler/jonas/1?v=4-5')
     await untilLoaded()
     expect(scrollTo).not.toHaveBeenCalled()
     await waitFor(() => expect(scrollIntoView).toHaveBeenCalled())
@@ -267,7 +273,7 @@ describe('ReaderChapter scrolling', () => {
   // Comparing a passage with the original is a reading action, not a jump: the
   // reader may be far below the verse the link opened on.
   it('stays where the reader is when the register is toggled', async () => {
-    renderAt('/ler/jonas/1#v4-5')
+    renderAt('/ler/jonas/1?v=4-5')
     await untilLoaded()
     await waitFor(() => expect(scrollIntoView).toHaveBeenCalledTimes(1))
 
@@ -278,19 +284,20 @@ describe('ReaderChapter scrolling', () => {
   })
 
   it('stays where the reader is when a verse is selected', async () => {
-    const { container } = renderAt('/ler/jonas/1#v4')
+    const { container } = renderAt('/ler/jonas/1?v=4')
     await untilLoaded()
     await waitFor(() => expect(scrollIntoView).toHaveBeenCalledTimes(1))
 
     fireEvent.click(verse(container, 2))
-    await waitFor(() => expect(hash()).toBe('#v2'))
+    await waitFor(() => expect(search()).toBe('?v=2'))
     expect(scrollIntoView).toHaveBeenCalledTimes(1)
     expect(scrollTo).not.toHaveBeenCalled()
   })
 })
 
-// A link that came out of the share button carries its passage in the query,
-// because the hash it uses while reading never reaches the preview server.
+// The URL a reader copies out of the address bar is the URL that unfurls: the
+// passage travels in the query, which is the only part of it a preview crawler
+// ever receives.
 describe('ReaderChapter shared links', () => {
   it('highlights the passage a shared link points at', async () => {
     const { container } = renderAt('/ler/jonas/1?v=2-4')
@@ -298,26 +305,25 @@ describe('ReaderChapter shared links', () => {
     expectSelected(container, [2, 3, 4])
   })
 
-  // Two spellings of the selection on screen at once is how they drift apart:
-  // the arriving query is converted to the hash the reader clicks with.
-  it('moves the passage from the query into the hash', async () => {
+  it('leaves the link exactly as it arrived, so copying it again works', async () => {
     renderAt('/ler/jonas/1?v=2-4')
     await untilLoaded()
-    await waitFor(() => expect(hash()).toBe('#v2-4'))
-    expect(search()).toBe('')
+    expect(search()).toBe('?v=2-4')
+    expect(hash()).toBe('')
   })
 
   it('goes on selecting from there', async () => {
     const { container } = renderAt('/ler/jonas/1?v=2')
     await untilLoaded()
-    await waitFor(() => expect(hash()).toBe('#v2'))
 
     fireEvent.click(verse(container, 4), { shiftKey: true })
-    await waitFor(() => expect(hash()).toBe('#v2-4'))
+    await waitFor(() => expect(search()).toBe('?v=2-4'))
     expectSelected(container, [2, 3, 4])
   })
 
-  it('scrolls to the passage even before the query becomes a hash', async () => {
+  // Without the hash there is no anchor for the browser to jump to, so this
+  // effect is the whole of "open a link and land on the verse".
+  it('scrolls to the passage it opened on', async () => {
     const { container } = renderAt('/ler/jonas/1?v=3')
     await untilLoaded()
     await waitFor(() => expect(scrollIntoView).toHaveBeenCalled())
@@ -331,13 +337,39 @@ describe('ReaderChapter shared links', () => {
     expectSelected(container, [])
     expect(search()).toBe('?utm_source=whatsapp')
   })
+})
 
-  // The reader has been clicking in the hash; an old query riding along behind
-  // it does not get to reopen a passage they already moved on from.
-  it('lets the hash win when the URL carries both', async () => {
-    const { container } = renderAt('/ler/jonas/1?v=2-4#v5')
+// Before this, the selection lived in the hash. Those links are already out
+// there, in messages nobody can go back and edit.
+describe('ReaderChapter links from when the selection lived in the hash', () => {
+  it('still highlights the passage an old link points at', async () => {
+    const { container } = renderAt('/ler/jonas/1#v2-4')
     await untilLoaded()
-    await waitFor(() => expect(hash()).toBe('#v5'))
-    expectSelected(container, [5])
+    expectSelected(container, [2, 3, 4])
+  })
+
+  it('rewrites the URL into the form that unfurls', async () => {
+    renderAt('/ler/jonas/1#v2-4')
+    await untilLoaded()
+    await waitFor(() => expect(search()).toBe('?v=2-4'))
+    expect(hash()).toBe('')
+  })
+
+  it('still scrolls to the passage', async () => {
+    const { container } = renderAt('/ler/jonas/1#v3')
+    await untilLoaded()
+    await waitFor(() => expect(scrollIntoView).toHaveBeenCalled())
+    expect(scrollIntoView.mock.instances[0]).toBe(verse(container, 3))
+  })
+
+  // Replaced, not pushed: otherwise the back button lands on the old URL, which
+  // rewrites itself again, and the reader is stuck.
+  it('does not trap the back button on the URL it rewrote', async () => {
+    renderAt('/ler', '/ler/jonas/1#v2')
+    await untilLoaded()
+    await waitFor(() => expect(search()).toBe('?v=2'))
+
+    fireEvent.click(screen.getByRole('button', { name: 'voltar' }))
+    await screen.findByText('Índice do leitor')
   })
 })

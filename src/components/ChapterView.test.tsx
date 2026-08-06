@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { ChapterView } from './ChapterView'
 import type { ReaderBook, View } from './readerData'
 import type { VerseClick, VerseRange } from './verseSelection'
-import { parseVerseHash } from './verseSelection'
+import { parseLegacyVerseHash } from './verseSelection'
 
 const book: ReaderBook = {
   code: 'Jonah',
@@ -103,12 +103,14 @@ describe('ChapterView', () => {
     expect(container.querySelector('#fnref-formal-1')).not.toBeNull()
   })
 
-  // The way back must not be readable as a verse selection, or following it
-  // would drop the passage the reader had highlighted.
+  // The selection lives in the query now, so a note can no longer clear it by
+  // touching the hash. The anchor still must not read as a verse: an old-style
+  // `#v2` link is adopted as a selection on arrival, and a note that looked
+  // like one would move the highlight the moment it was followed.
   it('uses a way-back anchor that cannot be parsed as a verse', () => {
     renderChapter()
     const href = screen.getByRole('link', { name: 'Voltar ao versículo 2' }).getAttribute('href') ?? ''
-    expect(parseVerseHash(href)).toBeUndefined()
+    expect(parseLegacyVerseHash(href)).toBeNull()
   })
 
   it('shows the review seal for a register', () => {
