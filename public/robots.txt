@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# The link preview card is rendered on request rather than stored, so an
+# unfurler has to be able to reach the function that draws it.
+Allow: /api/og
