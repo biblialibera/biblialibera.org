@@ -165,6 +165,13 @@ Pontos que não são óbvios e quebram se mexidos sem cuidado:
   partir da âncora; no toque, tocar fora da seleção estende e tocar dentro
   colapsa para aquele versículo, que é a única saída de um intervalo sem
   modificador.
+- **Shift+clique também é o gesto de selecionar texto do navegador**, e ele
+  roda no `mousedown`, antes do clique chegar. Sem `preventDefault`, o
+  navegador pinta a seleção nativa por cima do destaque e a guarda contra
+  arrastar-para-copiar descarta o clique, que foi o que deixou o intervalo
+  sem funcionar em navegador nenhum. O jsdom não seleciona texto sozinho,
+  então o teste que cobre isso forja `window.getSelection`: sem forjar, a
+  suíte fica verde com o gesto quebrado.
 - **O destaque é `box-shadow`, não padding**, para selecionar um versículo
   nunca reposicionar a coluna ao redor.
 - O efeito que rola até a passagem depende do livro carregado e do registro,

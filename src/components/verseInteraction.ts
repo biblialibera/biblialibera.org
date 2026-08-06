@@ -2,22 +2,11 @@ import type { HTMLAttributes, MouseEvent } from 'react'
 import type { VerseClick } from './verseSelection'
 import { verseElementId } from './verseSelection'
 
-/**
- * The props that turn a rendered verse into a selectable one: an anchor id so
- * `#v16` resolves, the click wiring, and the highlight.
- *
- * Shared by both registers, which render verses with different elements (the
- * pt text goes through the design system's VerseBlock, the original text is a
- * plain paragraph in its own font and direction), so this hands back props to
- * spread rather than wrapping either of them.
- *
- * The highlight is painted with a box-shadow rather than padding so that
- * selecting a verse never reflows the column around it. It is not animated:
- * VerseBlock sets `transition` inline for its own colour, and an inline style
- * beats a class, so a transition here would apply to one register and not the
- * other.
- */
-
+// The highlight is painted with a box-shadow rather than padding so that
+// selecting a verse never reflows the column around it. It is not animated:
+// VerseBlock sets `transition` inline for its own colour, and an inline style
+// beats a class, so a transition here would apply to one register and not the
+// other.
 const BASE_CLASS = 'cursor-pointer rounded-[var(--radius-sm)]'
 const SELECTED_CLASS = 'bg-[var(--color-selection)] shadow-[0_0_0_0.25em_var(--color-selection)]'
 
@@ -52,6 +41,20 @@ function isSelectingText(): boolean {
   return window.getSelection?.()?.isCollapsed === false
 }
 
+/** Footnote markers are links inside the verse: let them navigate. */
+function isMarker(event: MouseEvent<HTMLElement>): boolean {
+  return (event.target as HTMLElement).closest('a, button') !== null
+}
+
+/**
+ * The props that turn a rendered verse into a selectable one: an anchor id so
+ * `#v16` resolves, the click wiring, and the highlight.
+ *
+ * Shared by both registers, which render verses with different elements (the
+ * pt text goes through the design system's VerseBlock, the original text is a
+ * plain paragraph in its own font and direction), so this hands back props to
+ * spread rather than wrapping either of them.
+ */
 export function verseInteractionProps({
   verse,
   selected,
@@ -68,10 +71,18 @@ export function verseInteractionProps({
     // open and land on with the passage already highlighted.
     'aria-current': selected ? 'true' : undefined,
     className: selected ? `${BASE_CLASS} ${SELECTED_CLASS}` : BASE_CLASS,
+    // Shift+click is also the browser's own "extend the text selection"
+    // gesture, and it runs on mousedown, before the click reaches us. Left
+    // alone it drags a native selection across the verses, which both paints
+    // over the highlight and reads as a copy, so the click below was swallowed
+    // and extending a range never worked outside a test. Here the gesture
+    // belongs to the range, so take it.
+    onMouseDown: (event: MouseEvent<HTMLElement>) => {
+      if (event.shiftKey && !isMarker(event)) event.preventDefault()
+    },
     onClick: (event: MouseEvent<HTMLElement>) => {
-      // Footnote markers are links inside the verse: let them navigate.
-      if ((event.target as HTMLElement).closest('a, button')) return
-      if (isSelectingText()) return
+      if (isMarker(event)) return
+      if (!event.shiftKey && isSelectingText()) return
       onSelect(verse, { shiftKey: event.shiftKey, touch: isTouchClick(event.nativeEvent) })
     },
   }
