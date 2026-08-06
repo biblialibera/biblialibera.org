@@ -65,6 +65,13 @@ descendente troca a rampa mas os aliases continuam presos ao valor de
 - Tailwind lê os tokens do design system via arbitrary values
   (`bg-[var(--color-bg)]`), não duplica a paleta na config do Tailwind.
 
+**Tamanho de fonte com token precisa de `length:`.** `text-[var(--text-xs)]`
+compila para `color: var(--text-xs)`, não `font-size`: o Tailwind v4 não tem
+como saber o tipo de uma var e assume cor. O resultado é silencioso, o texto
+fica no tamanho herdado (ou no que o `base.css` der para aquele elemento, que
+num `<h2>` são 30px). A forma certa é `text-[length:var(--text-xs)]`. Cor
+segue normal, `text-[var(--color-text-faint)]` funciona.
+
 **Tailwind + tokens do design system, `src/index.css`:** `@layer` sempre
 perde de CSS sem layer, não importa a especificidade. `tokens/base.css` do
 design system define seletores de elemento (`a`, `body`, `h1`...) que
@@ -142,6 +149,26 @@ do projeto (os `ReviewSeal` do leitor) depende de continuar dizendo.
 Não há busca ainda: por ora `/temas` só lista os temas e `/temas/:slug` mostra
 as passagens. A busca sobre as passagens curadas está pronta mas guardada num
 `git stash` ("themes view with thematic search"), fora do escopo por enquanto.
+
+## Layout do leitor
+
+`/ler/:slug/:capitulo` é uma grade de três colunas: `BookRail` (todos os
+livros, agrupados por testamento) à esquerda, o texto no meio mantendo a
+`--reading-measure`, e `ChapterRail` (os capítulos do livro) à direita. Os dois
+trilhos são `sticky` abaixo do cabeçalho, com rolagem própria.
+
+- **Trilho é link, não botão.** Livro e capítulo são lugares: abrem em nova aba
+  no clique do meio e mostram para onde vão. O link de capítulo não leva `?v=`,
+  então trocar de capítulo limpa a passagem selecionada.
+- **Cada trilho rola até o item atual** mexendo no `scrollTop` dele, nunca com
+  `scrollIntoView`, que arrastaria a página junto. Sem isso, Apocalipse abre
+  com o trilho em Gênesis e o Salmo 119 com o trilho no capítulo 1.
+- **Abaixo de `lg` os trilhos somem** e a barra volta a ter o `‹ Livros` e o
+  botão que abre o `BookNav` do design system em popover. São dois caminhos
+  para a mesma navegação, um por tamanho de tela.
+- `--header-h` (em `src/index.css`, não é token do design system) é a altura do
+  `SiteHeader`: o `SiteHeader` se dimensiona por ela e os trilhos penduram o
+  `top` e o `max-height` nela. Mudou um, mudou o outro.
 
 ## Versículos linkáveis (`?v=...`)
 

@@ -64,25 +64,37 @@ export function bookByCode(code: string): ReaderIndexEntry | undefined {
   return readerIndex.find((b) => b.code === code)
 }
 
-/**
- * BookNav groups from the translated books: AT and DC fall under "Antigo
- * Testamento", NT under "Novo Testamento". Canonical order is preserved, and
- * empty sections are dropped so the nav only shows what exists.
- */
-export function navGroups(): NavGroup[] {
-  const sections: { section: string; canons: ReaderIndexEntry['canon'][] }[] = [
-    { section: 'Antigo Testamento', canons: ['AT', 'DC'] },
-    { section: 'Novo Testamento', canons: ['NT'] },
-  ]
+const SECTIONS: { section: string; canons: ReaderIndexEntry['canon'][] }[] = [
+  { section: 'Antigo Testamento', canons: ['AT', 'DC'] },
+  { section: 'Novo Testamento', canons: ['NT'] },
+]
 
-  return sections
-    .map(({ section, canons }) => ({
-      section,
-      items: readerIndex
-        .filter((b) => canons.includes(b.canon))
-        .map((b) => ({ code: b.code, name: b.name, abbrev: b.abbrev, chapters: b.chapters })),
-    }))
-    .filter((group) => group.items.length > 0)
+export interface BookGroup {
+  section: string
+  books: ReaderIndexEntry[]
+}
+
+/**
+ * The translated books by testament, whole entries: AT and DC fall under
+ * "Antigo Testamento", NT under "Novo Testamento". Canonical order is
+ * preserved, and empty sections are dropped so the nav only shows what exists.
+ *
+ * Entries rather than the trimmed shape `navGroups` hands the design system,
+ * because the reader's own rail links to books by slug.
+ */
+export function bookGroups(): BookGroup[] {
+  return SECTIONS.map(({ section, canons }) => ({
+    section,
+    books: readerIndex.filter((b) => canons.includes(b.canon)),
+  })).filter((group) => group.books.length > 0)
+}
+
+/** The same grouping in the shape BookNav takes, for the small-screen popover. */
+export function navGroups(): NavGroup[] {
+  return bookGroups().map(({ section, books }) => ({
+    section,
+    items: books.map((b) => ({ code: b.code, name: b.name, abbrev: b.abbrev, chapters: b.chapters })),
+  }))
 }
 
 // index.json is imported statically above; exclude it so the glob only owns
