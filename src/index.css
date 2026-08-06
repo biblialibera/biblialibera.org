@@ -22,3 +22,11 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* App-level layout, not a design system token: the height of the sticky
+   SiteHeader, which the reader's rails hang below (`top`, and the viewport
+   height left for them to scroll in). Declared once so the two cannot drift:
+   SiteHeader sets its own height from it. */
+:root {
+  --header-h: 4rem;
+}

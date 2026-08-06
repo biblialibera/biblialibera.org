@@ -12,7 +12,7 @@ export interface SiteHeaderProps {
 export function SiteHeader({ theme, onToggleTheme, onOpenGithub }: SiteHeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-bg)]">
-      <div className="mx-auto flex max-w-[var(--container-page)] items-center justify-between gap-[var(--space-4)] px-[var(--space-6)] py-[var(--space-3)]">
+      <div className="mx-auto flex h-[var(--header-h)] max-w-[var(--container-page)] items-center justify-between gap-[var(--space-4)] px-[var(--space-6)]">
         <Link to="/" className="no-underline" aria-label="Biblia Libera, início">
           <Logo size={28} tagline={false} />
         </Link>

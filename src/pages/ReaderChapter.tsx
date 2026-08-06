@@ -2,13 +2,23 @@ import { useEffect, useRef, useState } from 'react'
 import { Navigate, Link, useLocation, useNavigate, useParams } from 'react-router'
 import { Button } from '../design-system/components/core'
 import { BookNav } from '../design-system/components/reading'
+import { BookRail } from '../components/BookRail'
+import { ChapterRail } from '../components/ChapterRail'
 import { ChapterView } from '../components/ChapterView'
 import { Section } from '../components/Section'
 import { SharePassage } from '../components/SharePassage'
 import { SiteFooter } from '../components/SiteFooter'
 import { SiteHeader } from '../components/SiteHeader'
 import type { ReaderBook, View } from '../components/readerData'
-import { bookByCode, bookBySlug, loadBook, navGroups, readStoredRegister, storeRegister } from '../components/readerData'
+import {
+  bookByCode,
+  bookBySlug,
+  bookGroups,
+  loadBook,
+  navGroups,
+  readStoredRegister,
+  storeRegister,
+} from '../components/readerData'
 import type { SelectionState, VerseClick, VerseRange } from '../components/verseSelection'
 import {
   EMPTY_SELECTION,
@@ -142,77 +152,94 @@ function ReaderChapter({ theme, onToggleTheme }: ReaderChapterProps) {
       <SiteHeader theme={theme} onToggleTheme={onToggleTheme} onOpenGithub={openGithub} />
 
       <Section bordered={false}>
-        <div className="mx-auto mb-[var(--space-8)] flex max-w-[var(--reading-measure)] flex-wrap items-center justify-between gap-[var(--space-3)]">
-          <div className="flex items-center gap-[var(--space-3)]">
-            <Link
-              to="/ler"
-              className="font-sans text-[var(--text-sm)] font-semibold text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]"
-            >
-              ‹ Livros
-            </Link>
-            <div className="relative">
-              <Button variant="secondary" size="sm" onClick={() => setNavOpen((o) => !o)} aria-expanded={navOpen}>
-                {entry.abbrev} {chapter}
-              </Button>
-              {navOpen && (
-                <>
-                  <div className="fixed inset-0 z-40" aria-hidden onClick={() => setNavOpen(false)} />
-                  <div className="absolute left-0 top-[calc(100%+var(--space-2))] z-50">
-                    <BookNav
-                      books={navGroups()}
-                      book={entry.code}
-                      chapter={chapter}
-                      onEditionChange={() => {}}
-                      onSelectBook={(bookCode) => {
-                        setNavOpen(false)
-                        goBook(bookCode)
-                      }}
-                      onSelectChapter={(n) => {
-                        setNavOpen(false)
-                        goChapter(n)
-                      }}
-                    />
-                  </div>
-                </>
-              )}
-            </div>
+        {/* Books to the left of the reading, chapters to the right of it, both
+            sticky with their own scroll. Below lg there is no room for either,
+            and the toolbar's book button opens the same navigation as a popover. */}
+        <div className="grid grid-cols-1 gap-[var(--space-8)] lg:grid-cols-[13rem_minmax(0,1fr)_5.5rem]">
+          <div className="hidden lg:block">
+            <BookRail groups={bookGroups()} current={entry.code} />
           </div>
-          <div className="flex items-center gap-[var(--space-2)]">
-            <SharePassage
-              url={`${window.location.origin}${passagePath(entry.slug, chapter, selection.range)}`}
-              reference={passageReference(entry.name, chapter, selection.range)}
-            />
-            <Button variant="secondary" size="sm" disabled={chapter <= 1} onClick={() => goChapter(chapter - 1)}>
-              Anterior
-            </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              disabled={chapter >= entry.chapters}
-              onClick={() => goChapter(chapter + 1)}
-            >
-              Próximo
-            </Button>
+
+          <div>
+            <div className="mx-auto mb-[var(--space-8)] flex max-w-[var(--reading-measure)] flex-wrap items-center justify-between gap-[var(--space-3)]">
+              <div className="flex items-center gap-[var(--space-3)] lg:hidden">
+                <Link
+                  to="/ler"
+                  className="font-sans text-[var(--text-sm)] font-semibold text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]"
+                >
+                  &lsaquo; Livros
+                </Link>
+                <div className="relative">
+                  <Button variant="secondary" size="sm" onClick={() => setNavOpen((o) => !o)} aria-expanded={navOpen}>
+                    {entry.abbrev} {chapter}
+                  </Button>
+                  {navOpen && (
+                    <>
+                      <div className="fixed inset-0 z-40" aria-hidden onClick={() => setNavOpen(false)} />
+                      <div className="absolute left-0 top-[calc(100%+var(--space-2))] z-50">
+                        <BookNav
+                          books={navGroups()}
+                          book={entry.code}
+                          chapter={chapter}
+                          onEditionChange={() => {}}
+                          onSelectBook={(bookCode) => {
+                            setNavOpen(false)
+                            goBook(bookCode)
+                          }}
+                          onSelectChapter={(n) => {
+                            setNavOpen(false)
+                            goChapter(n)
+                          }}
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center gap-[var(--space-2)] lg:ms-auto">
+                <SharePassage
+                  url={`${window.location.origin}${passagePath(entry.slug, chapter, selection.range)}`}
+                  reference={passageReference(entry.name, chapter, selection.range)}
+                />
+                <Button variant="secondary" size="sm" disabled={chapter <= 1} onClick={() => goChapter(chapter - 1)}>
+                  Anterior
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  disabled={chapter >= entry.chapters}
+                  onClick={() => goChapter(chapter + 1)}
+                >
+                  Próximo
+                </Button>
+              </div>
+            </div>
+
+            {book ? (
+              <ChapterView
+                book={book}
+                chapter={chapter}
+                view={view}
+                onViewChange={changeView}
+                selection={selection.range}
+                onSelectVerse={selectVerse}
+              />
+            ) : (
+              <div className="mx-auto max-w-[var(--reading-measure)]">
+                <h1 className="m-0 font-serif text-[var(--text-2xl)] text-[var(--color-text)]">
+                  {entry.name} {chapter}
+                </h1>
+                <p className="mt-[var(--space-6)] font-sans text-[var(--text-sm)] text-[var(--color-text-faint)]">
+                  Carregando...
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="hidden lg:block">
+            <ChapterRail bookSlug={entry.slug} abbrev={entry.abbrev} chapters={entry.chapters} current={chapter} />
           </div>
         </div>
-
-        {book ? (
-          <ChapterView
-            book={book}
-            chapter={chapter}
-            view={view}
-            onViewChange={changeView}
-            selection={selection.range}
-            onSelectVerse={selectVerse}
-          />
-        ) : (
-          <div className="mx-auto max-w-[var(--reading-measure)]">
-            <h1 className="m-0 font-serif text-[var(--text-2xl)] text-[var(--color-text)]">
-              {entry.name} {chapter}
-            </h1>
-            <p className="mt-[var(--space-6)] font-sans text-[var(--text-sm)] text-[var(--color-text-faint)]">Carregando...</p>
-          </div>
-        )}
       </Section>
 
       <SiteFooter year={new Date().getFullYear()} />
