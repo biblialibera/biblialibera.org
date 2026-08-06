@@ -10,7 +10,10 @@ validação; este repo só consome esse conteúdo e apresenta.
 
 ## Stack
 
-- Vite + React + TypeScript, SPA (sem framework de servidor: sem Next.js).
+- Vite + React + TypeScript, SPA (sem framework de servidor: sem Next.js). As
+  únicas coisas que rodam no servidor são duas Vercel Functions em `api/`, e
+  existem só para o preview de link (ver "Preview de link"); nenhuma página
+  depende delas para renderizar.
 - `react-router` para rotas (`/` landing, futuramente `/ler/...` para o
   leitor).
 - npm como gerenciador de pacotes.
@@ -94,8 +97,12 @@ componente importa esse arquivo gerado.
   com status (`manifest.json` da lib), classificados AT/NT (a classificação
   é uma constante local, a lib não carrega cânon). Usado pela
   `BookStatusTable` na landing.
+- `scripts/build-og-text.mjs` → `public/og/<slug>/<capitulo>.json`: o texto em
+  pt de cada capítulo, sem notas e sem original, que as funções de preview
+  buscam em runtime. Gerado, no `.gitignore`, regenerado no `prebuild`.
 - `npm run sync-content` regenera todos; scripts individuais:
-  `sync-demo-passage`, `sync-books`, `sync-reader`, `sync-themes`.
+  `sync-demo-passage`, `sync-books`, `sync-reader`, `sync-themes`,
+  `sync-og-text`.
 
 ## Índice temático (`/temas`)
 
@@ -141,7 +148,8 @@ as passagens. A busca sobre as passagens curadas está pronta mas guardada num
 O leitor guarda o versículo ou intervalo selecionado no hash da URL: `#v16`,
 `#v16-18`. Toda posição de leitura vira link compartilhável, e `/temas/:slug`
 aponta cada passagem direto para os seus versículos (`passagePath`), não só
-para o capítulo.
+para o capítulo. O link que sai do botão Compartilhar usa a query
+(`sharePath`, `?v=16-18`) em vez do hash; ver "Preview de link".
 
 `src/components/verseSelection.ts` concentra a lógica pura (parse, formato,
 máquina de estados da seleção); `verseInteraction.ts` devolve as props que
@@ -176,6 +184,83 @@ Pontos que não são óbvios e quebram se mexidos sem cuidado:
   nunca reposicionar a coluna ao redor.
 - O efeito que rola até a passagem depende do livro carregado e do registro,
   nunca da seleção: senão cada clique arrastaria a página.
+
+## Preview de link (o card que aparece no WhatsApp)
+
+Colar um link do leitor num chat mostra um card com a passagem: referência,
+texto, selo de revisão. É a razão de existirem `api/preview.ts` (as meta tags)
+e `api/og.ts` (a imagem, 1200x630, via `@vercel/og`/Satori).
+
+**O hash não chega ao servidor.** Por isso o link compartilhado leva a
+passagem na query (`/ler/joao/3?v=16-18`) e não no hash: `#v16-18` é fragmento
+de navegador e o crawler receberia só o capítulo. O leitor continua usando o
+hash enquanto se lê; ao chegar por um link compartilhado ele adota o `?v=` e
+devolve a seleção para o hash com `replace`, para as duas formas nunca estarem
+na tela ao mesmo tempo dizendo o que está selecionado. `verseSelection.ts`
+tem as duas (`parseVerseHash`, `parseVerseQuery`) e é importado tanto pelo
+site quanto por `api/`: os dois lados precisam concordar até nos casos
+malformados, então esse módulo não importa nada.
+
+**Só crawler passa por função.** O `vercel.json` casa o user-agent
+(WhatsApp, facebookexternalhit, Twitterbot, Telegram, Slack, Discord,
+LinkedIn...) e só então reescreve para `/api/preview`; visitante humano
+continua recebendo o `index.html` estático, sem nenhum salto de latência. A
+query original é preservada e somada à do destino, que é como o `?v=` chega
+na função. Buscadores ficam **de fora** da lista de propósito: o Google
+renderiza JS e continua vendo o app de verdade, sem duas versões da mesma
+página competindo no índice. O `index.html` carrega as tags do site como
+fallback para qualquer unfurler não listado, em qualquer rota.
+
+**As funções não podem importar `src/data/reader/`.** O `@vercel/og` limita
+o bundle da função a 500KB contando assets, e o leitor tem 14MB. Daí
+`public/og/<slug>/<capitulo>.json` (`scripts/build-og-text.mjs`): as funções
+buscam por HTTP na própria CDN. A URL da imagem carrega só a rota
+(`?kind=reader&slug=joao&chapter=3&v=16-18`), nunca o texto: o WhatsApp
+cacheia preview por URL, e o texto tem que ser função do dado, não do que um
+link velho escreveu.
+
+Pontos que quebram sem aviso se mexidos:
+
+- **Import relativo dentro de `api/` termina em `.js`, nunca `.ts`.** A Vercel
+  não empacota essas funções: compila arquivo a arquivo e deixa o Node
+  resolver em runtime, então `./passage.ts` aponta para um arquivo que não
+  existe do outro lado e a função dá `ERR_MODULE_NOT_FOUND` em toda
+  invocação. Foi assim que o primeiro deploy quebrou, com a suíte inteira
+  verde: TypeScript e Vitest resolvem `./x.js` de volta para `x.ts`, só o
+  runtime percebe. `api/_lib/handlers.test.ts` checa os specifiers como
+  texto, que é o único jeito de pegar isso sem deploiar.
+- **As funções exportam `export default { fetch }`**, não uma função solta.
+  `export default async function handler(request)` é a assinatura antiga do
+  Node: a Vercel chama com `(req, res)`, `req.url` vira caminho relativo e
+  `new URL()` estoura. O mesmo teste trava o formato do export.
+- **Todo `.ts` direto em `api/` vira uma função** (rota pública). Helper e
+  teste ficam em `api/_lib/`: qualquer coisa sob diretório com underscore é
+  ignorada pela Vercel.
+- `npm run preview-og` roda com `tsx` e não com `node` por causa disso: com
+  os specifiers em `.js`, o type stripping do Node não acha os `.ts`.
+- **As fontes são baixadas do Google na hora de renderizar**, com subset pelo
+  `&text=`: Satori só lê ttf/otf/woff, e três famílias inteiras comeriam o
+  orçamento de 500KB. Pedir sem user-agent de navegador é o que faz o Google
+  responder em truetype em vez de woff2. O subset precisa incluir o texto
+  **em maiúsculas** também: o `textTransform: uppercase` roda dentro do
+  Satori, depois da fonte escolhida, e as letras que faltarem saem em branco.
+  `cardText()` existe para juntar tudo que o card desenha, inclusive o
+  wordmark e os rótulos de selo, que não vêm do chamador.
+- **Elemento sem filho não pode ter `children: []`**, tem que omitir a
+  propriedade: o Satori lê array vazio como "mais de um filho" e exige
+  `display: flex`. É o que o helper `el()` faz.
+- **O tamanho do texto do card foi calibrado olhando o PNG**, não pela
+  métrica da fonte: `npm run preview-og` escreve `.og-preview/*.png` rodando
+  o mesmo código das funções, com o texto lido do disco. É assim que se
+  mexe no card. `CARD_MAX_CHARS` é o que cabe nas cinco linhas do menor
+  tamanho.
+- A paleta e o `SealMark` estão duplicados em `api/_lib/card.ts` porque o
+  Satori não resolve CSS var nem JSX do design system. Mudou
+  `tokens/colors.css` ou o logo, atualiza lá também.
+
+O que **não** dá para verificar local: o unfurl de verdade. Nem o script nem
+os testes provam que o WhatsApp gostou das tags; isso exige URL pública,
+então a checagem final é colar um link de um deploy de preview num chat.
 
 ## Fluxo inicial (o que estamos construindo agora)
 

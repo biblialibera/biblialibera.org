@@ -1,4 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/ler/:slug/:chapter",
+      "has": [{ "type": "header", "key": "user-agent", "value": ".*(WhatsApp|facebookexternalhit|Twitterbot|TelegramBot|Slackbot|Discordbot|LinkedInBot|SkypeUriPreview|redditbot|Iframely).*" }],
+      "destination": "/api/preview?kind=reader&slug=:slug&chapter=:chapter"
+    },
+    {
+      "source": "/temas/:slug",
+      "has": [{ "type": "header", "key": "user-agent", "value": ".*(WhatsApp|facebookexternalhit|Twitterbot|TelegramBot|Slackbot|Discordbot|LinkedInBot|SkypeUriPreview|redditbot|Iframely).*" }],
+      "destination": "/api/preview?kind=theme&slug=:slug"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

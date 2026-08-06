@@ -6,7 +6,7 @@
   "scripts": {
     "predev": "npm run sync-themes",
     "dev": "vite",
-    "prebuild": "npm run sync-themes",
+    "prebuild": "npm run sync-themes && npm run sync-og-text",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
@@ -18,9 +18,12 @@
     "sync-books": "node scripts/extract-book-status.mjs",
     "sync-reader": "node scripts/build-reader-data.mjs",
     "sync-themes": "node scripts/build-themes.mjs",
-    "sync-content": "npm run sync-demo-passage && npm run sync-books && npm run sync-reader && npm run sync-themes"
+    "sync-og-text": "node scripts/build-og-text.mjs",
+    "sync-content": "npm run sync-demo-passage && npm run sync-books && npm run sync-reader && npm run sync-themes && npm run sync-og-text",
+    "preview-og": "tsx scripts/preview-og.mjs"
   },
   "dependencies": {
+    "@vercel/og": "^0.11.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router": "^8.3.0"
@@ -38,6 +41,7 @@
     "jsdom": "^29.1.1",
     "oxlint": "^1.71.0",
     "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.9",
     "typescript": "~6.0.2",
     "vite": "^8.1.1",
     "vitest": "^4.1.10"

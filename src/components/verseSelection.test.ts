@@ -4,11 +4,15 @@ import {
   footnoteElementId,
   footnoteRefElementId,
   formatVerseHash,
+  formatVerseParam,
   isVerseSelected,
   nextSelection,
   parseVerseHash,
+  parseVerseQuery,
   passagePath,
+  passageReference,
   rangesEqual,
+  sharePath,
   verseElementId,
 } from './verseSelection'
 
@@ -212,5 +216,84 @@ describe('passagePath', () => {
 
   it('points at a range', () => {
     expect(passagePath('salmos', 23, 1, 4)).toBe('/ler/salmos/23#v1-4')
+  })
+})
+
+describe('parseVerseQuery', () => {
+  it('reads a single verse', () => {
+    expect(parseVerseQuery('?v=16')).toEqual({ start: 16, end: 16 })
+  })
+
+  it('reads a range', () => {
+    expect(parseVerseQuery('?v=16-18')).toEqual({ start: 16, end: 18 })
+  })
+
+  it('finds the passage among other parameters', () => {
+    expect(parseVerseQuery('?utm_source=whatsapp&v=3-4')).toEqual({ start: 3, end: 4 })
+  })
+
+  it('reports no passage when the query has none', () => {
+    expect(parseVerseQuery('')).toBeNull()
+    expect(parseVerseQuery('?utm_source=whatsapp')).toBeNull()
+  })
+
+  // The query form has no `v` prefix of its own, so the hash form landing here
+  // is a malformed link, not a second spelling to accept.
+  it('rejects the hash spelling', () => {
+    expect(parseVerseQuery('?v=v16')).toBeNull()
+  })
+
+  it('applies the same guards as the hash form', () => {
+    expect(parseVerseQuery('?v=0')).toBeNull()
+    expect(parseVerseQuery('?v=abc')).toBeNull()
+    expect(parseVerseQuery(`?v=${'9'.repeat(400)}`)).toBeNull()
+    expect(parseVerseQuery('?v=18-16')).toEqual({ start: 16, end: 18 })
+  })
+})
+
+describe('formatVerseParam', () => {
+  it('writes a single verse', () => {
+    expect(formatVerseParam({ start: 16, end: 16 })).toBe('16')
+  })
+
+  it('writes a range', () => {
+    expect(formatVerseParam({ start: 16, end: 18 })).toBe('16-18')
+  })
+
+  it('round-trips through the query', () => {
+    const range = { start: 16, end: 18 }
+    expect(parseVerseQuery(`?v=${formatVerseParam(range)}`)).toEqual(range)
+  })
+})
+
+describe('sharePath', () => {
+  // The passage travels in the query rather than the hash for one reason: a
+  // crawler unfurling the link never receives the hash.
+  it('carries the passage where a preview server can see it', () => {
+    expect(sharePath('joao', 3, { start: 16, end: 18 })).toBe('/ler/joao/3?v=16-18')
+    expect(sharePath('joao', 3, { start: 16, end: 16 })).toBe('/ler/joao/3?v=16')
+  })
+
+  it('shares the chapter when nothing is selected', () => {
+    expect(sharePath('joao', 3, null)).toBe('/ler/joao/3')
+  })
+
+  it('points at the same chapter as the reading form', () => {
+    const [path] = sharePath('salmos', 23, { start: 1, end: 4 }).split('?')
+    expect(passagePath('salmos', 23, 1, 4).startsWith(path)).toBe(true)
+  })
+})
+
+describe('passageReference', () => {
+  it('writes a single verse', () => {
+    expect(passageReference('João', 3, { start: 16, end: 16 })).toBe('João 3:16')
+  })
+
+  it('writes a range', () => {
+    expect(passageReference('João', 3, { start: 16, end: 18 })).toBe('João 3:16-18')
+  })
+
+  it('names the chapter alone when nothing is selected', () => {
+    expect(passageReference('João', 3, null)).toBe('João 3')
   })
 })

@@ -28,6 +28,7 @@ function LocationProbe() {
   return (
     <>
       <span data-testid="hash">{location.hash}</span>
+      <span data-testid="search">{location.search}</span>
       <button type="button" onClick={() => navigate({ pathname: location.pathname, hash: '#fn-formal-1' })}>
         ir para a nota
       </button>
@@ -52,6 +53,7 @@ function renderAt(...entries: string[]) {
 
 const untilLoaded = () => screen.findByRole('radio', { name: 'Português' })
 const hash = () => screen.getByTestId('hash').textContent
+const search = () => screen.getByTestId('search').textContent
 const verse = (container: HTMLElement, n: number) => container.querySelector(`#v${n}`) as HTMLElement
 
 /**
@@ -284,5 +286,58 @@ describe('ReaderChapter scrolling', () => {
     await waitFor(() => expect(hash()).toBe('#v2'))
     expect(scrollIntoView).toHaveBeenCalledTimes(1)
     expect(scrollTo).not.toHaveBeenCalled()
+  })
+})
+
+// A link that came out of the share button carries its passage in the query,
+// because the hash it uses while reading never reaches the preview server.
+describe('ReaderChapter shared links', () => {
+  it('highlights the passage a shared link points at', async () => {
+    const { container } = renderAt('/ler/jonas/1?v=2-4')
+    await untilLoaded()
+    expectSelected(container, [2, 3, 4])
+  })
+
+  // Two spellings of the selection on screen at once is how they drift apart:
+  // the arriving query is converted to the hash the reader clicks with.
+  it('moves the passage from the query into the hash', async () => {
+    renderAt('/ler/jonas/1?v=2-4')
+    await untilLoaded()
+    await waitFor(() => expect(hash()).toBe('#v2-4'))
+    expect(search()).toBe('')
+  })
+
+  it('goes on selecting from there', async () => {
+    const { container } = renderAt('/ler/jonas/1?v=2')
+    await untilLoaded()
+    await waitFor(() => expect(hash()).toBe('#v2'))
+
+    fireEvent.click(verse(container, 4), { shiftKey: true })
+    await waitFor(() => expect(hash()).toBe('#v2-4'))
+    expectSelected(container, [2, 3, 4])
+  })
+
+  it('scrolls to the passage even before the query becomes a hash', async () => {
+    const { container } = renderAt('/ler/jonas/1?v=3')
+    await untilLoaded()
+    await waitFor(() => expect(scrollIntoView).toHaveBeenCalled())
+    expect(scrollIntoView.mock.instances[0]).toBe(verse(container, 3))
+    expect(scrollTo).not.toHaveBeenCalled()
+  })
+
+  it('keeps a query that says nothing about verses out of the way', async () => {
+    const { container } = renderAt('/ler/jonas/1?utm_source=whatsapp')
+    await untilLoaded()
+    expectSelected(container, [])
+    expect(search()).toBe('?utm_source=whatsapp')
+  })
+
+  // The reader has been clicking in the hash; an old query riding along behind
+  // it does not get to reopen a passage they already moved on from.
+  it('lets the hash win when the URL carries both', async () => {
+    const { container } = renderAt('/ler/jonas/1?v=2-4#v5')
+    await untilLoaded()
+    await waitFor(() => expect(hash()).toBe('#v5'))
+    expectSelected(container, [5])
   })
 })

@@ -9,6 +9,25 @@
       content="Tradução aberta e transparente da Bíblia, do hebraico e do grego para o português contemporâneo."
     />
     <title>Biblia Libera</title>
+
+    <!-- The link preview for the site itself, and the fallback for any crawler
+         vercel.json does not route to api/preview: every route serves this same
+         file, so these tags are what an unlisted unfurler reads anywhere. The
+         URLs are absolute because a crawler has no page to resolve them
+         against, which also means a preview deployment shows the production
+         card here. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Biblia Libera" />
+    <meta property="og:title" content="Biblia Libera" />
+    <meta
+      property="og:description"
+      content="Tradução aberta e transparente da Bíblia, do hebraico e do grego para o português contemporâneo."
+    />
+    <meta property="og:image" content="https://biblialibera.org/api/og" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://biblialibera.org/" />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
     <div id="root"></div>
