@@ -1,6 +1,6 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { createEvent, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router'
-import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import ReaderChapter from './ReaderChapter'
 
 const scrollTo = vi.fn()
@@ -135,6 +135,59 @@ describe('ReaderChapter verse links', () => {
     fireEvent.click(verse(container, 3))
     await waitFor(() => expect(hash()).toBe(''))
     expectSelected(container, [])
+  })
+
+  // A real shift+click is also the browser's own "extend the text selection"
+  // gesture, so by the time the click lands the document has text selected and
+  // the guard against drag-to-copy would throw the click away. jsdom never
+  // selects anything on its own, so the browser has to be staged here: without
+  // it these tests pass no matter what the handler does, which is exactly how
+  // range selection shipped broken in every browser while green in the suite.
+  describe('with text selected by the gesture itself', () => {
+    // Assigned rather than stubbed: the shared scrollTo stub is torn down with
+    // unstubAllGlobals only after the whole file, so this one has to restore
+    // itself without touching it.
+    const realGetSelection = window.getSelection
+    beforeEach(() => {
+      window.getSelection = () => ({ isCollapsed: false }) as unknown as Selection
+    })
+    afterEach(() => {
+      window.getSelection = realGetSelection
+    })
+
+    it('still extends the range', async () => {
+      const { container } = renderAt('/ler/jonas/1#v3')
+      await untilLoaded()
+
+      fireEvent.click(verse(container, 5), { shiftKey: true })
+      await waitFor(() => expect(hash()).toBe('#v3-5'))
+      expectSelected(container, [3, 4, 5])
+    })
+
+    it('still ignores the click that ends a drag to copy', async () => {
+      const { container } = renderAt('/ler/jonas/1#v3')
+      await untilLoaded()
+
+      fireEvent.click(verse(container, 5))
+      await waitFor(() => expect(hash()).toBe('#v3'))
+      expectSelected(container, [3])
+    })
+  })
+
+  // Taking the gesture is only half of it: the browser must also be stopped
+  // from painting its own selection across the verses it spans, which it does
+  // on mousedown, well before the click.
+  it('keeps the browser from selecting the text a shift-click spans', async () => {
+    const { container } = renderAt('/ler/jonas/1#v3')
+    await untilLoaded()
+
+    const extend = createEvent.mouseDown(verse(container, 5), { shiftKey: true })
+    fireEvent(verse(container, 5), extend)
+    expect(extend.defaultPrevented).toBe(true)
+
+    const plain = createEvent.mouseDown(verse(container, 5))
+    fireEvent(verse(container, 5), plain)
+    expect(plain.defaultPrevented).toBe(false)
   })
 
   // The footnote anchors share the hash with the verse selection, which is why
