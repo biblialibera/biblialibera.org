@@ -1,5 +1,5 @@
 import type { HTMLAttributes, MouseEvent } from 'react'
-import type { VerseClick } from './verseSelection'
+import type { VerseClick, VerseId } from './verseSelection'
 import { verseElementId } from './verseSelection'
 
 // The highlight is painted with a box-shadow rather than padding so that
@@ -11,9 +11,9 @@ const BASE_CLASS = 'cursor-pointer rounded-[var(--radius-sm)]'
 const SELECTED_CLASS = 'bg-[var(--color-selection)] shadow-[0_0_0_0.25em_var(--color-selection)]'
 
 interface VerseInteractionOptions {
-  verse: number
+  verse: VerseId
   selected: boolean
-  onSelect: (verse: number, click: VerseClick) => void
+  onSelect: (verse: VerseId, click: VerseClick) => void
 }
 
 /**

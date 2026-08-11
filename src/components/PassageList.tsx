@@ -5,6 +5,12 @@ import { passagePath } from './verseSelection'
 
 export interface PassageListProps {
   passages: ThemePassage[]
+  /**
+   * The edition to open a passage in: the reader's own, unless the passage
+   * only exists in another one, in which case the link goes where the passage
+   * actually is.
+   */
+  edition: string
 }
 
 /**
@@ -15,13 +21,18 @@ export interface PassageListProps {
  * divine-name or footnote apparatus): this is an index that points at the
  * reading, not a substitute for it.
  */
-export function PassageList({ passages }: PassageListProps) {
+export function PassageList({ passages, edition }: PassageListProps) {
   return (
     <ol className="m-0 flex list-none flex-col gap-[var(--space-8)] p-0">
       {passages.map((passage) => (
         <li key={passage.reference}>
           <Link
-            to={passagePath(passage.bookSlug, passage.chapter, { start: passage.start, end: passage.end })}
+            to={passagePath(
+              passage.editions.includes(edition) ? edition : passage.editions[0],
+              passage.bookSlug,
+              passage.chapter,
+              { start: passage.start, end: passage.end },
+            )}
             className="font-sans text-[var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-[var(--color-accent)] no-underline hover:underline"
           >
             {passage.reference}

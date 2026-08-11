@@ -8,20 +8,22 @@ const CHAPTER: ChapterText = {
   book: 'João',
   abbrev: 'Jo',
   slug: 'joao',
-  chapter: 3,
+  edition: 'catolica',
+  chapter: '3',
   status: 'checked',
   verses: [
-    { n: 16, t: 'Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito.' },
-    { n: 17, t: 'Ele disse: "não vim julgar o mundo".' },
+    { n: '16', t: 'Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito.' },
+    { n: '17', t: 'Ele disse: "não vim julgar o mundo".' },
   ],
 }
 
 const chapterFetch = vi.fn().mockResolvedValue({ ok: true, json: async () => CHAPTER })
 const missingFetch = vi.fn().mockResolvedValue({ ok: false, json: async () => null })
 
-const reader = (verses: { start: number; end: number } | null) => ({
+const reader = (verses: { start: string; end: string } | null, edition = 'catolica') => ({
   origin: ORIGIN,
   kind: 'reader',
+  edition,
   slug: 'joao',
   chapter: '3',
   verses,
@@ -29,7 +31,7 @@ const reader = (verses: { start: number; end: number } | null) => ({
 
 describe('resolvePreview for the reader', () => {
   it('titles the unfurl with the passage and quotes it underneath', async () => {
-    const preview = await resolvePreview(reader({ start: 16, end: 16 }), chapterFetch)
+    const preview = await resolvePreview(reader({ start: '16', end: '16' }), chapterFetch)
     expect(preview?.title).toBe('João 3:16')
     expect(preview?.description).toBe(CHAPTER.verses[0].t)
   })
@@ -37,28 +39,41 @@ describe('resolvePreview for the reader', () => {
   // WhatsApp resolves og:image against nothing: a relative URL is a missing
   // image, and a missing image is a link that does not unfurl at all.
   it('points at the card with an absolute URL', async () => {
-    const preview = await resolvePreview(reader({ start: 16, end: 17 }), chapterFetch)
-    expect(preview?.image).toBe(`${ORIGIN}/api/og?kind=reader&slug=joao&chapter=3&v=16-17`)
+    const preview = await resolvePreview(reader({ start: '16', end: '17' }), chapterFetch)
+    expect(preview?.image).toBe(`${ORIGIN}/api/og?kind=reader&edition=catolica&slug=joao&chapter=3&v=16-17`)
   })
 
   it('links back to the page that was shared, passage and all', async () => {
-    const preview = await resolvePreview(reader({ start: 16, end: 17 }), chapterFetch)
-    expect(preview?.url).toBe(`${ORIGIN}/ler/joao/3?v=16-17`)
+    const preview = await resolvePreview(reader({ start: '16', end: '17' }), chapterFetch)
+    expect(preview?.url).toBe(`${ORIGIN}/ler/catolica/joao/3?v=16-17`)
+  })
+
+  // The two editions do not number Esther and Daniel alike, so a card that
+  // dropped the edition would quote the wrong verse under the right reference.
+  it('keeps the shared link inside the edition it was shared from', async () => {
+    const preview = await resolvePreview(reader({ start: '16', end: '16' }, 'protestante'), chapterFetch)
+    expect(chapterFetch).toHaveBeenCalledWith(`${ORIGIN}/og/protestante/joao/3.json`)
+    expect(preview?.url).toBe(`${ORIGIN}/ler/protestante/joao/3?v=16`)
+    expect(preview?.image).toContain('edition=protestante')
+  })
+
+  it('answers nothing when the route names no edition', async () => {
+    await expect(resolvePreview({ ...reader(null), edition: null }, chapterFetch)).resolves.toBeNull()
   })
 
   it('drops the passage from both when the link names no verses', async () => {
     const preview = await resolvePreview(reader(null), chapterFetch)
     expect(preview?.title).toBe('João 3')
-    expect(preview?.url).toBe(`${ORIGIN}/ler/joao/3`)
-    expect(preview?.image).toBe(`${ORIGIN}/api/og?kind=reader&slug=joao&chapter=3`)
+    expect(preview?.url).toBe(`${ORIGIN}/ler/catolica/joao/3`)
+    expect(preview?.image).toBe(`${ORIGIN}/api/og?kind=reader&edition=catolica&slug=joao&chapter=3`)
   })
 
   // The image URL is what WhatsApp caches the preview under, so it has to name
   // the passage the card actually drew, not the one the link asked for.
   it('names the verses that exist when the link overshoots the chapter', async () => {
-    const preview = await resolvePreview(reader({ start: 17, end: 90 }), chapterFetch)
+    const preview = await resolvePreview(reader({ start: '17', end: '90' }), chapterFetch)
     expect(preview?.title).toBe('João 3:17')
-    expect(preview?.image).toBe(`${ORIGIN}/api/og?kind=reader&slug=joao&chapter=3&v=17`)
+    expect(preview?.image).toBe(`${ORIGIN}/api/og?kind=reader&edition=catolica&slug=joao&chapter=3&v=17`)
   })
 
   it('answers nothing for a chapter that does not exist', async () => {
@@ -67,7 +82,7 @@ describe('resolvePreview for the reader', () => {
 })
 
 describe('resolvePreview for a theme', () => {
-  const theme = { origin: ORIGIN, kind: 'theme', slug: 'amor', chapter: null, verses: null }
+  const theme = { origin: ORIGIN, kind: 'theme', edition: null, slug: 'amor', chapter: null, verses: null }
 
   it('titles the unfurl with the theme and counts its passages', async () => {
     const preview = await resolvePreview(theme, chapterFetch)
@@ -83,14 +98,14 @@ describe('resolvePreview for a theme', () => {
 
 describe('resolvePreview for anything else', () => {
   it('answers nothing, leaving the route to the site-wide tags', async () => {
-    const request = { origin: ORIGIN, kind: null, slug: null, chapter: null, verses: null }
+    const request = { origin: ORIGIN, kind: null, edition: null, slug: null, chapter: null, verses: null }
     await expect(resolvePreview(request, chapterFetch)).resolves.toBeNull()
   })
 })
 
 describe('renderPreviewHtml', () => {
   it('writes the tags a crawler comes for', async () => {
-    const preview = await resolvePreview(reader({ start: 16, end: 16 }), chapterFetch)
+    const preview = await resolvePreview(reader({ start: '16', end: '16' }), chapterFetch)
     const html = renderPreviewHtml(preview!)
 
     expect(html).toContain('<meta property="og:title" content="João 3:16" />')
@@ -108,7 +123,7 @@ describe('renderPreviewHtml', () => {
       title: 'João 3:17',
       description: CHAPTER.verses[1].t,
       image: `${ORIGIN}/api/og`,
-      url: `${ORIGIN}/ler/joao/3`,
+      url: `${ORIGIN}/ler/catolica/joao/3`,
     })
 
     expect(html).toContain('&quot;não vim julgar o mundo&quot;')
@@ -125,14 +140,17 @@ describe('renderPreviewHtml', () => {
 
 describe('cardContentFor', () => {
   it('draws the passage with the review status of the book it came from', async () => {
-    const content = await cardContentFor(reader({ start: 16, end: 16 }), chapterFetch)
+    const content = await cardContentFor(reader({ start: '16', end: '16' }), chapterFetch)
     expect(content).toEqual({ eyebrow: 'João 3:16', body: CHAPTER.verses[0].t, status: 'checked' })
   })
 
   // The thematic index has not been through human review. The page says so, and
   // the card travels further than the page.
   it('carries the missing review over to a theme card', async () => {
-    const content = await cardContentFor({ origin: ORIGIN, kind: 'theme', slug: 'amor', chapter: null, verses: null }, chapterFetch)
+    const content = await cardContentFor(
+      { origin: ORIGIN, kind: 'theme', edition: null, slug: 'amor', chapter: null, verses: null },
+      chapterFetch,
+    )
     expect(content.eyebrow).toBe('Amor')
     expect(content.note).toBe('Índice sem revisão humana')
     expect(content.status).toBeUndefined()
@@ -141,7 +159,7 @@ describe('cardContentFor', () => {
   // A card that fails to render is a link that does not unfurl, so there is
   // always something to draw.
   it('falls back to the site card when the passage cannot be found', async () => {
-    const content = await cardContentFor(reader({ start: 1, end: 1 }), missingFetch)
+    const content = await cardContentFor(reader({ start: '1', end: '1' }), missingFetch)
     expect(content.eyebrow).toBe('Das línguas originais')
   })
 })

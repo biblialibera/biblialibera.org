@@ -99,13 +99,13 @@
     "book": "Tobias",
     "ref": "Tb",
     "canon": "DC",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Judite",
     "ref": "Jt",
     "canon": "DC",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Ester",
@@ -117,13 +117,13 @@
     "book": "1 Macabeus",
     "ref": "1Mc",
     "canon": "DC",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "2 Macabeus",
     "ref": "2Mc",
     "canon": "DC",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Jó",
@@ -159,13 +159,13 @@
     "book": "Sabedoria",
     "ref": "Sb",
     "canon": "DC",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Eclesiástico",
     "ref": "Eclo",
     "canon": "DC",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Isaías",
@@ -189,7 +189,7 @@
     "book": "Baruc",
     "ref": "Br",
     "canon": "DC",
-    "status": "not-translated"
+    "status": "checked"
   },
   {
     "book": "Ezequiel",

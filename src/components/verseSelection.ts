@@ -22,9 +22,20 @@
  * malformed cases.
  */
 
+/**
+ * How a verse is named: its label, not its number.
+ *
+ * Almost always a plain number written out ("16"), but in the Catholic Esther
+ * the Greek additions hang off a host verse as lettered sub-verses, and chapter
+ * 5 runs `1, 1a … 1k, 2, 2a … 2e, 3`. There "1" no longer names one verse, so
+ * the label is the identity: it is what goes in `?v=`, what the DOM id is built
+ * from, and what a reference prints.
+ */
+export type VerseId = string
+
 export interface VerseRange {
-  start: number
-  end: number
+  start: VerseId
+  end: VerseId
 }
 
 export interface SelectionState {
@@ -34,7 +45,7 @@ export interface SelectionState {
    * extending backwards (shift-clicking above the first selected verse) keeps
    * pivoting on the verse the reader originally picked.
    */
-  anchor: number | null
+  anchor: VerseId | null
 }
 
 export interface VerseClick {
@@ -43,15 +54,56 @@ export interface VerseClick {
   touch: boolean
 }
 
-const LEGACY_VERSE_HASH = /^v(\d+)(?:-(\d+))?$/
-const VERSE_PARAM = /^(\d+)(?:-(\d+))?$/
+/** A verse label: a number, optionally followed by a sub-verse letter. */
+const VERSE_ID = /^(\d+)([a-z]{1,2})?$/
+const LEGACY_VERSE_HASH = /^v([0-9a-z]+)(?:-([0-9a-z]+))?$/
+const VERSE_PARAM = /^([0-9a-z]+)(?:-([0-9a-z]+))?$/
 /** The query parameter the selection lives in. */
 export const VERSE_PARAM_KEY = 'v'
 
 export const EMPTY_SELECTION: SelectionState = { range: null, anchor: null }
 
+/**
+ * A verse label read off a URL, normalized, or null when it names no verse.
+ *
+ * Normalizing matters because the label is compared for equality all over the
+ * reader: `?v=007` and `?v=7` have to be the same verse, or a hand-typed link
+ * highlights nothing while looking like it should.
+ */
+export function parseVerseId(raw: string): VerseId | null {
+  const match = VERSE_ID.exec(raw)
+  if (!match) return null
+
+  const number = Number(match[1])
+  // A digit run long enough to overflow parses as Infinity, and a chapter has
+  // no verse 9e308: treat anything outside the safe integers as no verse rather
+  // than letting it reach a range or a formatted "?v=2-Infinity".
+  if (!Number.isSafeInteger(number) || number < 1) return null
+
+  return `${number}${match[2] ?? ''}`
+}
+
+/**
+ * Reading order for two verse labels: by number first, then by sub-verse
+ * letter, with the host verse ahead of its additions ("1" before "1a").
+ *
+ * A total order rather than a lookup into the chapter, so that this module can
+ * stay import-free and the link-preview functions can decide what a range
+ * covers with nothing but the URL in hand.
+ */
+export function compareVerses(a: VerseId, b: VerseId): number {
+  const left = VERSE_ID.exec(a)
+  const right = VERSE_ID.exec(b)
+  if (!left || !right) return 0
+
+  const byNumber = Number(left[1]) - Number(right[1])
+  if (byNumber !== 0) return byNumber
+
+  return (left[2] ?? '').localeCompare(right[2] ?? '')
+}
+
 /** The DOM id of a verse: what the reader scrolls to, and a plain anchor. */
-export function verseElementId(verse: number): string {
+export function verseElementId(verse: VerseId): string {
   return `v${verse}`
 }
 
@@ -99,20 +151,16 @@ export function parseLegacyVerseHash(hash: string): VerseRange | null {
 
 /** `[, start, end?]` from either pattern to a range. */
 function rangeFromMatch(match: RegExpExecArray): VerseRange | null {
-  const start = Number(match[1])
-  const end = match[2] === undefined ? start : Number(match[2])
-  // A digit run long enough to overflow parses as Infinity, and a chapter has
-  // no verse 9e308: treat anything outside the safe integers as no selection
-  // rather than letting it reach a range or a formatted "?v=2-Infinity".
-  if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end)) return null
-  if (start < 1 || end < 1) return null
+  const start = parseVerseId(match[1])
+  const end = match[2] === undefined ? start : parseVerseId(match[2])
+  if (start === null || end === null) return null
 
-  return start <= end ? { start, end } : { start: end, end: start }
+  return compareVerses(start, end) <= 0 ? { start, end } : { start: end, end: start }
 }
 
 /** The `v` query value for a selection, e.g. `16` or `16-18`. */
 export function formatVerseParam(range: VerseRange): string {
-  return range.start === range.end ? `${range.start}` : `${range.start}-${range.end}`
+  return range.start === range.end ? range.start : `${range.start}-${range.end}`
 }
 
 /**
@@ -123,8 +171,8 @@ export function verseSearch(range: VerseRange | null): string {
   return range ? `?${VERSE_PARAM_KEY}=${formatVerseParam(range)}` : ''
 }
 
-export function isVerseSelected(range: VerseRange | null, verse: number): boolean {
-  return range !== null && verse >= range.start && verse <= range.end
+export function isVerseSelected(range: VerseRange | null, verse: VerseId): boolean {
+  return range !== null && compareVerses(verse, range.start) >= 0 && compareVerses(verse, range.end) <= 0
 }
 
 export function rangesEqual(a: VerseRange | null, b: VerseRange | null): boolean {
@@ -140,12 +188,13 @@ export function rangesEqual(a: VerseRange | null, b: VerseRange | null): boolean
  * back to that single verse, which is how a reader on a phone escapes a range
  * without a modifier. Clicking the only selected verse clears the selection.
  */
-export function nextSelection(state: SelectionState, verse: number, click: VerseClick): SelectionState {
+export function nextSelection(state: SelectionState, verse: VerseId, click: VerseClick): SelectionState {
   const { range, anchor } = state
   const inside = isVerseSelected(range, verse)
 
   if (anchor !== null && (click.shiftKey || (click.touch && !inside))) {
-    return { range: { start: Math.min(anchor, verse), end: Math.max(anchor, verse) }, anchor }
+    const forward = compareVerses(anchor, verse) <= 0
+    return { range: { start: forward ? anchor : verse, end: forward ? verse : anchor }, anchor }
   }
 
   if (range !== null && range.start === verse && range.end === verse) {
@@ -159,7 +208,7 @@ export function nextSelection(state: SelectionState, verse: number, click: Verse
  * How a passage is written out: "João 3:16", "João 3:16-18", "João 3" when
  * nothing is selected. Same shape the thematic index uses for its references.
  */
-export function passageReference(bookName: string, chapter: number, range: VerseRange | null): string {
+export function passageReference(bookName: string, chapter: string, range: VerseRange | null): string {
   if (!range) return `${bookName} ${chapter}`
   return `${bookName} ${chapter}:${formatVerseParam(range)}`
 }
@@ -170,7 +219,17 @@ export function passageReference(bookName: string, chapter: number, range: Verse
  * The one URL form there is: what the thematic index links to, what the share
  * button hands over, and what the address bar shows while reading are the same
  * string, so any of them can be copied anywhere and still unfurl.
+ *
+ * The edition leads, because the two editions disagree about what a reference
+ * names: Dn 3,24 is the Prayer of Azariah in the Catholic edition and the
+ * Hebrew verse in the Protestant one. A reader's own choice of edition is
+ * remembered separately; what a link carries is what the link opens.
  */
-export function passagePath(bookSlug: string, chapter: number, range: VerseRange | null): string {
-  return `/ler/${bookSlug}/${chapter}${verseSearch(range)}`
+export function passagePath(
+  edition: string,
+  bookSlug: string,
+  chapter: string,
+  range: VerseRange | null,
+): string {
+  return `/ler/${edition}/${bookSlug}/${chapter}${verseSearch(range)}`
 }

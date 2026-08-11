@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  compareVerses,
   EMPTY_SELECTION,
   footnoteElementId,
   footnoteRefElementId,
@@ -7,6 +8,7 @@ import {
   isVerseSelected,
   nextSelection,
   parseLegacyVerseHash,
+  parseVerseId,
   parseVerseQuery,
   passagePath,
   passageReference,
@@ -21,16 +23,16 @@ import {
 // and rewrites the URL into the query form.
 describe('parseLegacyVerseHash', () => {
   it('reads a single verse and a range', () => {
-    expect(parseLegacyVerseHash('#v16')).toEqual({ start: 16, end: 16 })
-    expect(parseLegacyVerseHash('#v16-18')).toEqual({ start: 16, end: 18 })
+    expect(parseLegacyVerseHash('#v16')).toEqual({ start: '16', end: '16' })
+    expect(parseLegacyVerseHash('#v16-18')).toEqual({ start: '16', end: '18' })
   })
 
   it('works without the leading hash', () => {
-    expect(parseLegacyVerseHash('v3-4')).toEqual({ start: 3, end: 4 })
+    expect(parseLegacyVerseHash('v3-4')).toEqual({ start: '3', end: '4' })
   })
 
   it('normalises a backwards range', () => {
-    expect(parseLegacyVerseHash('#v18-16')).toEqual({ start: 16, end: 18 })
+    expect(parseLegacyVerseHash('#v18-16')).toEqual({ start: '16', end: '18' })
   })
 
   it('finds no passage in an empty hash', () => {
@@ -44,7 +46,7 @@ describe('parseLegacyVerseHash', () => {
     expect(parseLegacyVerseHash('#fn-formal-1')).toBeNull()
     expect(parseLegacyVerseHash('#fnref-original-12')).toBeNull()
     expect(parseLegacyVerseHash('#conteudo')).toBeNull()
-    expect(parseLegacyVerseHash('#v16x')).toBeNull()
+    expect(parseLegacyVerseHash('#v16-')).toBeNull()
     expect(parseLegacyVerseHash('#v')).toBeNull()
   })
 
@@ -55,13 +57,66 @@ describe('parseLegacyVerseHash', () => {
   })
 })
 
+// The Greek additions to Esther hang off a host verse as lettered sub-verses,
+// so a verse is named by its label and a label is not always a number. The
+// order between them is what a range is built out of, and it has to hold
+// without asking the chapter, because the link-preview functions decide what a
+// shared URL covers with nothing but the URL.
+describe('verse labels', () => {
+  it('reads a sub-verse and a range across one', () => {
+    expect(parseVerseQuery('?v=1a')).toEqual({ start: '1a', end: '1a' })
+    expect(parseVerseQuery('?v=1a-1k')).toEqual({ start: '1a', end: '1k' })
+    expect(parseVerseQuery('?v=1-2')).toEqual({ start: '1', end: '2' })
+  })
+
+  it('puts the host verse ahead of its additions', () => {
+    expect(compareVerses('1', '1a')).toBeLessThan(0)
+    expect(compareVerses('1k', '2')).toBeLessThan(0)
+    expect(compareVerses('2', '10')).toBeLessThan(0)
+    expect(compareVerses('1a', '1a')).toBe(0)
+  })
+
+  it('sweeps up the sub-verses inside a numeric range', () => {
+    const range = { start: '1', end: '2' }
+    expect(['1', '1a', '1k', '2', '2a', '3'].map((v) => isVerseSelected(range, v))).toEqual([
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+    ])
+  })
+
+  it('normalises a label so a hand-typed link still lights up', () => {
+    expect(parseVerseId('007')).toBe('7')
+    expect(parseVerseQuery('?v=007')).toEqual({ start: '7', end: '7' })
+  })
+
+  it('normalises a backwards range across sub-verses', () => {
+    expect(parseVerseQuery('?v=1k-1a')).toEqual({ start: '1a', end: '1k' })
+  })
+
+  it('names a sub-verse in the DOM and in a reference', () => {
+    expect(verseElementId('1a')).toBe('v1a')
+    expect(passageReference('Ester', '5', { start: '1a', end: '1k' })).toBe('Ester 5:1a-1k')
+  })
+
+  it('rejects what is not a label', () => {
+    expect(parseVerseId('abc')).toBeNull()
+    expect(parseVerseId('0')).toBeNull()
+    expect(parseVerseId('1A')).toBeNull()
+    expect(parseVerseId('')).toBeNull()
+  })
+})
+
 describe('verseSearch', () => {
   it('collapses a one-verse range', () => {
-    expect(verseSearch({ start: 9, end: 9 })).toBe('?v=9')
+    expect(verseSearch({ start: '9', end: '9' })).toBe('?v=9')
   })
 
   it('writes a range', () => {
-    expect(verseSearch({ start: 1, end: 4 })).toBe('?v=1-4')
+    expect(verseSearch({ start: '1', end: '4' })).toBe('?v=1-4')
   })
 
   // Not `?v=`: an empty parameter left behind is one more thing in a URL
@@ -71,7 +126,7 @@ describe('verseSearch', () => {
   })
 
   it('round-trips through parseVerseQuery', () => {
-    for (const range of [{ start: 1, end: 1 }, { start: 2, end: 7 }, { start: 150, end: 176 }]) {
+    for (const range of [{ start: '1', end: '1' }, { start: '2', end: '7' }, { start: '150', end: '176' }]) {
       expect(parseVerseQuery(verseSearch(range))).toEqual(range)
     }
   })
@@ -79,24 +134,24 @@ describe('verseSearch', () => {
 
 describe('isVerseSelected', () => {
   it('covers the whole inclusive range', () => {
-    const range = { start: 16, end: 18 }
-    expect([15, 16, 17, 18, 19].map((v) => isVerseSelected(range, v))).toEqual([false, true, true, true, false])
+    const range = { start: '16', end: '18' }
+    expect(['15', '16', '17', '18', '19'].map((v) => isVerseSelected(range, v))).toEqual([false, true, true, true, false])
   })
 
   it('selects nothing when there is no range', () => {
-    expect(isVerseSelected(null, 1)).toBe(false)
+    expect(isVerseSelected(null, '1')).toBe(false)
   })
 })
 
 describe('rangesEqual', () => {
   it('compares by value', () => {
-    expect(rangesEqual({ start: 1, end: 2 }, { start: 1, end: 2 })).toBe(true)
-    expect(rangesEqual({ start: 1, end: 2 }, { start: 1, end: 3 })).toBe(false)
+    expect(rangesEqual({ start: '1', end: '2' }, { start: '1', end: '2' })).toBe(true)
+    expect(rangesEqual({ start: '1', end: '2' }, { start: '1', end: '3' })).toBe(false)
   })
 
   it('treats two empty selections as equal', () => {
     expect(rangesEqual(null, null)).toBe(true)
-    expect(rangesEqual(null, { start: 1, end: 1 })).toBe(false)
+    expect(rangesEqual(null, { start: '1', end: '1' })).toBe(false)
   })
 })
 
@@ -105,45 +160,45 @@ describe('nextSelection with a mouse', () => {
   const shiftClick = { shiftKey: true, touch: false }
 
   it('selects a single verse', () => {
-    expect(nextSelection(EMPTY_SELECTION, 16, click)).toEqual({ range: { start: 16, end: 16 }, anchor: 16 })
+    expect(nextSelection(EMPTY_SELECTION, '16', click)).toEqual({ range: { start: '16', end: '16' }, anchor: '16' })
   })
 
   it('extends forwards on shift-click', () => {
-    const first = nextSelection(EMPTY_SELECTION, 16, click)
-    expect(nextSelection(first, 18, shiftClick)).toEqual({ range: { start: 16, end: 18 }, anchor: 16 })
+    const first = nextSelection(EMPTY_SELECTION, '16', click)
+    expect(nextSelection(first, '18', shiftClick)).toEqual({ range: { start: '16', end: '18' }, anchor: '16' })
   })
 
   it('extends backwards on shift-click', () => {
-    const first = nextSelection(EMPTY_SELECTION, 16, click)
-    expect(nextSelection(first, 14, shiftClick)).toEqual({ range: { start: 14, end: 16 }, anchor: 16 })
+    const first = nextSelection(EMPTY_SELECTION, '16', click)
+    expect(nextSelection(first, '14', shiftClick)).toEqual({ range: { start: '14', end: '16' }, anchor: '16' })
   })
 
   // The anchor is the verse the reader picked, so widening then narrowing
   // keeps pivoting on it instead of creeping along with the range edge.
   it('keeps pivoting on the original anchor when re-extending', () => {
-    let state = nextSelection(EMPTY_SELECTION, 16, click)
-    state = nextSelection(state, 20, shiftClick)
-    state = nextSelection(state, 18, shiftClick)
-    expect(state).toEqual({ range: { start: 16, end: 18 }, anchor: 16 })
+    let state = nextSelection(EMPTY_SELECTION, '16', click)
+    state = nextSelection(state, '20', shiftClick)
+    state = nextSelection(state, '18', shiftClick)
+    expect(state).toEqual({ range: { start: '16', end: '18' }, anchor: '16' })
   })
 
   it('shift-clicking with nothing selected just selects that verse', () => {
-    expect(nextSelection(EMPTY_SELECTION, 5, shiftClick)).toEqual({ range: { start: 5, end: 5 }, anchor: 5 })
+    expect(nextSelection(EMPTY_SELECTION, '5', shiftClick)).toEqual({ range: { start: '5', end: '5' }, anchor: '5' })
   })
 
   it('replaces the selection on a plain click elsewhere', () => {
-    const range = nextSelection(nextSelection(EMPTY_SELECTION, 16, click), 18, shiftClick)
-    expect(nextSelection(range, 30, click)).toEqual({ range: { start: 30, end: 30 }, anchor: 30 })
+    const range = nextSelection(nextSelection(EMPTY_SELECTION, '16', click), '18', shiftClick)
+    expect(nextSelection(range, '30', click)).toEqual({ range: { start: '30', end: '30' }, anchor: '30' })
   })
 
   it('clears when clicking the only selected verse', () => {
-    const first = nextSelection(EMPTY_SELECTION, 16, click)
-    expect(nextSelection(first, 16, click)).toEqual(EMPTY_SELECTION)
+    const first = nextSelection(EMPTY_SELECTION, '16', click)
+    expect(nextSelection(first, '16', click)).toEqual(EMPTY_SELECTION)
   })
 
   it('does not clear when clicking a verse inside a range', () => {
-    const range = nextSelection(nextSelection(EMPTY_SELECTION, 16, click), 20, shiftClick)
-    expect(nextSelection(range, 18, click)).toEqual({ range: { start: 18, end: 18 }, anchor: 18 })
+    const range = nextSelection(nextSelection(EMPTY_SELECTION, '16', click), '20', shiftClick)
+    expect(nextSelection(range, '18', click)).toEqual({ range: { start: '18', end: '18' }, anchor: '18' })
   })
 })
 
@@ -151,37 +206,37 @@ describe('nextSelection with a finger', () => {
   const tap = { shiftKey: false, touch: true }
 
   it('selects a single verse on the first tap', () => {
-    expect(nextSelection(EMPTY_SELECTION, 16, tap)).toEqual({ range: { start: 16, end: 16 }, anchor: 16 })
+    expect(nextSelection(EMPTY_SELECTION, '16', tap)).toEqual({ range: { start: '16', end: '16' }, anchor: '16' })
   })
 
   // There is no shift key on a phone, so a second tap outside the selection is
   // what extends a range there.
   it('extends when tapping a verse outside the selection', () => {
-    const first = nextSelection(EMPTY_SELECTION, 16, tap)
-    expect(nextSelection(first, 18, tap)).toEqual({ range: { start: 16, end: 18 }, anchor: 16 })
+    const first = nextSelection(EMPTY_SELECTION, '16', tap)
+    expect(nextSelection(first, '18', tap)).toEqual({ range: { start: '16', end: '18' }, anchor: '16' })
   })
 
   it('extends backwards too', () => {
-    const first = nextSelection(EMPTY_SELECTION, 16, tap)
-    expect(nextSelection(first, 12, tap)).toEqual({ range: { start: 12, end: 16 }, anchor: 16 })
+    const first = nextSelection(EMPTY_SELECTION, '16', tap)
+    expect(nextSelection(first, '12', tap)).toEqual({ range: { start: '12', end: '16' }, anchor: '16' })
   })
 
   // Without this, a range on touch would be a trap: every further tap would
   // widen it and there would be no way back to a single verse.
   it('collapses to one verse when tapping inside the range', () => {
-    const range = nextSelection(nextSelection(EMPTY_SELECTION, 16, tap), 20, tap)
-    expect(nextSelection(range, 18, tap)).toEqual({ range: { start: 18, end: 18 }, anchor: 18 })
+    const range = nextSelection(nextSelection(EMPTY_SELECTION, '16', tap), '20', tap)
+    expect(nextSelection(range, '18', tap)).toEqual({ range: { start: '18', end: '18' }, anchor: '18' })
   })
 
   it('clears when tapping the only selected verse', () => {
-    const first = nextSelection(EMPTY_SELECTION, 16, tap)
-    expect(nextSelection(first, 16, tap)).toEqual(EMPTY_SELECTION)
+    const first = nextSelection(EMPTY_SELECTION, '16', tap)
+    expect(nextSelection(first, '16', tap)).toEqual(EMPTY_SELECTION)
   })
 })
 
 describe('element ids', () => {
   it('names a verse, which is what the reader scrolls to', () => {
-    expect(verseElementId(16)).toBe('v16')
+    expect(verseElementId('16')).toBe('v16')
   })
 
   it('prefixes footnotes so they never parse as verses', () => {
@@ -204,32 +259,34 @@ describe('passagePath', () => {
   // hands over and what the address bar shows are the same string, so a URL
   // copied from any of them unfurls into the passage it names.
   it('carries the passage where a preview crawler can see it', () => {
-    expect(passagePath('josue', 1, { start: 9, end: 9 })).toBe('/ler/josue/1?v=9')
-    expect(passagePath('salmos', 23, { start: 1, end: 4 })).toBe('/ler/salmos/23?v=1-4')
+    expect(passagePath('catolica', 'josue', '1', { start: '9', end: '9' })).toBe('/ler/catolica/josue/1?v=9')
+    expect(passagePath('protestante', 'salmos', '23', { start: '1', end: '4' })).toBe(
+      '/ler/protestante/salmos/23?v=1-4',
+    )
   })
 
   it('points at the chapter alone when nothing is selected', () => {
-    expect(passagePath('joao', 3, null)).toBe('/ler/joao/3')
+    expect(passagePath('catolica', 'joao', '3', null)).toBe('/ler/catolica/joao/3')
   })
 
   it('round-trips: the path a link carries selects the same verses on arrival', () => {
-    const range = { start: 16, end: 18 }
-    const [, search] = passagePath('joao', 3, range).split('?')
+    const range = { start: '16', end: '18' }
+    const [, search] = passagePath('catolica', 'joao', '3', range).split('?')
     expect(parseVerseQuery(`?${search}`)).toEqual(range)
   })
 })
 
 describe('parseVerseQuery', () => {
   it('reads a single verse', () => {
-    expect(parseVerseQuery('?v=16')).toEqual({ start: 16, end: 16 })
+    expect(parseVerseQuery('?v=16')).toEqual({ start: '16', end: '16' })
   })
 
   it('reads a range', () => {
-    expect(parseVerseQuery('?v=16-18')).toEqual({ start: 16, end: 18 })
+    expect(parseVerseQuery('?v=16-18')).toEqual({ start: '16', end: '18' })
   })
 
   it('finds the passage among other parameters', () => {
-    expect(parseVerseQuery('?utm_source=whatsapp&v=3-4')).toEqual({ start: 3, end: 4 })
+    expect(parseVerseQuery('?utm_source=whatsapp&v=3-4')).toEqual({ start: '3', end: '4' })
   })
 
   it('reports no passage when the query has none', () => {
@@ -247,35 +304,35 @@ describe('parseVerseQuery', () => {
     expect(parseVerseQuery('?v=0')).toBeNull()
     expect(parseVerseQuery('?v=abc')).toBeNull()
     expect(parseVerseQuery(`?v=${'9'.repeat(400)}`)).toBeNull()
-    expect(parseVerseQuery('?v=18-16')).toEqual({ start: 16, end: 18 })
+    expect(parseVerseQuery('?v=18-16')).toEqual({ start: '16', end: '18' })
   })
 })
 
 describe('formatVerseParam', () => {
   it('writes a single verse', () => {
-    expect(formatVerseParam({ start: 16, end: 16 })).toBe('16')
+    expect(formatVerseParam({ start: '16', end: '16' })).toBe('16')
   })
 
   it('writes a range', () => {
-    expect(formatVerseParam({ start: 16, end: 18 })).toBe('16-18')
+    expect(formatVerseParam({ start: '16', end: '18' })).toBe('16-18')
   })
 
   it('round-trips through the query', () => {
-    const range = { start: 16, end: 18 }
+    const range = { start: '16', end: '18' }
     expect(parseVerseQuery(`?v=${formatVerseParam(range)}`)).toEqual(range)
   })
 })
 
 describe('passageReference', () => {
   it('writes a single verse', () => {
-    expect(passageReference('João', 3, { start: 16, end: 16 })).toBe('João 3:16')
+    expect(passageReference('João', '3', { start: '16', end: '16' })).toBe('João 3:16')
   })
 
   it('writes a range', () => {
-    expect(passageReference('João', 3, { start: 16, end: 18 })).toBe('João 3:16-18')
+    expect(passageReference('João', '3', { start: '16', end: '18' })).toBe('João 3:16-18')
   })
 
   it('names the chapter alone when nothing is selected', () => {
-    expect(passageReference('João', 3, null)).toBe('João 3')
+    expect(passageReference('João', '3', null)).toBe('João 3')
   })
 })

@@ -1,8 +1,10 @@
 import indexData from '../data/themes/index.json'
+import type { ChapterId } from './readerData'
+import type { VerseId } from './verseSelection'
 
 /** One verse inside a curated passage. */
 export interface ThemeVerse {
-  verse: number
+  verse: VerseId
   text: string
 }
 
@@ -13,9 +15,15 @@ export interface ThemePassage {
   book: string
   abbrev: string
   bookSlug: string
-  chapter: number
-  start: number
-  end: number
+  chapter: ChapterId
+  start: VerseId
+  end: VerseId
+  /**
+   * The editions this passage can be opened in. Every curated passage today
+   * reads the same in both, and the themes build refuses to emit one that does
+   * not; a book only one edition carries would land here as a single key.
+   */
+  editions: string[]
   verses: ThemeVerse[]
 }
 

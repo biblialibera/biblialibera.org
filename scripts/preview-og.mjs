@@ -24,7 +24,7 @@ import { cardContentFor } from '../api/_lib/preview.ts';
 const publicDir = new URL('../public/', import.meta.url);
 const outDir = new URL('../.og-preview/', import.meta.url);
 
-/** Stands in for fetch: /og/joao/3.json is public/og/joao/3.json on disk. */
+/** Stands in for fetch: /og/catolica/joao/3.json is that path under public/. */
 const fileFetch = async (url) => {
   const path = new URL(new URL(url).pathname.replace(/^\//, ''), publicDir);
   try {
@@ -36,13 +36,22 @@ const fileFetch = async (url) => {
 };
 
 const samples = [
-  { name: 'verse', kind: 'reader', slug: 'joao', chapter: '3', v: '16' },
-  { name: 'range', kind: 'reader', slug: 'joao', chapter: '3', v: '16-18' },
-  { name: 'range-long', kind: 'reader', slug: 'salmos', chapter: '23', v: '1-6' },
-  { name: 'chapter', kind: 'reader', slug: 'genesis', chapter: '1', v: null },
-  { name: 'rtl-book', kind: 'reader', slug: 'isaias', chapter: '53', v: '5' },
-  { name: 'theme', kind: 'theme', slug: 'amor', chapter: null, v: null },
-  { name: 'site', kind: null, slug: null, chapter: null, v: null },
+  { name: 'verse', kind: 'reader', edition: 'catolica', slug: 'joao', chapter: '3', v: '16' },
+  { name: 'range', kind: 'reader', edition: 'catolica', slug: 'joao', chapter: '3', v: '16-18' },
+  { name: 'range-long', kind: 'reader', edition: 'catolica', slug: 'salmos', chapter: '23', v: '1-6' },
+  { name: 'chapter', kind: 'reader', edition: 'protestante', slug: 'genesis', chapter: '1', v: null },
+  { name: 'rtl-book', kind: 'reader', edition: 'catolica', slug: 'isaias', chapter: '53', v: '5' },
+  // Deuterocanonical, so it only exists in one of the two editions.
+  { name: 'deuterocanonical', kind: 'reader', edition: 'catolica', slug: 'tobias', chapter: '4', v: '15' },
+  // The same reference in the two editions, which is the whole reason the
+  // edition is in the URL: this is the Prayer of Azariah in one and the
+  // Hebrew verse in the other.
+  { name: 'daniel-catolica', kind: 'reader', edition: 'catolica', slug: 'daniel', chapter: '3', v: '24' },
+  { name: 'daniel-protestante', kind: 'reader', edition: 'protestante', slug: 'daniel', chapter: '3', v: '24' },
+  // Lettered sub-verses, which only the assembled Esther has.
+  { name: 'sub-verse', kind: 'reader', edition: 'catolica', slug: 'ester', chapter: '5', v: '1a-1c' },
+  { name: 'theme', kind: 'theme', edition: null, slug: 'amor', chapter: null, v: null },
+  { name: 'site', kind: null, edition: null, slug: null, chapter: null, v: null },
 ];
 
 mkdirSync(fileURLToPath(outDir), { recursive: true });
@@ -59,6 +68,6 @@ for (const sample of samples) {
 }
 
 function parseRange(value) {
-  const [start, end] = value.split('-').map(Number);
+  const [start, end] = value.split('-');
   return { start, end: end ?? start };
 }

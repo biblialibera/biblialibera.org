@@ -6,7 +6,14 @@ import { ChapterRail } from './ChapterRail'
 const renderRail = (props: Partial<Parameters<typeof ChapterRail>[0]> = {}) =>
   render(
     <MemoryRouter>
-      <ChapterRail bookSlug="jonas" abbrev="Jn" chapters={4} current={2} {...props} />
+      <ChapterRail
+        edition="catolica"
+        bookSlug="jonas"
+        abbrev="Jn"
+        chapters={['1', '2', '3', '4']}
+        current="2"
+        {...props}
+      />
     </MemoryRouter>,
   )
 
@@ -18,7 +25,7 @@ describe('ChapterRail', () => {
 
   it('links each number to its chapter', () => {
     renderRail()
-    expect(screen.getByRole('link', { name: '3' })).toHaveAttribute('href', '/ler/jonas/3')
+    expect(screen.getByRole('link', { name: '3' })).toHaveAttribute('href', '/ler/catolica/jonas/3')
   })
 
   it('marks the chapter being read, and only that one', () => {
@@ -37,8 +44,18 @@ describe('ChapterRail', () => {
   })
 
   it('handles a one-chapter book', () => {
-    renderRail({ bookSlug: 'judas', abbrev: 'Jd', chapters: 1, current: 1 })
+    renderRail({ bookSlug: 'judas', abbrev: 'Jd', chapters: ['1'], current: '1' })
     expect(screen.getAllByRole('link')).toHaveLength(1)
+  })
+
+  // Sirach opens with the translator's prologue, whose chapter is "praef".
+  // The cell is a square with room for two characters, so it is cut, and the
+  // accessible name is what says which chapter it is.
+  it('names a chapter that is not a number', () => {
+    renderRail({ bookSlug: 'eclesiastico', abbrev: 'Eclo', chapters: ['praef', '1'], current: 'praef' })
+    const prologue = screen.getByRole('link', { name: 'Prólogo' })
+    expect(prologue).toHaveTextContent('Pr')
+    expect(prologue).toHaveAttribute('href', '/ler/catolica/eclesiastico/praef')
   })
 
   it('is a landmark a screen reader can jump to, named after the book', () => {

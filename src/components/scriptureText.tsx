@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { DivineName, FootnoteRef } from '../design-system/components/reading'
+import type { VerseId } from './verseSelection'
 import { footnoteElementId, footnoteRefElementId } from './verseSelection'
 
 const DIVINE_NAMES: Record<string, string> = {
@@ -48,7 +49,7 @@ export function renderVerseText(text: string, footnotes: string[], idPrefix: str
 }
 
 export interface PassageVerse {
-  verse: number
+  verse: VerseId
   text: string
   footnotes: string[]
 }
@@ -57,7 +58,7 @@ export interface PassageNote {
   number: number
   text: string
   /** The verse the note hangs off, which its back-link names. */
-  verse: number
+  verse: VerseId
 }
 
 /**

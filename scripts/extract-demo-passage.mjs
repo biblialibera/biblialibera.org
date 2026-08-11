@@ -27,7 +27,11 @@ const CORPUS_META = {
 function excerpt(book) {
   const chapter = book.chapters.find((c) => c.chapter === CHAPTER);
   if (!chapter) throw new Error(`chapter ${CHAPTER} not found`);
-  return chapter.verses.slice(0, VERSE_COUNT).map(({ verse, text, footnotes }) => ({ verse, text, footnotes }));
+  // Verses are addressed by label everywhere in the reader, not by number: see
+  // the note on VerseId in src/components/verseSelection.ts.
+  return chapter.verses
+    .slice(0, VERSE_COUNT)
+    .map(({ verse, text, footnotes }) => ({ verse: String(verse), text, footnotes }));
 }
 
 function originalExcerpt() {
@@ -40,7 +44,7 @@ function originalExcerpt() {
   const editionByCorpus = new Map(corpora().map((c) => [c.code, c.name]));
   return {
     info: { corpus: book.corpus, edition: editionByCorpus.get(book.corpus), language: meta.language, dir: meta.dir },
-    verses: chapter.verses.slice(0, VERSE_COUNT).map(({ verse, text }) => ({ verse, text })),
+    verses: chapter.verses.slice(0, VERSE_COUNT).map(({ verse, text }) => ({ verse: String(verse), text })),
   };
 }
 

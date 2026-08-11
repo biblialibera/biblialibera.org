@@ -1,15 +1,16 @@
 import { describe, expect, it } from 'vitest'
 import { previewRequestFrom } from './request.js'
 
-const url = 'https://internal.vercel.app/api/og?kind=reader&slug=joao&chapter=3&v=16-18'
+const url = 'https://internal.vercel.app/api/og?kind=reader&edition=catolica&slug=joao&chapter=3&v=16-18'
 
 describe('previewRequestFrom', () => {
   it('reads the route out of the query the rewrite passes along', () => {
     const request = previewRequestFrom(new Request(url))
     expect(request.kind).toBe('reader')
+    expect(request.edition).toBe('catolica')
     expect(request.slug).toBe('joao')
     expect(request.chapter).toBe('3')
-    expect(request.verses).toEqual({ start: 16, end: 18 })
+    expect(request.verses).toEqual({ start: '16', end: '18' })
   })
 
   // A function is invoked on an internal host. An og:image built from that

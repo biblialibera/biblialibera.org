@@ -14,6 +14,7 @@ const GITHUB_URL = 'https://github.com/biblialibera/biblialibera'
 
 const bookRows = booksData as BookStatusRow[]
 const translatedCount = bookRows.filter((row) => row.status !== 'not-translated').length
+const reviewedCount = bookRows.filter((row) => row.status === 'reviewed').length
 
 const WHY_CARDS = [
   {
@@ -161,9 +162,12 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
             Onde estamos, sem maquiar
           </h2>
           <p className="m-0 mb-[var(--space-5)] text-[var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-secondary)]">
-            {translatedCount} de {bookRows.length} livros já traduzidos e verificados na auditoria automática,
-            entre protocanônicos, deuterocanônicos e o Novo Testamento. A revisão humana está em andamento; nenhum
-            texto circula sem o status declarado.
+            {translatedCount} de {bookRows.length} livros traduzidos e verificados na auditoria automática, entre
+            protocanônicos, deuterocanônicos e o Novo Testamento, e o leitor monta a edição católica ou a
+            protestante a partir deles.{' '}
+            {reviewedCount === 0
+              ? 'Nenhum passou por revisão humana ainda, e é isso que o status de cada linha declara.'
+              : `${reviewedCount} já passaram por revisão humana; nenhum texto circula sem o status declarado.`}
           </p>
           <div className="flex flex-wrap items-center gap-[var(--space-3)]">
             <ReviewSeal status="draft" size="sm" detail />
@@ -174,7 +178,7 @@ function Landing({ theme, onToggleTheme }: LandingProps) {
 
         <BookStatusTable
           rows={bookRows}
-          caption={`${bookRows.length} livros (com os deuterocanônicos) · ${translatedCount} traduzidos e verificados · revisão humana em andamento`}
+          caption={`${bookRows.length} livros (com os deuterocanônicos) · ${translatedCount} traduzidos e verificados · ${reviewedCount} revisados por humanos`}
         />
 
         <div className="mt-[var(--space-5)]">

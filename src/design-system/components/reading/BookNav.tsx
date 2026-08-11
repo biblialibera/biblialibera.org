@@ -4,7 +4,12 @@ export interface NavBook {
   code: string
   name: string
   abbrev: string
-  chapters: number
+  /**
+   * The book's chapters: a count, or the labels themselves. Widened from the
+   * design source's plain count for Sirach, whose first chapter is the
+   * translator's prologue and is labelled "praef" rather than numbered.
+   */
+  chapters: number | (number | string)[]
 }
 
 export interface NavGroup {
@@ -15,13 +20,26 @@ export interface NavGroup {
 export interface BookNavProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
   /** Books grouped by testament. Defaults to the translated books. */
   books?: NavGroup[]
-  edition?: 'catholic' | 'protestant' | 'nt'
+  edition?: string
   onEditionChange?: (edition: string) => void
+  /**
+   * The editions offered. Defaults to the three the design source draws;
+   * a consumer that publishes fewer passes its own rather than rendering
+   * buttons that lead nowhere.
+   */
+  editions?: NavEdition[]
   /** Selected book code (OSIS), e.g. "Jonah". */
   book?: string
-  chapter?: number
+  chapter?: number | string
   onSelectBook?: (code: string) => void
-  onSelectChapter?: (chapter: number) => void
+  onSelectChapter?: (chapter: number | string) => void
+}
+
+export interface NavEdition {
+  value: string
+  label: string
+  /** Short note under the label, e.g. the book count. */
+  note: string
 }
 
 const DEFAULT_BOOKS: NavGroup[] = [
@@ -46,11 +64,16 @@ const DEFAULT_BOOKS: NavGroup[] = [
   },
 ]
 
-const EDITIONS = [
+const DEFAULT_EDITIONS: NavEdition[] = [
   { value: 'catholic', label: 'Católica', note: '73' },
   { value: 'protestant', label: 'Protestante', note: '66' },
   { value: 'nt', label: 'Novo Test.', note: '27' },
 ]
+
+/** A count becomes 1..n; labels are already the list. */
+function chapterList(chapters: number | (number | string)[]): (number | string)[] {
+  return typeof chapters === 'number' ? Array.from({ length: chapters }, (_, i) => i + 1) : chapters
+}
 
 /**
  * BookNav — book + chapter navigation for 66-73 books without a wall of links.
@@ -61,6 +84,7 @@ export function BookNav({
   books = DEFAULT_BOOKS,
   edition = 'catholic',
   onEditionChange,
+  editions = DEFAULT_EDITIONS,
   book = 'Jonah',
   chapter = 2,
   onSelectBook,
@@ -70,7 +94,7 @@ export function BookNav({
 }: BookNavProps) {
   const flat = books.flatMap((g) => g.items)
   const current = flat.find((b) => b.code === book) ?? flat[0]
-  const nChap = current ? current.chapters : 0
+  const chapters = chapterList(current?.chapters ?? 0)
 
   return (
     <div
@@ -88,7 +112,7 @@ export function BookNav({
     >
       {/* Edition */}
       <div style={{ display: 'flex', gap: '4px', padding: 'var(--space-3)', borderBottom: 'var(--border-hair) solid var(--color-border)' }}>
-        {EDITIONS.map((e) => {
+        {editions.map((e) => {
           const active = e.value === edition
           return (
             <button
@@ -187,7 +211,7 @@ export function BookNav({
             {current ? current.abbrev : ''} · Cap.
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3px' }}>
-            {Array.from({ length: nChap }, (_, i) => i + 1).map((c) => {
+            {chapters.map((c) => {
               const active = c === chapter && current?.code === book
               return (
                 <button

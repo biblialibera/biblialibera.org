@@ -34,6 +34,8 @@ export interface Preview {
 export interface PreviewRequest {
   origin: string
   kind: string | null
+  /** Which edition the shared link was reading; the rewrite always carries one. */
+  edition: string | null
   slug: string | null
   chapter: string | null
   verses: VerseRange | null
@@ -46,21 +48,24 @@ export async function resolvePreview(request: PreviewRequest, fetchImpl: Fetch):
   return null
 }
 
-async function readerPreview({ origin, slug, chapter, verses }: PreviewRequest, fetchImpl: Fetch): Promise<Preview | null> {
-  if (!slug) return null
+async function readerPreview(
+  { origin, edition, slug, chapter, verses }: PreviewRequest,
+  fetchImpl: Fetch,
+): Promise<Preview | null> {
+  if (!edition || !slug || !chapter) return null
 
-  const chapterNumber = Number(chapter)
-  const text = await loadChapter(origin, slug, chapterNumber, fetchImpl)
+  const text = await loadChapter(origin, edition, slug, chapter, fetchImpl)
   if (!text) return null
 
   const passage = buildPassage(text, verses)
   const image = new URL('/api/og', origin)
   image.searchParams.set('kind', 'reader')
+  image.searchParams.set('edition', edition)
   image.searchParams.set('slug', slug)
-  image.searchParams.set('chapter', String(chapterNumber))
+  image.searchParams.set('chapter', chapter)
   if (passage.range) image.searchParams.set('v', formatVerseParam(passage.range))
 
-  const page = new URL(`/ler/${slug}/${chapterNumber}`, origin)
+  const page = new URL(`/ler/${edition}/${slug}/${chapter}`, origin)
   if (passage.range) page.searchParams.set('v', formatVerseParam(passage.range))
 
   return {
@@ -97,8 +102,8 @@ function themePreview({ origin, slug }: PreviewRequest): Preview | null {
  * og:image is what makes WhatsApp drop the preview altogether.
  */
 export async function cardContentFor(request: PreviewRequest, fetchImpl: Fetch): Promise<CardContent> {
-  if (request.kind === 'reader' && request.slug) {
-    const chapter = await loadChapter(request.origin, request.slug, Number(request.chapter), fetchImpl)
+  if (request.kind === 'reader' && request.edition && request.slug && request.chapter) {
+    const chapter = await loadChapter(request.origin, request.edition, request.slug, request.chapter, fetchImpl)
     if (chapter) {
       const passage = buildPassage(chapter, request.verses)
       return { eyebrow: passage.reference, body: passage.text, status: passage.status }

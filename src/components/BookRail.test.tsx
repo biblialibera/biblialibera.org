@@ -8,14 +8,14 @@ const GROUPS: BookGroup[] = [
   {
     section: 'Antigo Testamento',
     books: [
-      { slug: 'genesis', code: 'Gen', name: 'Gênesis', abbrev: 'Gn', canon: 'AT', chapters: 50, status: { formal: 'checked' }, original: { language: 'Hebraico' } },
-      { slug: 'jonas', code: 'Jonah', name: 'Jonas', abbrev: 'Jn', canon: 'AT', chapters: 4, status: { formal: 'checked' }, original: { language: 'Hebraico' } },
+      { slug: 'genesis', code: 'Gen', file: 'Gen', name: 'Gênesis', abbrev: 'Gn', canon: 'AT', chapters: 50, status: { formal: 'checked' }, original: { language: 'Hebraico' } },
+      { slug: 'jonas', code: 'Jonah', file: 'Jonah', name: 'Jonas', abbrev: 'Jn', canon: 'AT', chapters: 4, status: { formal: 'checked' }, original: { language: 'Hebraico' } },
     ],
   },
   {
     section: 'Novo Testamento',
     books: [
-      { slug: 'joao', code: 'John', name: 'João', abbrev: 'Jo', canon: 'NT', chapters: 21, status: { formal: 'checked' }, original: { language: 'Grego' } },
+      { slug: 'joao', code: 'John', file: 'John', name: 'João', abbrev: 'Jo', canon: 'NT', chapters: 21, status: { formal: 'checked' }, original: { language: 'Grego' } },
     ],
   },
 ]
@@ -23,7 +23,7 @@ const GROUPS: BookGroup[] = [
 const renderRail = (current?: string) =>
   render(
     <MemoryRouter>
-      <BookRail groups={GROUPS} current={current} />
+      <BookRail groups={GROUPS} edition="catolica" current={current} />
     </MemoryRouter>,
   )
 
@@ -40,8 +40,8 @@ describe('BookRail', () => {
   // click and shows where it goes on hover.
   it('opens each book at its first chapter', () => {
     renderRail()
-    expect(screen.getByRole('link', { name: /Jonas/ })).toHaveAttribute('href', '/ler/jonas/1')
-    expect(screen.getByRole('link', { name: /João/ })).toHaveAttribute('href', '/ler/joao/1')
+    expect(screen.getByRole('link', { name: /Jonas/ })).toHaveAttribute('href', '/ler/catolica/jonas/1')
+    expect(screen.getByRole('link', { name: /João/ })).toHaveAttribute('href', '/ler/catolica/joao/1')
   })
 
   it('marks the book being read, and only that one', () => {

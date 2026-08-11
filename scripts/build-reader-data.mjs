@@ -1,28 +1,32 @@
-// Generates the reader's data from the `biblialibera` package: a light index
-// of the translated books plus one file per book carrying the formal register
-// and the original-language text, so the reader can lazy-load a single book
-// on demand instead of shipping the whole corpus to the browser. Re-run after
-// updating the `biblialibera` dependency:
+// Generates the reader's data from the `biblialibera` package: one light index
+// per edition plus one file per book carrying the formal register and the
+// original-language text, so the reader can lazy-load a single book on demand
+// instead of shipping the whole corpus to the browser. Re-run after updating
+// the `biblialibera` dependency:
 //
 //   node scripts/build-reader-data.mjs
 //
 // Outputs:
-//   src/data/reader/index.json   one light entry per translated book (no text)
-//   src/data/reader/<CODE>.json  full book: the formal register + the
-//                                original, keyed per chapter
+//   src/data/reader/index.json     the editions, each with its book list (no text)
+//   src/data/reader/<FILE>.json    full book: the formal register + the
+//                                  original, keyed per chapter
 //
-// The manifest is the source of truth for which books exist; canon order and
-// classification come from scripts/canon.mjs; the original text comes from the
-// separate `biblialibera/original` bundle (Hebrew WLC, Greek Nestle 1904, LXX).
+// The package is the source of truth for everything here: which books exist,
+// their pt-BR names and abbreviations, their canon class, the order they come
+// in and how an edition assembles them (scripts/editions.mjs only names the
+// editions the site offers). Nothing about the canon is written down twice.
+//
+// Two books come out different per edition: the Catholic Esther and Daniel
+// carry the Greek additions, which renumbers them (Daniel gains chapters 13 and
+// 14, and its chapter 3 runs to verse 100). Those get a file per edition,
+// `Esth.catolica.json`; the other 71 books are byte-identical in both editions
+// and are written once.
 
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import ptManifest from '../node_modules/biblialibera/data/pt/manifest.json' with { type: 'json' };
-import { corpora, getBook } from 'biblialibera/original';
-import { CANON, slugify } from './canon.mjs';
-
-const pkgUrl = (register, code) =>
-  new URL(`../node_modules/biblialibera/data/pt/${register}/${code}.json`, import.meta.url);
+import pt from 'biblialibera/pt';
+import { corpora, getBook as getOriginalBook } from 'biblialibera/original';
+import { EDITIONS, canonOf, slugify } from './editions.mjs';
 
 // Reading direction and pt-BR language label per original corpus; the edition
 // name (for the citation shown in place of the review seal) comes from the
@@ -34,81 +38,143 @@ const CORPUS_META = {
 };
 const editionByCorpus = new Map(corpora().map((c) => [c.code, c.name]));
 
-const canonByCode = new Map(CANON.map(([code, name, abbrev, canon]) => [code, { name, abbrev, canon }]));
+// Which corpus each bundled original text belongs to, by OSIS code. An
+// assembled book mixes them: the Catholic Esther is Hebrew with Greek blocks
+// woven in, so the corpus is a property of the verse, not of the book.
+const corpusByCode = new Map(
+  pt.books().map(({ book }) => [book, getOriginalBook(book)?.corpus ?? null]),
+);
 
-function readBook(register, code) {
-  return JSON.parse(readFileSync(pkgUrl(register, code), 'utf8'));
+/** The corpus an original verse came from, read off its osisID's book. */
+function corpusOfOriginal(original) {
+  return corpusByCode.get(original.id.split('.')[0]) ?? null;
 }
 
-/** Original text for a book, keyed by chapter string, plus its metadata. */
-function readOriginal(code) {
-  const book = getBook(code);
-  if (!book) return null;
-  const meta = CORPUS_META[book.corpus];
-  if (!meta) throw new Error(`${code}: unknown corpus ${book.corpus}`);
+/**
+ * One book as the reader loads it: every chapter with the pt (formal) verses
+ * and the matching original-language ones.
+ *
+ * `withOriginal` does the alignment, by osisID, including across an assembly:
+ * it is what puts the Greek of the Esther additions next to the Hebrew of the
+ * verses around them. Verses are addressed by label (`"16"`, `"1a"`) rather
+ * than by number, because in the Catholic Esther the additions hang off a host
+ * verse as lettered sub-verses and `1` alone no longer names one verse.
+ */
+function readBook(edition, summary) {
+  const book = edition.getBook(summary.book, { register: 'formal', withOriginal: true });
+  if (!book) throw new Error(`${summary.book}: not bundled in the ${edition.name} edition`);
+
+  const versesPerCorpus = new Map();
+
+  const chapters = book.chapters.map(({ chapter, verses }) => {
+    const formal = [];
+    const original = [];
+
+    for (const verse of verses) {
+      const label = `${verse.verse}${verse.sub ?? ''}`;
+      formal.push({ verse: label, text: verse.text, footnotes: verse.footnotes });
+
+      if (!verse.original) continue;
+      const corpus = corpusOfOriginal(verse.original);
+      if (corpus && !CORPUS_META[corpus]) throw new Error(`${summary.book}: unknown corpus ${corpus}`);
+      if (corpus) versesPerCorpus.set(corpus, (versesPerCorpus.get(corpus) ?? 0) + 1);
+      original.push({ verse: label, text: verse.original.text, corpus });
+    }
+
+    return { chapter: String(chapter), formal, original };
+  });
+
+  return { chapters, versesPerCorpus };
+}
+
+/**
+ * The original-language metadata a book's header shows: the citation next to
+ * the text and the reading direction. A book that mixes corpora (the Catholic
+ * Esther, Hebrew plus Greek) names both editions and takes its direction from
+ * the corpus most of it is in; the verses that disagree carry their own.
+ */
+function originalInfo(versesPerCorpus) {
+  const byWeight = [...versesPerCorpus].sort(([, a], [, b]) => b - a);
+  if (byWeight.length === 0) return null;
+
+  const [main] = byWeight[0];
+  const list = byWeight.map(([corpus]) => corpus);
   return {
-    info: { corpus: book.corpus, edition: editionByCorpus.get(book.corpus), language: meta.language, dir: meta.dir },
-    byChapter: new Map(book.chapters.map((c) => [String(c.chapter), c.verses])),
+    corpus: main,
+    edition: list.map((c) => editionByCorpus.get(c)).join(' + '),
+    language: [...new Set(list.map((c) => CORPUS_META[c].language))].join(' e '),
+    dir: CORPUS_META[main].dir,
   };
 }
 
-/** Merge the formal register and the original of one book into per-chapter rows. */
-function mergeChapters(formalBook, originalByChapter) {
-  return formalBook.chapters.map(({ chapter: n, verses }) => {
-    const original = originalByChapter?.get(String(n)) ?? [];
-    return {
-      chapter: n,
-      formal: verses.map(({ verse, text, footnotes }) => ({ verse, text, footnotes })),
-      original: original.map(({ verse, text }) => ({ verse, text })),
-    };
-  });
+/**
+ * A book's chapters for the index: the count when they are plainly `1..n`,
+ * which is every book but one, and the full list of labels when they are not.
+ *
+ * Sirach opens with the translator's prologue, whose chapter is `praef` rather
+ * than a number, so a count alone cannot describe it. Spelling every chapter
+ * out for all 139 entries would quadruple the index the landing bundle carries
+ * to say one thing about one book.
+ */
+function chapterIds(ids) {
+  const sequential = ids.every((id, i) => id === String(i + 1));
+  return sequential ? ids.length : ids;
 }
 
 const outDir = new URL('../src/data/reader/', import.meta.url);
+rmSync(outDir, { recursive: true, force: true });
 mkdirSync(outDir, { recursive: true });
 
-// Manifest order is not guaranteed canonical, so walk CANON and keep the
-// books the manifest actually carries.
-const manifestByCode = new Map(ptManifest.books.map((b) => [b.book, b]));
-const translated = CANON.map(([code]) => code).filter((code) => manifestByCode.has(code));
-
+const written = new Set();
 const index = [];
 
-for (const code of translated) {
-  const meta = manifestByCode.get(code);
-  const canonMeta = canonByCode.get(code);
-  const status = { formal: meta.status.formal };
-  const slug = slugify(canonMeta.name);
+for (const { key, pkg, name, summary } of EDITIONS) {
+  const edition = pt.edition(pkg);
+  const books = [];
 
-  if (!meta.status.formal) throw new Error(`${code}: register formal not in manifest`);
+  for (const bookSummary of edition.books()) {
+    // Only an assembled book differs between editions; everything else is the
+    // same file read twice.
+    const file = bookSummary.assembled ? `${bookSummary.book}.${key}` : bookSummary.book;
+    const slug = slugify(bookSummary.name);
+    const status = { formal: bookSummary.status.formal };
+    if (!status.formal) throw new Error(`${bookSummary.book}: register formal not bundled`);
 
-  const formalBook = readBook('formal', code);
-  const original = readOriginal(code);
-  const book = {
-    code,
-    name: canonMeta.name,
-    abbrev: canonMeta.abbrev,
-    slug,
-    status,
-    original: original?.info ?? null,
-    chapters: mergeChapters(formalBook, original?.byChapter),
-  };
+    const { chapters, versesPerCorpus } = readBook(edition, bookSummary);
+    const original = originalInfo(versesPerCorpus);
 
-  const bookPath = fileURLToPath(new URL(`${code}.json`, outDir));
-  writeFileSync(bookPath, JSON.stringify(book) + '\n', 'utf8');
+    if (!written.has(file)) {
+      written.add(file);
+      const book = {
+        code: bookSummary.book,
+        name: bookSummary.name,
+        abbrev: bookSummary.abbrev,
+        slug,
+        status,
+        original,
+        chapters,
+      };
+      writeFileSync(fileURLToPath(new URL(`${file}.json`, outDir)), JSON.stringify(book) + '\n', 'utf8');
+    }
 
-  index.push({
-    slug,
-    code,
-    name: canonMeta.name,
-    abbrev: canonMeta.abbrev,
-    canon: canonMeta.canon,
-    chapters: meta.chapters,
-    status,
-    original: original ? { language: original.info.language } : null,
-  });
+    books.push({
+      slug,
+      code: bookSummary.book,
+      file,
+      name: bookSummary.name,
+      abbrev: bookSummary.abbrev,
+      canon: canonOf(bookSummary.class),
+      chapters: chapterIds(chapters.map((c) => c.chapter)),
+      status,
+      original: original ? { language: original.language } : null,
+    });
+  }
+
+  index.push({ key, name, summary, books });
 }
 
 const indexPath = fileURLToPath(new URL('index.json', outDir));
 writeFileSync(indexPath, JSON.stringify(index, null, 2) + '\n', 'utf8');
-console.log(`wrote ${indexPath} (${index.length} books) + ${index.length} book files`);
+console.log(
+  `wrote ${indexPath} (${index.map((e) => `${e.key}: ${e.books.length} books`).join(', ')}) + ${written.size} book files`,
+);

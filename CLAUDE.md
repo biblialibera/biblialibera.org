@@ -87,8 +87,18 @@ A lib npm `biblialibera` (do `open-bible`, `pipeline/build-package.js`) já
 existe e está publicada no registry do npm: JSON estruturado por
 livro/registro (`data/<lang>/<registro>/<Livro>.json`) mais um `core.js` que
 lê do disco via `fs` (só funciona em Node, nunca no bundle do navegador).
-Instalada como `devDependencies` (`^0.1.0`), não `dependencies`, porque só o
+Instalada como `devDependencies` (`^0.5.0`), não `dependencies`, porque só o
 script de extração roda em Node; ver abaixo.
+
+**O pacote é a fonte de verdade sobre o cânon, não este repo.** Desde a
+0.5.0 cada livro carrega a sua `class` (`protocanonical` / `deuterocanonical`
+/ `newTestament`) e o pacote monta as edições sozinho
+(`pt.edition('catholic')`, `'protestant'`, `'new-testament'`), com ordem,
+nomes pt-BR e abreviações. A tabela de cânon escrita à mão que existia aqui
+(`scripts/canon.mjs`) foi apagada por isso: duplicá-la é como ela sai do ar.
+Sobrou `scripts/editions.mjs`, que só **nomeia** as duas edições que o site
+publica (chave em pt para a URL, chave do pacote, resumo). O registro
+`simple`, que o pacote também traz completo, ainda não é usado aqui.
 
 Padrão para trazer conteúdo real pro site: nunca importar
 `biblialibera/<lang>` nem os JSONs de livro inteiro direto em código que roda
@@ -100,13 +110,13 @@ componente importa esse arquivo gerado.
 - `scripts/extract-demo-passage.mjs` → `src/data/psalm23.json`: Salmo 23,
   vv. 1-4, tradução formal e original. Usado pela `RegisterDemo` (demo viva
   na landing).
-- `scripts/extract-book-status.mjs` → `src/data/books.json`: lista de livros
-  com status (`manifest.json` da lib), classificados AT/NT (a classificação
-  é uma constante local, a lib não carrega cânon). Usado pela
+- `scripts/extract-book-status.mjs` → `src/data/books.json`: os 73 livros da
+  edição católica (o superset) com o status de cada um. Usado pela
   `BookStatusTable` na landing.
-- `scripts/build-og-text.mjs` → `public/og/<slug>/<capitulo>.json`: o texto em
-  pt de cada capítulo, sem notas e sem original, que as funções de preview
-  buscam em runtime. Gerado, no `.gitignore`, regenerado no `prebuild`.
+- `scripts/build-reader-data.mjs` → `src/data/reader/`: ver "Edições" abaixo.
+- `scripts/build-og-text.mjs` → `public/og/<edicao>/<slug>/<capitulo>.json`: o
+  texto em pt de cada capítulo, sem notas e sem original, que as funções de
+  preview buscam em runtime. Gerado, no `.gitignore`, regenerado no `prebuild`.
 - `npm run sync-content` regenera todos; scripts individuais:
   `sync-demo-passage`, `sync-books`, `sync-reader`, `sync-themes`,
   `sync-og-text`.
@@ -120,6 +130,15 @@ contra `src/data/reader/` e gera o que o site carrega:
 
 - `src/data/themes/index.json` — um registro leve por tema (sem texto)
 - `src/data/themes/<slug>.json` — as passagens do tema, com o texto
+
+As passagens resolvem contra a **edição católica**, que é o superset, mas o
+script não escolhe um lado às escondidas: ele resolve a mesma referência em
+toda edição que tenha o livro e **falha** se as duas discordarem. É a mesma
+lógica dos anchors, estendida às edições: citar Ester ou Daniel sem dizer de
+qual edição se fala é deriva, e ela é pega no build em vez de por um leitor
+caindo no versículo errado. Cada passagem sai com `editions`, a lista de
+onde ela pode ser aberta, e a `PassageList` linka para a edição do leitor
+quando ela está lá, senão para a que tem o livro.
 
 `src/data/themes/` é gerado e está no `.gitignore`: só a fonte curada é
 versionada. Os hooks `predev`/`pretest`/`prebuild` no `package.json` rodam
@@ -150,6 +169,70 @@ Não há busca ainda: por ora `/temas` só lista os temas e `/temas/:slug` mostr
 as passagens. A busca sobre as passagens curadas está pronta mas guardada num
 `git stash` ("themes view with thematic search"), fora do escopo por enquanto.
 
+## Edições (católica e protestante)
+
+O leitor publica duas edições. A tradução é a mesma: o que muda é quais
+livros entram (73 contra 66) e como **Ester e Daniel** são montados. Os
+outros 71 livros são idênticos nas duas.
+
+**A edição fica na URL: `/ler/:edicao/:slug/:capitulo`.** Não é enfeite: as
+duas edições discordam sobre o que uma referência nomeia. Dn 3,24 é a Oração
+de Azarias numa e o versículo hebraico na outra; Tobias existe numa e não na
+outra. Sem a edição no caminho, um link compartilhado abre outra passagem na
+casa de quem recebe, e o card do WhatsApp cita a errada.
+
+**A escolha é guardada à parte, no `localStorage` (`bl.reader.edition`).** As
+duas coisas são distintas de propósito:
+
+- `/ler` sem escolha guardada mostra o `EditionPicker`, a única pergunta
+  feita antes de ler. Com escolha, redireciona para `/ler/<edicao>`.
+- Abrir o link de alguém **não** grava nada: a URL manda enquanto se está
+  nela. Só o picker e o `EditionToggle` escrevem a preferência, porque
+  escolher é um ato, chegar não é.
+- `/ler/:slug/:capitulo` (a forma antiga, de antes da edição entrar no
+  caminho) continua valendo: `ReaderRedirect` resolve para a edição guardada,
+  ou para a padrão (`DEFAULT_EDITION`, a primeira do índice gerado, que é a
+  católica por ser o superset). O `vercel.json` repete esse padrão na regra
+  de crawler de duas partes, e um teste em `api/_lib/handlers.test.ts`
+  compara os dois: é JSON que só a Vercel lê, então nada mais pegaria a
+  divergência.
+
+O que `scripts/build-reader-data.mjs` gera:
+
+- `src/data/reader/index.json`: as edições, cada uma com a sua lista de
+  livros (sem texto). Cada entrada traz `file`, que é o arquivo a carregar.
+- `src/data/reader/<FILE>.json`: o livro inteiro. Livro montado tem um
+  arquivo por edição (`Dan.catolica.json`); os outros 71 são escritos uma vez
+  e lidos pelas duas. São 75 arquivos, não 139.
+
+**Dois formatos que o resto do site não esperava, e que quebram se alguém
+voltar a tratá-los como número:**
+
+- **Versículo é rótulo, não número** (`VerseId` em `verseSelection.ts`). Na
+  Ester católica os acréscimos gregos penduram no versículo hospedeiro como
+  subversículos com letra, e o capítulo 5 corre `1, 1a … 1k, 2, 2a … 2e, 3`:
+  "1" sozinho deixou de nomear um versículo. `compareVerses` dá a ordem
+  (número, depois letra, hospedeiro antes dos acréscimos) sem consultar o
+  capítulo, porque `verseSelection.ts` não importa nada e as funções de
+  preview decidem o alcance de um `?v=` só com a URL na mão.
+- **Capítulo é rótulo, não número** (`ChapterId`). O Eclesiástico abre com o
+  prólogo do tradutor, cujo capítulo é `praef` e não um número, então o
+  trilho não pode ser `1..n` e "anterior/próximo" andam pela lista de
+  capítulos em vez de somar 1. No índice, `chapters` é a **contagem** quando
+  os capítulos são `1..n` (todo livro menos um) e a lista de rótulos quando
+  não são; leia sempre por `chapterIds()`.
+
+**Livro montado mistura corpora**, então a direção de leitura é por
+versículo, não por livro: a Ester católica é hebraico com blocos gregos
+intercalados, e Daniel 13-14 (Susana, Bel) são gregos dentro de um livro
+hebraico. Cada versículo do original guarda o seu `corpus`; pôr `dir` uma vez
+no container deitaria metade do capítulo ao contrário.
+
+O `BookNav` do design system já vinha com seletor de edição, até então
+inerte. Ele ganhou dois props aditivos (`editions`, e `chapters` aceitando
+rótulos) mantendo o default de origem: sem passar nada, desenha exatamente o
+que o Claude Design desenhava.
+
 ## Layout do leitor
 
 `/ler/:slug/:capitulo` é uma grade de três colunas: `BookRail` (todos os
@@ -159,7 +242,10 @@ trilhos são `sticky` abaixo do cabeçalho, com rolagem própria.
 
 - **Trilho é link, não botão.** Livro e capítulo são lugares: abrem em nova aba
   no clique do meio e mostram para onde vão. O link de capítulo não leva `?v=`,
-  então trocar de capítulo limpa a passagem selecionada.
+  então trocar de capítulo limpa a passagem selecionada. O `EditionToggle`
+  segue a mesma regra, e por isso também não leva `?v=`: as duas edições não
+  numeram Ester e Daniel igual, e carregar a seleção destacaria uma passagem
+  que o leitor não escolheu.
 - **Cada trilho rola até o item atual** mexendo no `scrollTop` dele, nunca com
   `scrollIntoView`, que arrastaria a página junto. Sem isso, Apocalipse abre
   com o trilho em Gênesis e o Salmo 119 com o trilho no capítulo 1.
@@ -180,8 +266,9 @@ para o capítulo.
 **Query e não hash, que é onde isso começou:** o hash nunca sai do navegador,
 então o crawler que monta o preview receberia só o capítulo e o card citaria a
 passagem errada. Na query, a URL da barra de endereços é a URL que vale copiar,
-sem botão no meio. Existe uma forma só: `passagePath` é o que o índice temático
-linka, o que o botão Compartilhar entrega e o que a barra de endereços mostra.
+sem botão no meio. Existe uma forma só: `passagePath(edicao, slug, capitulo,
+intervalo)` é o que o índice temático linka, o que o botão Compartilhar
+entrega e o que a barra de endereços mostra.
 
 O preço disso é o pulo de âncora do navegador: `#v16` trazia a passagem para a
 tela de graça, e agora nada faz isso além do efeito que rola até ela. Esse
@@ -250,12 +337,19 @@ página competindo no índice. O `index.html` carrega as tags do site como
 fallback para qualquer unfurler não listado, em qualquer rota.
 
 **As funções não podem importar `src/data/reader/`.** O `@vercel/og` limita
-o bundle da função a 500KB contando assets, e o leitor tem 14MB. Daí
-`public/og/<slug>/<capitulo>.json` (`scripts/build-og-text.mjs`): as funções
-buscam por HTTP na própria CDN. A URL da imagem carrega só a rota
-(`?kind=reader&slug=joao&chapter=3&v=16-18`), nunca o texto: o WhatsApp
-cacheia preview por URL, e o texto tem que ser função do dado, não do que um
-link velho escreveu.
+o bundle da função a 500KB contando assets, e o leitor tem 17MB. Daí
+`public/og/<edicao>/<slug>/<capitulo>.json` (`scripts/build-og-text.mjs`): as
+funções buscam por HTTP na própria CDN. A URL da imagem carrega só a rota
+(`?kind=reader&edition=catolica&slug=joao&chapter=3&v=16-18`), nunca o texto:
+o WhatsApp cacheia preview por URL, e o texto tem que ser função do dado, não
+do que um link velho escreveu.
+
+A edição entra nesse caminho pelo mesmo motivo que entra na URL do leitor, e
+o preço é a maior parte dos capítulos escrita duas vezes, byte a byte (2518
+arquivos). É o lado barato da troca: alguns MB de asset estático contra um
+card que cita a passagem que o link realmente aponta. Dá para ver os dois
+lados com `npm run preview-og`, que renderiza `daniel-catolica.png` e
+`daniel-protestante.png` a partir da mesma referência.
 
 Pontos que quebram sem aviso se mexidos:
 
@@ -305,7 +399,8 @@ então a checagem final é colar um link de um deploy de preview num chat.
 1. Landing page (feita): apresenta o projeto, a tradução formal e o texto
    original, com link para o repositório de tradução.
 2. Leitor (feito): mostra um livro/capítulo em português (formal) ou no
-   original, com um toggle entre as duas, e com versículos linkáveis.
+   original, com um toggle entre as duas, com versículos linkáveis e na
+   edição católica ou protestante (ver "Edições").
 3. Índice temático (feito): `/temas` lista os temas e `/temas/:slug` mostra as
    passagens de um tema. O `SiteHeader` leva para lá.
 4. Comunidade (futuro, não implementar agora): sugestões e anotações de

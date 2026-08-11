@@ -4,6 +4,7 @@ import { PassageList } from '../components/PassageList'
 import { Section } from '../components/Section'
 import { SiteFooter } from '../components/SiteFooter'
 import { SiteHeader } from '../components/SiteHeader'
+import { DEFAULT_EDITION, readStoredEdition } from '../components/editions'
 import { loadTheme, themeBySlug, type Theme as ThemeData } from '../components/themeData'
 
 const GITHUB_URL = 'https://github.com/biblialibera/biblialibera'
@@ -17,6 +18,10 @@ export interface ThemeDetailProps {
 function ThemeDetail({ theme, onToggleTheme }: ThemeDetailProps) {
   const { slug } = useParams()
   const entry = slug ? themeBySlug(slug) : undefined
+  // The index points into the reader, so it points into the reader's own
+  // edition. Nobody chose one yet on a first visit through /temas, and the
+  // default is the superset, so the link still lands somewhere real.
+  const edition = readStoredEdition() ?? DEFAULT_EDITION
   const [data, setData] = useState<ThemeData | null>(null)
   const [failed, setFailed] = useState(false)
 
@@ -63,7 +68,7 @@ function ThemeDetail({ theme, onToggleTheme }: ThemeDetailProps) {
           </p>
 
           {data?.slug === entry.slug ? (
-            <PassageList passages={data.passages} />
+            <PassageList passages={data.passages} edition={edition} />
           ) : (
             <p className="m-0 font-sans text-[var(--text-sm)] text-[var(--color-text-faint)]">
               {failed ? 'Não foi possível carregar as passagens deste tema.' : 'Carregando...'}

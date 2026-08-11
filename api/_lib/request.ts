@@ -15,6 +15,7 @@ export function previewRequestFrom(request: Request): PreviewRequest {
   return {
     origin: publicOrigin(request, url),
     kind: url.searchParams.get('kind'),
+    edition: url.searchParams.get('edition'),
     slug: url.searchParams.get('slug'),
     chapter: url.searchParams.get('chapter'),
     verses: parseVerseQuery(url.search),

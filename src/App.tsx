@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router'
 import Landing from './pages/Landing'
 import ReaderChapter from './pages/ReaderChapter'
 import ReaderIndex from './pages/ReaderIndex'
+import ReaderRedirect from './pages/ReaderRedirect'
 import ThemeDetail from './pages/ThemeDetail'
 import Themes from './pages/Themes'
 
@@ -26,8 +27,17 @@ function App() {
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       <Routes>
         <Route path="/" element={<Landing theme={theme} onToggleTheme={toggleTheme} />} />
+        {/* The edition is part of the path because the two editions disagree
+            about what a reference names, so a shared link has to carry it. The
+            two-segment form is what links looked like before that, and is
+            redirected rather than dropped. */}
         <Route path="/ler" element={<ReaderIndex theme={theme} onToggleTheme={toggleTheme} />} />
-        <Route path="/ler/:slug/:capitulo" element={<ReaderChapter theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/ler/:edicao" element={<ReaderIndex theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/ler/:primeiro/:segundo" element={<ReaderRedirect />} />
+        <Route
+          path="/ler/:edicao/:slug/:capitulo"
+          element={<ReaderChapter theme={theme} onToggleTheme={toggleTheme} />}
+        />
         <Route path="/temas" element={<Themes theme={theme} onToggleTheme={toggleTheme} />} />
         <Route path="/temas/:slug" element={<ThemeDetail theme={theme} onToggleTheme={toggleTheme} />} />
       </Routes>

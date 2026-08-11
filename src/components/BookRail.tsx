@@ -1,9 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router'
 import type { BookGroup } from './readerData'
+import { chapterIds } from './readerData'
 
 export interface BookRailProps {
   groups: BookGroup[]
+  /** The edition being read, which every link stays inside. */
+  edition: string
   /** OSIS code of the book being read, highlighted and scrolled to. */
   current?: string
 }
@@ -20,7 +23,7 @@ export interface BookRailProps {
  * chapter scrolls past it. Hidden below `lg`, where the screen has no room for
  * a rail: there the header's book button opens the same navigation as a popover.
  */
-export function BookRail({ groups, current }: BookRailProps) {
+export function BookRail({ groups, edition, current }: BookRailProps) {
   const rail = useRef<HTMLElement>(null)
   const active = useRef<HTMLAnchorElement>(null)
 
@@ -53,7 +56,7 @@ export function BookRail({ groups, current }: BookRailProps) {
                 <li key={book.code}>
                   <Link
                     ref={selected ? active : undefined}
-                    to={`/ler/${book.slug}/1`}
+                    to={`/ler/${edition}/${book.slug}/${chapterIds(book)[0]}`}
                     aria-current={selected ? 'page' : undefined}
                     className={`flex items-baseline justify-between gap-[var(--space-2)] rounded-[var(--radius-sm)] px-[var(--space-2)] py-[var(--space-1)] font-sans text-[length:var(--text-sm)] no-underline ${
                       selected

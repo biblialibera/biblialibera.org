@@ -9,18 +9,21 @@
  */
 
 import type { VerseRange } from '../../src/components/verseSelection.js'
-import { passageReference } from '../../src/components/verseSelection.js'
+import { isVerseSelected, passageReference } from '../../src/components/verseSelection.js'
 
 export type Status = 'draft' | 'checked' | 'reviewed'
 
-/** One file of public/og/<slug>/<chapter>.json. */
+/** One file of public/og/<edicao>/<slug>/<capitulo>.json. */
 export interface ChapterText {
   book: string
   abbrev: string
   slug: string
-  chapter: number
+  edition: string
+  /** The chapter's label: a number written out, or "praef" in Sirach. */
+  chapter: string
   status: Status
-  verses: { n: number; t: string }[]
+  /** Verses by label, which in the Catholic Esther includes "1a" and friends. */
+  verses: { n: string; t: string }[]
 }
 
 export interface Passage {
@@ -29,24 +32,33 @@ export interface Passage {
   text: string
   status: Status
   bookName: string
-  chapter: number
+  chapter: string
   /** The verses actually found, which is not always the ones asked for. */
   range: VerseRange | null
 }
 
 export type Fetch = (url: string) => Promise<{ ok: boolean; json: () => Promise<unknown> }>
 
-/** The chapter text behind a reader path, or null when there is no such chapter. */
+/**
+ * The chapter text behind a reader path, or null when there is no such chapter.
+ *
+ * The edition is part of the path because the two editions genuinely disagree:
+ * Dn 3,24 is the Prayer of Azariah in the Catholic one and the Hebrew verse in
+ * the Protestant one, and a card that quoted the wrong one would be wrong in
+ * exactly the place this whole detour exists to get right.
+ */
 export async function loadChapter(
   origin: string,
+  edition: string,
   slug: string,
-  chapter: number,
+  chapter: string,
   fetchImpl: Fetch,
 ): Promise<ChapterText | null> {
-  if (!/^[a-z0-9-]+$/.test(slug) || !Number.isSafeInteger(chapter) || chapter < 1) return null
+  const segment = /^[a-z0-9-]+$/
+  if (!segment.test(edition) || !segment.test(slug) || !segment.test(chapter)) return null
 
   try {
-    const response = await fetchImpl(`${origin}/og/${slug}/${chapter}.json`)
+    const response = await fetchImpl(`${origin}/og/${edition}/${slug}/${chapter}.json`)
     if (!response.ok) return null
     return (await response.json()) as ChapterText
   } catch {
@@ -64,7 +76,7 @@ export async function loadChapter(
  * the preview would otherwise quote one passage and label it another.
  */
 export function buildPassage(chapter: ChapterText, range: VerseRange | null): Passage {
-  const selected = range ? chapter.verses.filter((v) => v.n >= range.start && v.n <= range.end) : []
+  const selected = range ? chapter.verses.filter((v) => isVerseSelected(range, v.n)) : []
   const verses = selected.length > 0 ? selected : chapter.verses
   const found = selected.length > 0 && range ? { start: verses[0].n, end: verses[verses.length - 1].n } : null
 

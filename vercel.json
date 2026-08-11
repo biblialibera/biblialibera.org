@@ -2,9 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
+      "source": "/ler/:edition/:slug/:chapter",
+      "has": [{ "type": "header", "key": "user-agent", "value": ".*(WhatsApp|facebookexternalhit|Twitterbot|TelegramBot|Slackbot|Discordbot|LinkedInBot|SkypeUriPreview|redditbot|Iframely).*" }],
+      "destination": "/api/preview?kind=reader&edition=:edition&slug=:slug&chapter=:chapter"
+    },
+    {
       "source": "/ler/:slug/:chapter",
       "has": [{ "type": "header", "key": "user-agent", "value": ".*(WhatsApp|facebookexternalhit|Twitterbot|TelegramBot|Slackbot|Discordbot|LinkedInBot|SkypeUriPreview|redditbot|Iframely).*" }],
-      "destination": "/api/preview?kind=reader&slug=:slug&chapter=:chapter"
+      "destination": "/api/preview?kind=reader&edition=catolica&slug=:slug&chapter=:chapter"
     },
     {
       "source": "/temas/:slug",

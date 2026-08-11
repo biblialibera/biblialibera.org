@@ -19,7 +19,7 @@ describe('ThemeDetail', () => {
     renderAt('/temas/medo')
     expect(screen.getByRole('heading', { level: 1, name: 'Medo e coragem' })).toBeInTheDocument()
     await waitFor(() =>
-      expect(screen.getByRole('link', { name: 'Josué 1:9' })).toHaveAttribute('href', '/ler/josue/1?v=9'),
+      expect(screen.getByRole('link', { name: 'Josué 1:9' })).toHaveAttribute('href', '/ler/catolica/josue/1?v=9'),
     )
   })
 

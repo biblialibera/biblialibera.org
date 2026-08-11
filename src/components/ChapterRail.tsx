@@ -1,12 +1,20 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router'
+import type { ChapterId } from './readerData'
+import { chapterLabel, chapterShortLabel } from './readerData'
 
 export interface ChapterRailProps {
+  /** The edition being read, which every link stays inside. */
+  edition: string
   bookSlug: string
   /** Short book name, the rail's heading: it is the only label the numbers get. */
   abbrev: string
-  chapters: number
-  current: number
+  /**
+   * The book's chapters, as labels rather than a count: Sirach opens with the
+   * translator's prologue, whose chapter is not a number.
+   */
+  chapters: ChapterId[]
+  current: ChapterId
 }
 
 /**
@@ -18,7 +26,7 @@ export interface ChapterRailProps {
  * A chapter link carries no `?v=`, so opening one clears the selected passage,
  * which is what moving to another chapter means.
  */
-export function ChapterRail({ bookSlug, abbrev, chapters, current }: ChapterRailProps) {
+export function ChapterRail({ edition, bookSlug, abbrev, chapters, current }: ChapterRailProps) {
   const rail = useRef<HTMLElement>(null)
   const active = useRef<HTMLAnchorElement>(null)
 
@@ -41,21 +49,22 @@ export function ChapterRail({ bookSlug, abbrev, chapters, current }: ChapterRail
         {abbrev}
       </h2>
       <ul className="m-0 grid list-none grid-cols-2 gap-[var(--space-1)] p-0">
-        {Array.from({ length: chapters }, (_, i) => i + 1).map((n) => {
-          const selected = n === current
+        {chapters.map((id) => {
+          const selected = id === current
           return (
-            <li key={n}>
+            <li key={id}>
               <Link
                 ref={selected ? active : undefined}
-                to={`/ler/${bookSlug}/${n}`}
+                to={`/ler/${edition}/${bookSlug}/${id}`}
                 aria-current={selected ? 'page' : undefined}
+                aria-label={chapterLabel(id)}
                 className={`flex aspect-square items-center justify-center rounded-[var(--radius-sm)] font-mono text-[length:var(--text-xs)] no-underline ${
                   selected
                     ? 'bg-[var(--color-accent)] font-semibold text-[var(--color-accent-contrast)]'
                     : 'bg-[var(--color-surface-sunken)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent-tint)] hover:text-[var(--color-accent)]'
                 }`}
               >
-                {n}
+                {chapterShortLabel(id)}
               </Link>
             </li>
           )

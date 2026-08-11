@@ -35,13 +35,68 @@ const sourceUrl = new URL('../src/data/themes.source.json', import.meta.url);
 
 const readJson = (url) => JSON.parse(readFileSync(url, 'utf8'));
 
-const readerIndex = readJson(new URL('index.json', dataDir));
-const entryByCode = new Map(readerIndex.map((e) => [e.code, e]));
+const readerEditions = readJson(new URL('index.json', dataDir));
+
+// Passages resolve against the Catholic edition because it is the superset:
+// every book any theme could cite is in it. What keeps that from quietly
+// picking a side is the check below, which resolves the same reference in every
+// other edition that carries the book and refuses to build if the two disagree.
+const [primaryEdition] = readerEditions;
+const entryByCode = new Map(primaryEdition.books.map((e) => [e.code, e]));
 
 const bookCache = new Map();
-function loadBook(code) {
-  if (!bookCache.has(code)) bookCache.set(code, readJson(new URL(`${code}.json`, dataDir)));
-  return bookCache.get(code);
+function loadBook(file) {
+  if (!bookCache.has(file)) bookCache.set(file, readJson(new URL(`${file}.json`, dataDir)));
+  return bookCache.get(file);
+}
+
+/**
+ * The verses a reference names inside a book, or null when the book does not
+ * have them. Verses are addressed by label, so a range is the labels between
+ * its two numeric ends: in the Catholic Esther that sweeps up the lettered
+ * sub-verses sitting between them, which is what a printed edition shows too.
+ */
+function versesInRange(book, chapterId, start, end) {
+  const chapter = book.chapters.find((c) => c.chapter === chapterId);
+  if (!chapter) return null;
+
+  const verses = chapter.formal.filter((v) => {
+    const n = Number.parseInt(v.verse, 10);
+    return n >= start && n <= end;
+  });
+  return { chapter, verses };
+}
+
+/**
+ * Which editions a passage means the same thing in.
+ *
+ * The thematic index links into the reader, and the reader is in whichever
+ * edition the visitor chose, so a cited passage has to survive the crossing.
+ * Most do: 71 of the 73 books are the same text in both. The two that are not
+ * are Esther and Daniel, which the Catholic edition assembles with the Greek
+ * additions, renumbering them. Citing one of those without saying which edition
+ * you mean is the drift this catches, and it is caught at build time rather
+ * than by a reader landing on the wrong verse.
+ */
+function editionsAgreeing(ref, code, chapterId, start, end, expected) {
+  const keys = [];
+
+  for (const edition of readerEditions) {
+    const entry = edition.books.find((b) => b.code === code);
+    if (!entry) continue;
+
+    const found = versesInRange(loadBook(entry.file), chapterId, start, end);
+    const text = found?.verses.map((v) => v.text).join(' ');
+    if (text === expected) keys.push(edition.key);
+    else if (edition !== primaryEdition) {
+      return fail(
+        `${ref}: ${entry.name} ${chapterId}:${start}-${end} is not the same passage in the ${edition.name} edition. ` +
+          `The two number this book differently, so the reference has to name the edition it means.`,
+      );
+    }
+  }
+
+  return keys;
 }
 
 /** "Matt 6:25-34" / "Ps 23:1" -> { code, chapter, start, end }. */
@@ -111,11 +166,12 @@ function resolvePassage(themeSlug, { ref, anchor, endAnchor }) {
   if (!entry) return fail(`${themeSlug}: ${ref}: book "${code}" is not in the reader index`);
   if (end < start) return fail(`${themeSlug}: ${ref}: verse range runs backwards`);
 
-  const book = loadBook(code);
-  const chapter = book.chapters.find((c) => c.chapter === chapterNumber);
-  if (!chapter) return fail(`${themeSlug}: ${ref}: ${entry.name} has no chapter ${chapterNumber}`);
+  const chapterId = String(chapterNumber);
+  const book = loadBook(entry.file);
+  const found = versesInRange(book, chapterId, start, end);
+  if (!found) return fail(`${themeSlug}: ${ref}: ${entry.name} has no chapter ${chapterNumber}`);
 
-  const verses = chapter.formal.filter((v) => v.verse >= start && v.verse <= end);
+  const { chapter, verses } = found;
   const missing = end - start + 1 - verses.length;
   if (missing > 0) {
     const last = chapter.formal.at(-1)?.verse;
@@ -157,15 +213,21 @@ function resolvePassage(themeSlug, { ref, anchor, endAnchor }) {
     }
   }
 
+  const editions = editionsAgreeing(`${themeSlug}: ${ref}`, code, chapterId, start, end, text);
+  if (editions === null) return null;
+
   const label = start === end ? `${entry.name} ${chapterNumber}:${start}` : `${entry.name} ${chapterNumber}:${start}-${end}`;
   return {
     reference: label,
     book: entry.name,
     abbrev: entry.abbrev,
     bookSlug: entry.slug,
-    chapter: chapterNumber,
-    start,
-    end,
+    chapter: chapterId,
+    start: verses[0].verse,
+    end: verses.at(-1).verse,
+    // Which editions this passage can be linked into, so a reader on the other
+    // one is not sent to a book their edition does not have.
+    editions,
     verses: verses.map(({ verse, text: verseText }) => ({ verse, text: verseText })),
   };
 }

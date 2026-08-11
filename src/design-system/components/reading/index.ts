@@ -11,4 +11,4 @@ export { ReviewSeal } from './ReviewSeal'
 export type { ReviewSealProps } from './ReviewSeal'
 
 export { BookNav } from './BookNav'
-export type { BookNavProps, NavBook, NavGroup } from './BookNav'
+export type { BookNavProps, NavBook, NavEdition, NavGroup } from './BookNav'

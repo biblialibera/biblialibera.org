@@ -6,22 +6,22 @@
   },
   "formal": [
     {
-      "verse": 1,
+      "verse": "1",
       "text": "Salmo de Davi. O SENHOR é o meu pastor; nada me faltará.",
       "footnotes": []
     },
     {
-      "verse": 2,
+      "verse": "2",
       "text": "Em pastos verdejantes ele me faz repousar; para águas tranquilas me conduz.",
       "footnotes": []
     },
     {
-      "verse": 3,
+      "verse": "3",
       "text": "Ele restaura a minha alma; guia-me pelas veredas da justiça por amor do seu nome.",
       "footnotes": []
     },
     {
-      "verse": 4,
+      "verse": "4",
       "text": "Mesmo que eu ande pelo vale da sombra da morte, não temerei mal algum, pois tu estás comigo; a tua vara e o teu cajado me consolam.",
       "footnotes": [
         "Ou: \"pelo vale da escuridão profunda\"."
@@ -30,19 +30,19 @@
   ],
   "original": [
     {
-      "verse": 1,
+      "verse": "1",
       "text": "מִזְמ֥וֹר לְדָוִ֑ד יְהוָ֥ה רֹ֝עִ֗י לֹ֣א אֶחְסָֽר׃"
     },
     {
-      "verse": 2,
+      "verse": "2",
       "text": "בִּנְא֣וֹת דֶּ֭שֶׁא יַרְבִּיצֵ֑נִי עַל־מֵ֖י מְנֻח֣וֹת יְנַהֲלֵֽנִי׃"
     },
     {
-      "verse": 3,
+      "verse": "3",
       "text": "נַפְשִׁ֥י יְשׁוֹבֵ֑ב יַֽנְחֵ֥נִי בְמַעְגְּלֵי־צֶ֝֗דֶק לְמַ֣עַן שְׁמֽוֹ׃"
     },
     {
-      "verse": 4,
+      "verse": "4",
       "text": "גַּ֤ם כִּֽי־אֵלֵ֨ךְ בְּגֵ֪יא צַלְמָ֡וֶת לֹא־אִ֘ירָ֤א רָ֗ע כִּי־אַתָּ֥ה עִמָּדִ֑י שִׁבְטְךָ֥ וּ֝מִשְׁעַנְתֶּ֗ךָ הֵ֣מָּה יְנַֽחֲמֻֽנִי׃"
     }
   ],

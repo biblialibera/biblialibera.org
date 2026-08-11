@@ -14,14 +14,14 @@ const book: ReaderBook = {
   original: { corpus: 'wlc', edition: 'Westminster Leningrad Codex', language: 'Hebraico', dir: 'rtl' },
   chapters: [
     {
-      chapter: 1,
+      chapter: '1',
       formal: [
-        { verse: 1, text: 'A palavra do SENHOR veio a Jonas.', footnotes: [] },
-        { verse: 2, text: 'Levanta-te e vai a Nínive.', footnotes: ['Nínive: capital da Assíria.'] },
+        { verse: '1', text: 'A palavra do SENHOR veio a Jonas.', footnotes: [] },
+        { verse: '2', text: 'Levanta-te e vai a Nínive.', footnotes: ['Nínive: capital da Assíria.'] },
       ],
       original: [
-        { verse: 1, text: 'וַיְהִי דְּבַר־יְהוָה אֶל־יוֹנָה' },
-        { verse: 2, text: 'קוּם לֵךְ אֶל־נִינְוֵה' },
+        { verse: '1', text: 'וַיְהִי דְּבַר־יְהוָה אֶל־יוֹנָה', corpus: 'wlc' },
+        { verse: '2', text: 'קוּם לֵךְ אֶל־נִינְוֵה', corpus: 'wlc' },
       ],
     },
   ],
@@ -31,7 +31,7 @@ interface Options {
   view?: View
   onViewChange?: (view: View) => void
   selection?: VerseRange | null
-  onSelectVerse?: (verse: number, click: VerseClick) => void
+  onSelectVerse?: (verse: string, click: VerseClick) => void
 }
 
 function chapter({
@@ -43,7 +43,7 @@ function chapter({
   return (
     <ChapterView
       book={book}
-      chapter={1}
+      chapter="1"
       view={view}
       onViewChange={onViewChange}
       selection={selection}
@@ -54,7 +54,7 @@ function chapter({
 
 const renderChapter = (options: Options = {}) => render(chapter(options))
 
-const verseEl = (container: HTMLElement, verse: number) => container.querySelector(`#v${verse}`) as HTMLElement
+const verseEl = (container: HTMLElement, verse: string) => container.querySelector(`#v${verse}`) as HTMLElement
 
 describe('ChapterView', () => {
   it('renders the chapter heading and the selected register', () => {
@@ -130,42 +130,42 @@ describe('ChapterView', () => {
 describe('ChapterView verse selection', () => {
   it('gives every verse an anchor id so #v2 resolves', () => {
     const { container } = renderChapter()
-    expect(verseEl(container, 1)).not.toBeNull()
-    expect(verseEl(container, 2)).not.toBeNull()
+    expect(verseEl(container, '1')).not.toBeNull()
+    expect(verseEl(container, '2')).not.toBeNull()
   })
 
   it('anchors the original register verses too', () => {
     const { container } = renderChapter({ view: 'original' })
-    expect(verseEl(container, 2)).not.toBeNull()
+    expect(verseEl(container, '2')).not.toBeNull()
   })
 
   it('reports a plain click on a verse', () => {
     const onSelectVerse = vi.fn()
     const { container } = renderChapter({ onSelectVerse })
-    fireEvent.click(verseEl(container, 2))
-    expect(onSelectVerse).toHaveBeenCalledWith(2, { shiftKey: false, touch: false })
+    fireEvent.click(verseEl(container, '2'))
+    expect(onSelectVerse).toHaveBeenCalledWith('2', { shiftKey: false, touch: false })
   })
 
   it('reports the shift modifier so the caller can extend a range', () => {
     const onSelectVerse = vi.fn()
     const { container } = renderChapter({ onSelectVerse })
-    fireEvent.click(verseEl(container, 2), { shiftKey: true })
-    expect(onSelectVerse).toHaveBeenCalledWith(2, { shiftKey: true, touch: false })
+    fireEvent.click(verseEl(container, '2'), { shiftKey: true })
+    expect(onSelectVerse).toHaveBeenCalledWith('2', { shiftKey: true, touch: false })
   })
 
   it('reports clicks in the original register too', () => {
     const onSelectVerse = vi.fn()
     const { container } = renderChapter({ view: 'original', onSelectVerse })
-    fireEvent.click(verseEl(container, 1))
-    expect(onSelectVerse).toHaveBeenCalledWith(1, { shiftKey: false, touch: false })
+    fireEvent.click(verseEl(container, '1'))
+    expect(onSelectVerse).toHaveBeenCalledWith('1', { shiftKey: false, touch: false })
   })
 
   // Verses stay prose: they are not widgets, so a screen reader still reads
   // them sentence by sentence and Psalm 119 does not become 176 tab stops.
   it('leaves verses as text rather than turning them into buttons', () => {
-    const { container } = renderChapter({ selection: { start: 2, end: 2 } })
-    expect(verseEl(container, 2)).not.toHaveAttribute('role')
-    expect(verseEl(container, 2)).not.toHaveAttribute('tabindex')
+    const { container } = renderChapter({ selection: { start: '2', end: '2' } })
+    expect(verseEl(container, '2')).not.toHaveAttribute('role')
+    expect(verseEl(container, '2')).not.toHaveAttribute('tabindex')
   })
 
   // A footnote marker sits inside the verse paragraph. Clicking it must jump
@@ -183,34 +183,34 @@ describe('ChapterView verse selection', () => {
     const onSelectVerse = vi.fn()
     const { container } = renderChapter({ onSelectVerse })
     const getSelection = vi.spyOn(window, 'getSelection').mockReturnValue({ isCollapsed: false } as Selection)
-    fireEvent.click(verseEl(container, 2))
+    fireEvent.click(verseEl(container, '2'))
     expect(onSelectVerse).not.toHaveBeenCalled()
     getSelection.mockRestore()
   })
 
   it('marks only the verses in the range as current', () => {
-    const { container } = renderChapter({ selection: { start: 2, end: 2 } })
-    expect(verseEl(container, 1)).not.toHaveAttribute('aria-current')
-    expect(verseEl(container, 2)).toHaveAttribute('aria-current', 'true')
+    const { container } = renderChapter({ selection: { start: '2', end: '2' } })
+    expect(verseEl(container, '1')).not.toHaveAttribute('aria-current')
+    expect(verseEl(container, '2')).toHaveAttribute('aria-current', 'true')
   })
 
   it('highlights the selected verse and leaves the others plain', () => {
-    const { container } = renderChapter({ selection: { start: 2, end: 2 } })
-    expect(verseEl(container, 2).className).toContain('bg-[var(--color-selection)]')
-    expect(verseEl(container, 1).className).not.toContain('bg-[var(--color-selection)]')
+    const { container } = renderChapter({ selection: { start: '2', end: '2' } })
+    expect(verseEl(container, '2').className).toContain('bg-[var(--color-selection)]')
+    expect(verseEl(container, '1').className).not.toContain('bg-[var(--color-selection)]')
   })
 
   it('highlights every verse of a range', () => {
-    const { container } = renderChapter({ selection: { start: 1, end: 2 } })
-    expect(verseEl(container, 1).className).toContain('bg-[var(--color-selection)]')
-    expect(verseEl(container, 2).className).toContain('bg-[var(--color-selection)]')
+    const { container } = renderChapter({ selection: { start: '1', end: '2' } })
+    expect(verseEl(container, '1').className).toContain('bg-[var(--color-selection)]')
+    expect(verseEl(container, '2').className).toContain('bg-[var(--color-selection)]')
   })
 
   // The original register keeps its own font, size and direction classes: the
   // highlight is appended to them, it does not replace them.
   it('keeps the original register styling when a verse is highlighted', () => {
-    const { container } = renderChapter({ view: 'original', selection: { start: 1, end: 1 } })
-    const verse = verseEl(container, 1)
+    const { container } = renderChapter({ view: 'original', selection: { start: '1', end: '1' } })
+    const verse = verseEl(container, '1')
     expect(verse.className).toContain('bg-[var(--color-selection)]')
     expect(verse.className).toContain('text-[var(--text-xl)]')
   })

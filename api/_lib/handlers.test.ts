@@ -14,14 +14,17 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import og from '../og.js'
 import preview from '../preview.js'
 import type { ChapterText } from './passage.js'
+import vercelConfig from '../../vercel.json' with { type: 'json' }
+import readerIndex from '../../src/data/reader/index.json' with { type: 'json' }
 
 const CHAPTER: ChapterText = {
   book: 'João',
   abbrev: 'Jo',
   slug: 'joao',
-  chapter: 3,
+  edition: 'catolica',
+  chapter: '3',
   status: 'checked',
-  verses: [{ n: 16, t: 'Porque Deus amou o mundo de tal maneira.' }],
+  verses: [{ n: '16', t: 'Porque Deus amou o mundo de tal maneira.' }],
 }
 
 afterEach(() => vi.unstubAllGlobals())
@@ -51,7 +54,9 @@ describe('the preview function', () => {
     )
 
     const response = await preview.fetch(
-      crawlerRequest('https://internal.vercel.app/api/preview?kind=reader&slug=joao&chapter=3&v=16'),
+      crawlerRequest(
+        'https://internal.vercel.app/api/preview?kind=reader&edition=catolica&slug=joao&chapter=3&v=16',
+      ),
     )
     const html = await response.text()
 
@@ -65,7 +70,7 @@ describe('the preview function', () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('network')))
 
     const response = await preview.fetch(
-      crawlerRequest('https://internal.vercel.app/api/preview?kind=reader&slug=joao&chapter=3'),
+      crawlerRequest('https://internal.vercel.app/api/preview?kind=reader&edition=catolica&slug=joao&chapter=3'),
     )
 
     expect(response.status).toBe(200)
@@ -105,5 +110,35 @@ describe('the imports the functions ship with', () => {
     expect(relative.length).toBeGreaterThan(0)
     expect(relative.filter((specifier) => specifier.endsWith('.ts'))).toEqual([])
     expect(relative.filter((specifier) => !/\.(js|json)$/.test(specifier))).toEqual([])
+  })
+})
+
+// The rewrite is the only thing that tells a function which edition a shared
+// link was reading, and nothing else in the suite can see it: it is JSON that
+// only Vercel reads, and a wrong value there means every card quotes the wrong
+// edition while every test stays green.
+describe('the rewrite that sends crawlers here', () => {
+  const readerRewrites = vercelConfig.rewrites.filter((r) => r.destination.includes('kind=reader'))
+
+  it('carries the edition from the path', () => {
+    const withEdition = readerRewrites.find((r) => r.source === '/ler/:edition/:slug/:chapter')
+    expect(withEdition?.destination).toContain('edition=:edition')
+  })
+
+  // Links handed out before the edition moved into the path are still out
+  // there, and they mean whichever edition a reader with no preference gets.
+  it('resolves an edition-less link the same way the app does', () => {
+    const legacy = readerRewrites.find((r) => r.source === '/ler/:slug/:chapter')
+    // The same fallback the app applies, read off the generated index rather
+    // than off src/components/editions.ts: importing that here would pull the
+    // reader's Vite-only module graph into the api TypeScript project.
+    expect(legacy?.destination).toContain(`edition=${readerIndex[0].key}`)
+  })
+
+  it('leaves every other visitor on the static app', () => {
+    expect(vercelConfig.rewrites.at(-1)).toEqual({ source: '/(.*)', destination: '/index.html' })
+    for (const rewrite of readerRewrites) {
+      expect(rewrite.has?.[0].value).toContain('WhatsApp')
+    }
   })
 })

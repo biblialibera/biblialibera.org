@@ -1,926 +1,2154 @@
 [
   {
-    "slug": "genesis",
-    "code": "Gen",
-    "name": "Gênesis",
-    "abbrev": "Gn",
-    "canon": "AT",
-    "chapters": 50,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "exodo",
-    "code": "Exod",
-    "name": "Êxodo",
-    "abbrev": "Êx",
-    "canon": "AT",
-    "chapters": 40,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "levitico",
-    "code": "Lev",
-    "name": "Levítico",
-    "abbrev": "Lv",
-    "canon": "AT",
-    "chapters": 27,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "numeros",
-    "code": "Num",
-    "name": "Números",
-    "abbrev": "Nm",
-    "canon": "AT",
-    "chapters": 36,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "deuteronomio",
-    "code": "Deut",
-    "name": "Deuteronômio",
-    "abbrev": "Dt",
-    "canon": "AT",
-    "chapters": 34,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "josue",
-    "code": "Josh",
-    "name": "Josué",
-    "abbrev": "Js",
-    "canon": "AT",
-    "chapters": 24,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "juizes",
-    "code": "Judg",
-    "name": "Juízes",
-    "abbrev": "Jz",
-    "canon": "AT",
-    "chapters": 21,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "rute",
-    "code": "Ruth",
-    "name": "Rute",
-    "abbrev": "Rt",
-    "canon": "AT",
-    "chapters": 4,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "1-samuel",
-    "code": "1Sam",
-    "name": "1 Samuel",
-    "abbrev": "1Sm",
-    "canon": "AT",
-    "chapters": 31,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "2-samuel",
-    "code": "2Sam",
-    "name": "2 Samuel",
-    "abbrev": "2Sm",
-    "canon": "AT",
-    "chapters": 24,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "1-reis",
-    "code": "1Kgs",
-    "name": "1 Reis",
-    "abbrev": "1Rs",
-    "canon": "AT",
-    "chapters": 22,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "2-reis",
-    "code": "2Kgs",
-    "name": "2 Reis",
-    "abbrev": "2Rs",
-    "canon": "AT",
-    "chapters": 25,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "1-cronicas",
-    "code": "1Chr",
-    "name": "1 Crônicas",
-    "abbrev": "1Cr",
-    "canon": "AT",
-    "chapters": 29,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "2-cronicas",
-    "code": "2Chr",
-    "name": "2 Crônicas",
-    "abbrev": "2Cr",
-    "canon": "AT",
-    "chapters": 36,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "esdras",
-    "code": "Ezra",
-    "name": "Esdras",
-    "abbrev": "Ed",
-    "canon": "AT",
-    "chapters": 10,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "neemias",
-    "code": "Neh",
-    "name": "Neemias",
-    "abbrev": "Ne",
-    "canon": "AT",
-    "chapters": 13,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "ester",
-    "code": "Esth",
-    "name": "Ester",
-    "abbrev": "Et",
-    "canon": "AT",
-    "chapters": 10,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "jo",
-    "code": "Job",
-    "name": "Jó",
-    "abbrev": "Jó",
-    "canon": "AT",
-    "chapters": 42,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "salmos",
-    "code": "Ps",
-    "name": "Salmos",
-    "abbrev": "Sl",
-    "canon": "AT",
-    "chapters": 150,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "proverbios",
-    "code": "Prov",
-    "name": "Provérbios",
-    "abbrev": "Pv",
-    "canon": "AT",
-    "chapters": 31,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "eclesiastes",
-    "code": "Eccl",
-    "name": "Eclesiastes",
-    "abbrev": "Ec",
-    "canon": "AT",
-    "chapters": 12,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "canticos",
-    "code": "Song",
-    "name": "Cânticos",
-    "abbrev": "Ct",
-    "canon": "AT",
-    "chapters": 8,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "isaias",
-    "code": "Isa",
-    "name": "Isaías",
-    "abbrev": "Is",
-    "canon": "AT",
-    "chapters": 66,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "jeremias",
-    "code": "Jer",
-    "name": "Jeremias",
-    "abbrev": "Jr",
-    "canon": "AT",
-    "chapters": 52,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "lamentacoes",
-    "code": "Lam",
-    "name": "Lamentações",
-    "abbrev": "Lm",
-    "canon": "AT",
-    "chapters": 5,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "ezequiel",
-    "code": "Ezek",
-    "name": "Ezequiel",
-    "abbrev": "Ez",
-    "canon": "AT",
-    "chapters": 48,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "daniel",
-    "code": "Dan",
-    "name": "Daniel",
-    "abbrev": "Dn",
-    "canon": "AT",
-    "chapters": 12,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "oseias",
-    "code": "Hos",
-    "name": "Oseias",
-    "abbrev": "Os",
-    "canon": "AT",
-    "chapters": 14,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "joel",
-    "code": "Joel",
-    "name": "Joel",
-    "abbrev": "Jl",
-    "canon": "AT",
-    "chapters": 4,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "amos",
-    "code": "Amos",
-    "name": "Amós",
-    "abbrev": "Am",
-    "canon": "AT",
-    "chapters": 9,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "obadias",
-    "code": "Obad",
-    "name": "Obadias",
-    "abbrev": "Ob",
-    "canon": "AT",
-    "chapters": 1,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "jonas",
-    "code": "Jonah",
-    "name": "Jonas",
-    "abbrev": "Jn",
-    "canon": "AT",
-    "chapters": 4,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "miqueias",
-    "code": "Mic",
-    "name": "Miqueias",
-    "abbrev": "Mq",
-    "canon": "AT",
-    "chapters": 7,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "naum",
-    "code": "Nah",
-    "name": "Naum",
-    "abbrev": "Na",
-    "canon": "AT",
-    "chapters": 3,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "habacuque",
-    "code": "Hab",
-    "name": "Habacuque",
-    "abbrev": "Hc",
-    "canon": "AT",
-    "chapters": 3,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "sofonias",
-    "code": "Zeph",
-    "name": "Sofonias",
-    "abbrev": "Sf",
-    "canon": "AT",
-    "chapters": 3,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "ageu",
-    "code": "Hag",
-    "name": "Ageu",
-    "abbrev": "Ag",
-    "canon": "AT",
-    "chapters": 2,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "zacarias",
-    "code": "Zech",
-    "name": "Zacarias",
-    "abbrev": "Zc",
-    "canon": "AT",
-    "chapters": 14,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "malaquias",
-    "code": "Mal",
-    "name": "Malaquias",
-    "abbrev": "Ml",
-    "canon": "AT",
-    "chapters": 3,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Hebraico"
-    }
-  },
-  {
-    "slug": "mateus",
-    "code": "Matt",
-    "name": "Mateus",
-    "abbrev": "Mt",
-    "canon": "NT",
-    "chapters": 28,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "marcos",
-    "code": "Mark",
-    "name": "Marcos",
-    "abbrev": "Mc",
-    "canon": "NT",
-    "chapters": 16,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "lucas",
-    "code": "Luke",
-    "name": "Lucas",
-    "abbrev": "Lc",
-    "canon": "NT",
-    "chapters": 24,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "joao",
-    "code": "John",
-    "name": "João",
-    "abbrev": "Jo",
-    "canon": "NT",
-    "chapters": 21,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "atos",
-    "code": "Acts",
-    "name": "Atos",
-    "abbrev": "At",
-    "canon": "NT",
-    "chapters": 28,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "romanos",
-    "code": "Rom",
-    "name": "Romanos",
-    "abbrev": "Rm",
-    "canon": "NT",
-    "chapters": 16,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "1-corintios",
-    "code": "1Cor",
-    "name": "1 Coríntios",
-    "abbrev": "1Co",
-    "canon": "NT",
-    "chapters": 16,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "2-corintios",
-    "code": "2Cor",
-    "name": "2 Coríntios",
-    "abbrev": "2Co",
-    "canon": "NT",
-    "chapters": 13,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "galatas",
-    "code": "Gal",
-    "name": "Gálatas",
-    "abbrev": "Gl",
-    "canon": "NT",
-    "chapters": 6,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "efesios",
-    "code": "Eph",
-    "name": "Efésios",
-    "abbrev": "Ef",
-    "canon": "NT",
-    "chapters": 6,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "filipenses",
-    "code": "Phil",
-    "name": "Filipenses",
-    "abbrev": "Fp",
-    "canon": "NT",
-    "chapters": 4,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "colossenses",
-    "code": "Col",
-    "name": "Colossenses",
-    "abbrev": "Cl",
-    "canon": "NT",
-    "chapters": 4,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "1-tessalonicenses",
-    "code": "1Thess",
-    "name": "1 Tessalonicenses",
-    "abbrev": "1Ts",
-    "canon": "NT",
-    "chapters": 5,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "2-tessalonicenses",
-    "code": "2Thess",
-    "name": "2 Tessalonicenses",
-    "abbrev": "2Ts",
-    "canon": "NT",
-    "chapters": 3,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "1-timoteo",
-    "code": "1Tim",
-    "name": "1 Timóteo",
-    "abbrev": "1Tm",
-    "canon": "NT",
-    "chapters": 6,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "2-timoteo",
-    "code": "2Tim",
-    "name": "2 Timóteo",
-    "abbrev": "2Tm",
-    "canon": "NT",
-    "chapters": 4,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "tito",
-    "code": "Titus",
-    "name": "Tito",
-    "abbrev": "Tt",
-    "canon": "NT",
-    "chapters": 3,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "filemom",
-    "code": "Phlm",
-    "name": "Filemom",
-    "abbrev": "Fm",
-    "canon": "NT",
-    "chapters": 1,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "hebreus",
-    "code": "Heb",
-    "name": "Hebreus",
-    "abbrev": "Hb",
-    "canon": "NT",
-    "chapters": 13,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "tiago",
-    "code": "Jas",
-    "name": "Tiago",
-    "abbrev": "Tg",
-    "canon": "NT",
-    "chapters": 5,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "1-pedro",
-    "code": "1Pet",
-    "name": "1 Pedro",
-    "abbrev": "1Pe",
-    "canon": "NT",
-    "chapters": 5,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "2-pedro",
-    "code": "2Pet",
-    "name": "2 Pedro",
-    "abbrev": "2Pe",
-    "canon": "NT",
-    "chapters": 3,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "1-joao",
-    "code": "1John",
-    "name": "1 João",
-    "abbrev": "1Jo",
-    "canon": "NT",
-    "chapters": 5,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "2-joao",
-    "code": "2John",
-    "name": "2 João",
-    "abbrev": "2Jo",
-    "canon": "NT",
-    "chapters": 1,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "3-joao",
-    "code": "3John",
-    "name": "3 João",
-    "abbrev": "3Jo",
-    "canon": "NT",
-    "chapters": 1,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "judas",
-    "code": "Jude",
-    "name": "Judas",
-    "abbrev": "Jd",
-    "canon": "NT",
-    "chapters": 1,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
-  },
-  {
-    "slug": "apocalipse",
-    "code": "Rev",
-    "name": "Apocalipse",
-    "abbrev": "Ap",
-    "canon": "NT",
-    "chapters": 22,
-    "status": {
-      "formal": "checked"
-    },
-    "original": {
-      "language": "Grego"
-    }
+    "key": "catolica",
+    "name": "Católica",
+    "summary": "Com os deuterocanônicos, e com os acréscimos gregos em Ester e Daniel.",
+    "books": [
+      {
+        "slug": "genesis",
+        "code": "Gen",
+        "file": "Gen",
+        "name": "Gênesis",
+        "abbrev": "Gn",
+        "canon": "AT",
+        "chapters": 50,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "exodo",
+        "code": "Exod",
+        "file": "Exod",
+        "name": "Êxodo",
+        "abbrev": "Êx",
+        "canon": "AT",
+        "chapters": 40,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "levitico",
+        "code": "Lev",
+        "file": "Lev",
+        "name": "Levítico",
+        "abbrev": "Lv",
+        "canon": "AT",
+        "chapters": 27,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "numeros",
+        "code": "Num",
+        "file": "Num",
+        "name": "Números",
+        "abbrev": "Nm",
+        "canon": "AT",
+        "chapters": 36,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "deuteronomio",
+        "code": "Deut",
+        "file": "Deut",
+        "name": "Deuteronômio",
+        "abbrev": "Dt",
+        "canon": "AT",
+        "chapters": 34,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "josue",
+        "code": "Josh",
+        "file": "Josh",
+        "name": "Josué",
+        "abbrev": "Js",
+        "canon": "AT",
+        "chapters": 24,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "juizes",
+        "code": "Judg",
+        "file": "Judg",
+        "name": "Juízes",
+        "abbrev": "Jz",
+        "canon": "AT",
+        "chapters": 21,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "rute",
+        "code": "Ruth",
+        "file": "Ruth",
+        "name": "Rute",
+        "abbrev": "Rt",
+        "canon": "AT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "1-samuel",
+        "code": "1Sam",
+        "file": "1Sam",
+        "name": "1 Samuel",
+        "abbrev": "1Sm",
+        "canon": "AT",
+        "chapters": 31,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "2-samuel",
+        "code": "2Sam",
+        "file": "2Sam",
+        "name": "2 Samuel",
+        "abbrev": "2Sm",
+        "canon": "AT",
+        "chapters": 24,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "1-reis",
+        "code": "1Kgs",
+        "file": "1Kgs",
+        "name": "1 Reis",
+        "abbrev": "1Rs",
+        "canon": "AT",
+        "chapters": 22,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "2-reis",
+        "code": "2Kgs",
+        "file": "2Kgs",
+        "name": "2 Reis",
+        "abbrev": "2Rs",
+        "canon": "AT",
+        "chapters": 25,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "1-cronicas",
+        "code": "1Chr",
+        "file": "1Chr",
+        "name": "1 Crônicas",
+        "abbrev": "1Cr",
+        "canon": "AT",
+        "chapters": 29,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "2-cronicas",
+        "code": "2Chr",
+        "file": "2Chr",
+        "name": "2 Crônicas",
+        "abbrev": "2Cr",
+        "canon": "AT",
+        "chapters": 36,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "esdras",
+        "code": "Ezra",
+        "file": "Ezra",
+        "name": "Esdras",
+        "abbrev": "Ed",
+        "canon": "AT",
+        "chapters": 10,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "neemias",
+        "code": "Neh",
+        "file": "Neh",
+        "name": "Neemias",
+        "abbrev": "Ne",
+        "canon": "AT",
+        "chapters": 13,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "tobias",
+        "code": "Tob",
+        "file": "Tob",
+        "name": "Tobias",
+        "abbrev": "Tb",
+        "canon": "DC",
+        "chapters": 14,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "judite",
+        "code": "Jdt",
+        "file": "Jdt",
+        "name": "Judite",
+        "abbrev": "Jt",
+        "canon": "DC",
+        "chapters": 16,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "ester",
+        "code": "Esth",
+        "file": "Esth.catolica",
+        "name": "Ester",
+        "abbrev": "Et",
+        "canon": "AT",
+        "chapters": 10,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico e Grego"
+        }
+      },
+      {
+        "slug": "1-macabeus",
+        "code": "1Macc",
+        "file": "1Macc",
+        "name": "1 Macabeus",
+        "abbrev": "1Mc",
+        "canon": "DC",
+        "chapters": 16,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "2-macabeus",
+        "code": "2Macc",
+        "file": "2Macc",
+        "name": "2 Macabeus",
+        "abbrev": "2Mc",
+        "canon": "DC",
+        "chapters": 15,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "jo",
+        "code": "Job",
+        "file": "Job",
+        "name": "Jó",
+        "abbrev": "Jó",
+        "canon": "AT",
+        "chapters": 42,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "salmos",
+        "code": "Ps",
+        "file": "Ps",
+        "name": "Salmos",
+        "abbrev": "Sl",
+        "canon": "AT",
+        "chapters": 150,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "proverbios",
+        "code": "Prov",
+        "file": "Prov",
+        "name": "Provérbios",
+        "abbrev": "Pv",
+        "canon": "AT",
+        "chapters": 31,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "eclesiastes",
+        "code": "Eccl",
+        "file": "Eccl",
+        "name": "Eclesiastes",
+        "abbrev": "Ec",
+        "canon": "AT",
+        "chapters": 12,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "canticos",
+        "code": "Song",
+        "file": "Song",
+        "name": "Cânticos",
+        "abbrev": "Ct",
+        "canon": "AT",
+        "chapters": 8,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "sabedoria",
+        "code": "Wis",
+        "file": "Wis",
+        "name": "Sabedoria",
+        "abbrev": "Sb",
+        "canon": "DC",
+        "chapters": 19,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "eclesiastico",
+        "code": "Sir",
+        "file": "Sir",
+        "name": "Eclesiástico",
+        "abbrev": "Eclo",
+        "canon": "DC",
+        "chapters": [
+          "praef",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30",
+          "31",
+          "32",
+          "33",
+          "34",
+          "35",
+          "36",
+          "37",
+          "38",
+          "39",
+          "40",
+          "41",
+          "42",
+          "43",
+          "44",
+          "45",
+          "46",
+          "47",
+          "48",
+          "49",
+          "50",
+          "51"
+        ],
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "isaias",
+        "code": "Isa",
+        "file": "Isa",
+        "name": "Isaías",
+        "abbrev": "Is",
+        "canon": "AT",
+        "chapters": 66,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "jeremias",
+        "code": "Jer",
+        "file": "Jer",
+        "name": "Jeremias",
+        "abbrev": "Jr",
+        "canon": "AT",
+        "chapters": 52,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "lamentacoes",
+        "code": "Lam",
+        "file": "Lam",
+        "name": "Lamentações",
+        "abbrev": "Lm",
+        "canon": "AT",
+        "chapters": 5,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "baruc",
+        "code": "Bar",
+        "file": "Bar",
+        "name": "Baruc",
+        "abbrev": "Br",
+        "canon": "DC",
+        "chapters": 6,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "ezequiel",
+        "code": "Ezek",
+        "file": "Ezek",
+        "name": "Ezequiel",
+        "abbrev": "Ez",
+        "canon": "AT",
+        "chapters": 48,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "daniel",
+        "code": "Dan",
+        "file": "Dan.catolica",
+        "name": "Daniel",
+        "abbrev": "Dn",
+        "canon": "AT",
+        "chapters": 14,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico e Grego"
+        }
+      },
+      {
+        "slug": "oseias",
+        "code": "Hos",
+        "file": "Hos",
+        "name": "Oseias",
+        "abbrev": "Os",
+        "canon": "AT",
+        "chapters": 14,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "joel",
+        "code": "Joel",
+        "file": "Joel",
+        "name": "Joel",
+        "abbrev": "Jl",
+        "canon": "AT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "amos",
+        "code": "Amos",
+        "file": "Amos",
+        "name": "Amós",
+        "abbrev": "Am",
+        "canon": "AT",
+        "chapters": 9,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "obadias",
+        "code": "Obad",
+        "file": "Obad",
+        "name": "Obadias",
+        "abbrev": "Ob",
+        "canon": "AT",
+        "chapters": 1,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "jonas",
+        "code": "Jonah",
+        "file": "Jonah",
+        "name": "Jonas",
+        "abbrev": "Jn",
+        "canon": "AT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "miqueias",
+        "code": "Mic",
+        "file": "Mic",
+        "name": "Miqueias",
+        "abbrev": "Mq",
+        "canon": "AT",
+        "chapters": 7,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "naum",
+        "code": "Nah",
+        "file": "Nah",
+        "name": "Naum",
+        "abbrev": "Na",
+        "canon": "AT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "habacuque",
+        "code": "Hab",
+        "file": "Hab",
+        "name": "Habacuque",
+        "abbrev": "Hc",
+        "canon": "AT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "sofonias",
+        "code": "Zeph",
+        "file": "Zeph",
+        "name": "Sofonias",
+        "abbrev": "Sf",
+        "canon": "AT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "ageu",
+        "code": "Hag",
+        "file": "Hag",
+        "name": "Ageu",
+        "abbrev": "Ag",
+        "canon": "AT",
+        "chapters": 2,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "zacarias",
+        "code": "Zech",
+        "file": "Zech",
+        "name": "Zacarias",
+        "abbrev": "Zc",
+        "canon": "AT",
+        "chapters": 14,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "malaquias",
+        "code": "Mal",
+        "file": "Mal",
+        "name": "Malaquias",
+        "abbrev": "Ml",
+        "canon": "AT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "mateus",
+        "code": "Matt",
+        "file": "Matt",
+        "name": "Mateus",
+        "abbrev": "Mt",
+        "canon": "NT",
+        "chapters": 28,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "marcos",
+        "code": "Mark",
+        "file": "Mark",
+        "name": "Marcos",
+        "abbrev": "Mc",
+        "canon": "NT",
+        "chapters": 16,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "lucas",
+        "code": "Luke",
+        "file": "Luke",
+        "name": "Lucas",
+        "abbrev": "Lc",
+        "canon": "NT",
+        "chapters": 24,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "joao",
+        "code": "John",
+        "file": "John",
+        "name": "João",
+        "abbrev": "Jo",
+        "canon": "NT",
+        "chapters": 21,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "atos",
+        "code": "Acts",
+        "file": "Acts",
+        "name": "Atos",
+        "abbrev": "At",
+        "canon": "NT",
+        "chapters": 28,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "romanos",
+        "code": "Rom",
+        "file": "Rom",
+        "name": "Romanos",
+        "abbrev": "Rm",
+        "canon": "NT",
+        "chapters": 16,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "1-corintios",
+        "code": "1Cor",
+        "file": "1Cor",
+        "name": "1 Coríntios",
+        "abbrev": "1Co",
+        "canon": "NT",
+        "chapters": 16,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "2-corintios",
+        "code": "2Cor",
+        "file": "2Cor",
+        "name": "2 Coríntios",
+        "abbrev": "2Co",
+        "canon": "NT",
+        "chapters": 13,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "galatas",
+        "code": "Gal",
+        "file": "Gal",
+        "name": "Gálatas",
+        "abbrev": "Gl",
+        "canon": "NT",
+        "chapters": 6,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "efesios",
+        "code": "Eph",
+        "file": "Eph",
+        "name": "Efésios",
+        "abbrev": "Ef",
+        "canon": "NT",
+        "chapters": 6,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "filipenses",
+        "code": "Phil",
+        "file": "Phil",
+        "name": "Filipenses",
+        "abbrev": "Fp",
+        "canon": "NT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "colossenses",
+        "code": "Col",
+        "file": "Col",
+        "name": "Colossenses",
+        "abbrev": "Cl",
+        "canon": "NT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "1-tessalonicenses",
+        "code": "1Thess",
+        "file": "1Thess",
+        "name": "1 Tessalonicenses",
+        "abbrev": "1Ts",
+        "canon": "NT",
+        "chapters": 5,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "2-tessalonicenses",
+        "code": "2Thess",
+        "file": "2Thess",
+        "name": "2 Tessalonicenses",
+        "abbrev": "2Ts",
+        "canon": "NT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "1-timoteo",
+        "code": "1Tim",
+        "file": "1Tim",
+        "name": "1 Timóteo",
+        "abbrev": "1Tm",
+        "canon": "NT",
+        "chapters": 6,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "2-timoteo",
+        "code": "2Tim",
+        "file": "2Tim",
+        "name": "2 Timóteo",
+        "abbrev": "2Tm",
+        "canon": "NT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "tito",
+        "code": "Titus",
+        "file": "Titus",
+        "name": "Tito",
+        "abbrev": "Tt",
+        "canon": "NT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "filemom",
+        "code": "Phlm",
+        "file": "Phlm",
+        "name": "Filemom",
+        "abbrev": "Fm",
+        "canon": "NT",
+        "chapters": 1,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "hebreus",
+        "code": "Heb",
+        "file": "Heb",
+        "name": "Hebreus",
+        "abbrev": "Hb",
+        "canon": "NT",
+        "chapters": 13,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "tiago",
+        "code": "Jas",
+        "file": "Jas",
+        "name": "Tiago",
+        "abbrev": "Tg",
+        "canon": "NT",
+        "chapters": 5,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "1-pedro",
+        "code": "1Pet",
+        "file": "1Pet",
+        "name": "1 Pedro",
+        "abbrev": "1Pe",
+        "canon": "NT",
+        "chapters": 5,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "2-pedro",
+        "code": "2Pet",
+        "file": "2Pet",
+        "name": "2 Pedro",
+        "abbrev": "2Pe",
+        "canon": "NT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "1-joao",
+        "code": "1John",
+        "file": "1John",
+        "name": "1 João",
+        "abbrev": "1Jo",
+        "canon": "NT",
+        "chapters": 5,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "2-joao",
+        "code": "2John",
+        "file": "2John",
+        "name": "2 João",
+        "abbrev": "2Jo",
+        "canon": "NT",
+        "chapters": 1,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "3-joao",
+        "code": "3John",
+        "file": "3John",
+        "name": "3 João",
+        "abbrev": "3Jo",
+        "canon": "NT",
+        "chapters": 1,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "judas",
+        "code": "Jude",
+        "file": "Jude",
+        "name": "Judas",
+        "abbrev": "Jd",
+        "canon": "NT",
+        "chapters": 1,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "apocalipse",
+        "code": "Rev",
+        "file": "Rev",
+        "name": "Apocalipse",
+        "abbrev": "Ap",
+        "canon": "NT",
+        "chapters": 22,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      }
+    ]
+  },
+  {
+    "key": "protestante",
+    "name": "Protestante",
+    "summary": "Só os protocanônicos do Antigo Testamento, mais o Novo Testamento.",
+    "books": [
+      {
+        "slug": "genesis",
+        "code": "Gen",
+        "file": "Gen",
+        "name": "Gênesis",
+        "abbrev": "Gn",
+        "canon": "AT",
+        "chapters": 50,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "exodo",
+        "code": "Exod",
+        "file": "Exod",
+        "name": "Êxodo",
+        "abbrev": "Êx",
+        "canon": "AT",
+        "chapters": 40,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "levitico",
+        "code": "Lev",
+        "file": "Lev",
+        "name": "Levítico",
+        "abbrev": "Lv",
+        "canon": "AT",
+        "chapters": 27,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "numeros",
+        "code": "Num",
+        "file": "Num",
+        "name": "Números",
+        "abbrev": "Nm",
+        "canon": "AT",
+        "chapters": 36,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "deuteronomio",
+        "code": "Deut",
+        "file": "Deut",
+        "name": "Deuteronômio",
+        "abbrev": "Dt",
+        "canon": "AT",
+        "chapters": 34,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "josue",
+        "code": "Josh",
+        "file": "Josh",
+        "name": "Josué",
+        "abbrev": "Js",
+        "canon": "AT",
+        "chapters": 24,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "juizes",
+        "code": "Judg",
+        "file": "Judg",
+        "name": "Juízes",
+        "abbrev": "Jz",
+        "canon": "AT",
+        "chapters": 21,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "rute",
+        "code": "Ruth",
+        "file": "Ruth",
+        "name": "Rute",
+        "abbrev": "Rt",
+        "canon": "AT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "1-samuel",
+        "code": "1Sam",
+        "file": "1Sam",
+        "name": "1 Samuel",
+        "abbrev": "1Sm",
+        "canon": "AT",
+        "chapters": 31,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "2-samuel",
+        "code": "2Sam",
+        "file": "2Sam",
+        "name": "2 Samuel",
+        "abbrev": "2Sm",
+        "canon": "AT",
+        "chapters": 24,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "1-reis",
+        "code": "1Kgs",
+        "file": "1Kgs",
+        "name": "1 Reis",
+        "abbrev": "1Rs",
+        "canon": "AT",
+        "chapters": 22,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "2-reis",
+        "code": "2Kgs",
+        "file": "2Kgs",
+        "name": "2 Reis",
+        "abbrev": "2Rs",
+        "canon": "AT",
+        "chapters": 25,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "1-cronicas",
+        "code": "1Chr",
+        "file": "1Chr",
+        "name": "1 Crônicas",
+        "abbrev": "1Cr",
+        "canon": "AT",
+        "chapters": 29,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "2-cronicas",
+        "code": "2Chr",
+        "file": "2Chr",
+        "name": "2 Crônicas",
+        "abbrev": "2Cr",
+        "canon": "AT",
+        "chapters": 36,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "esdras",
+        "code": "Ezra",
+        "file": "Ezra",
+        "name": "Esdras",
+        "abbrev": "Ed",
+        "canon": "AT",
+        "chapters": 10,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "neemias",
+        "code": "Neh",
+        "file": "Neh",
+        "name": "Neemias",
+        "abbrev": "Ne",
+        "canon": "AT",
+        "chapters": 13,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "ester",
+        "code": "Esth",
+        "file": "Esth",
+        "name": "Ester",
+        "abbrev": "Et",
+        "canon": "AT",
+        "chapters": 10,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "jo",
+        "code": "Job",
+        "file": "Job",
+        "name": "Jó",
+        "abbrev": "Jó",
+        "canon": "AT",
+        "chapters": 42,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "salmos",
+        "code": "Ps",
+        "file": "Ps",
+        "name": "Salmos",
+        "abbrev": "Sl",
+        "canon": "AT",
+        "chapters": 150,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "proverbios",
+        "code": "Prov",
+        "file": "Prov",
+        "name": "Provérbios",
+        "abbrev": "Pv",
+        "canon": "AT",
+        "chapters": 31,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "eclesiastes",
+        "code": "Eccl",
+        "file": "Eccl",
+        "name": "Eclesiastes",
+        "abbrev": "Ec",
+        "canon": "AT",
+        "chapters": 12,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "canticos",
+        "code": "Song",
+        "file": "Song",
+        "name": "Cânticos",
+        "abbrev": "Ct",
+        "canon": "AT",
+        "chapters": 8,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "isaias",
+        "code": "Isa",
+        "file": "Isa",
+        "name": "Isaías",
+        "abbrev": "Is",
+        "canon": "AT",
+        "chapters": 66,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "jeremias",
+        "code": "Jer",
+        "file": "Jer",
+        "name": "Jeremias",
+        "abbrev": "Jr",
+        "canon": "AT",
+        "chapters": 52,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "lamentacoes",
+        "code": "Lam",
+        "file": "Lam",
+        "name": "Lamentações",
+        "abbrev": "Lm",
+        "canon": "AT",
+        "chapters": 5,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "ezequiel",
+        "code": "Ezek",
+        "file": "Ezek",
+        "name": "Ezequiel",
+        "abbrev": "Ez",
+        "canon": "AT",
+        "chapters": 48,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "daniel",
+        "code": "Dan",
+        "file": "Dan",
+        "name": "Daniel",
+        "abbrev": "Dn",
+        "canon": "AT",
+        "chapters": 12,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "oseias",
+        "code": "Hos",
+        "file": "Hos",
+        "name": "Oseias",
+        "abbrev": "Os",
+        "canon": "AT",
+        "chapters": 14,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "joel",
+        "code": "Joel",
+        "file": "Joel",
+        "name": "Joel",
+        "abbrev": "Jl",
+        "canon": "AT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "amos",
+        "code": "Amos",
+        "file": "Amos",
+        "name": "Amós",
+        "abbrev": "Am",
+        "canon": "AT",
+        "chapters": 9,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "obadias",
+        "code": "Obad",
+        "file": "Obad",
+        "name": "Obadias",
+        "abbrev": "Ob",
+        "canon": "AT",
+        "chapters": 1,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "jonas",
+        "code": "Jonah",
+        "file": "Jonah",
+        "name": "Jonas",
+        "abbrev": "Jn",
+        "canon": "AT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "miqueias",
+        "code": "Mic",
+        "file": "Mic",
+        "name": "Miqueias",
+        "abbrev": "Mq",
+        "canon": "AT",
+        "chapters": 7,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "naum",
+        "code": "Nah",
+        "file": "Nah",
+        "name": "Naum",
+        "abbrev": "Na",
+        "canon": "AT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "habacuque",
+        "code": "Hab",
+        "file": "Hab",
+        "name": "Habacuque",
+        "abbrev": "Hc",
+        "canon": "AT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "sofonias",
+        "code": "Zeph",
+        "file": "Zeph",
+        "name": "Sofonias",
+        "abbrev": "Sf",
+        "canon": "AT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "ageu",
+        "code": "Hag",
+        "file": "Hag",
+        "name": "Ageu",
+        "abbrev": "Ag",
+        "canon": "AT",
+        "chapters": 2,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "zacarias",
+        "code": "Zech",
+        "file": "Zech",
+        "name": "Zacarias",
+        "abbrev": "Zc",
+        "canon": "AT",
+        "chapters": 14,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "malaquias",
+        "code": "Mal",
+        "file": "Mal",
+        "name": "Malaquias",
+        "abbrev": "Ml",
+        "canon": "AT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Hebraico"
+        }
+      },
+      {
+        "slug": "mateus",
+        "code": "Matt",
+        "file": "Matt",
+        "name": "Mateus",
+        "abbrev": "Mt",
+        "canon": "NT",
+        "chapters": 28,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "marcos",
+        "code": "Mark",
+        "file": "Mark",
+        "name": "Marcos",
+        "abbrev": "Mc",
+        "canon": "NT",
+        "chapters": 16,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "lucas",
+        "code": "Luke",
+        "file": "Luke",
+        "name": "Lucas",
+        "abbrev": "Lc",
+        "canon": "NT",
+        "chapters": 24,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "joao",
+        "code": "John",
+        "file": "John",
+        "name": "João",
+        "abbrev": "Jo",
+        "canon": "NT",
+        "chapters": 21,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "atos",
+        "code": "Acts",
+        "file": "Acts",
+        "name": "Atos",
+        "abbrev": "At",
+        "canon": "NT",
+        "chapters": 28,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "romanos",
+        "code": "Rom",
+        "file": "Rom",
+        "name": "Romanos",
+        "abbrev": "Rm",
+        "canon": "NT",
+        "chapters": 16,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "1-corintios",
+        "code": "1Cor",
+        "file": "1Cor",
+        "name": "1 Coríntios",
+        "abbrev": "1Co",
+        "canon": "NT",
+        "chapters": 16,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "2-corintios",
+        "code": "2Cor",
+        "file": "2Cor",
+        "name": "2 Coríntios",
+        "abbrev": "2Co",
+        "canon": "NT",
+        "chapters": 13,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "galatas",
+        "code": "Gal",
+        "file": "Gal",
+        "name": "Gálatas",
+        "abbrev": "Gl",
+        "canon": "NT",
+        "chapters": 6,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "efesios",
+        "code": "Eph",
+        "file": "Eph",
+        "name": "Efésios",
+        "abbrev": "Ef",
+        "canon": "NT",
+        "chapters": 6,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "filipenses",
+        "code": "Phil",
+        "file": "Phil",
+        "name": "Filipenses",
+        "abbrev": "Fp",
+        "canon": "NT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "colossenses",
+        "code": "Col",
+        "file": "Col",
+        "name": "Colossenses",
+        "abbrev": "Cl",
+        "canon": "NT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "1-tessalonicenses",
+        "code": "1Thess",
+        "file": "1Thess",
+        "name": "1 Tessalonicenses",
+        "abbrev": "1Ts",
+        "canon": "NT",
+        "chapters": 5,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "2-tessalonicenses",
+        "code": "2Thess",
+        "file": "2Thess",
+        "name": "2 Tessalonicenses",
+        "abbrev": "2Ts",
+        "canon": "NT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "1-timoteo",
+        "code": "1Tim",
+        "file": "1Tim",
+        "name": "1 Timóteo",
+        "abbrev": "1Tm",
+        "canon": "NT",
+        "chapters": 6,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "2-timoteo",
+        "code": "2Tim",
+        "file": "2Tim",
+        "name": "2 Timóteo",
+        "abbrev": "2Tm",
+        "canon": "NT",
+        "chapters": 4,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "tito",
+        "code": "Titus",
+        "file": "Titus",
+        "name": "Tito",
+        "abbrev": "Tt",
+        "canon": "NT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "filemom",
+        "code": "Phlm",
+        "file": "Phlm",
+        "name": "Filemom",
+        "abbrev": "Fm",
+        "canon": "NT",
+        "chapters": 1,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "hebreus",
+        "code": "Heb",
+        "file": "Heb",
+        "name": "Hebreus",
+        "abbrev": "Hb",
+        "canon": "NT",
+        "chapters": 13,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "tiago",
+        "code": "Jas",
+        "file": "Jas",
+        "name": "Tiago",
+        "abbrev": "Tg",
+        "canon": "NT",
+        "chapters": 5,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "1-pedro",
+        "code": "1Pet",
+        "file": "1Pet",
+        "name": "1 Pedro",
+        "abbrev": "1Pe",
+        "canon": "NT",
+        "chapters": 5,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "2-pedro",
+        "code": "2Pet",
+        "file": "2Pet",
+        "name": "2 Pedro",
+        "abbrev": "2Pe",
+        "canon": "NT",
+        "chapters": 3,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "1-joao",
+        "code": "1John",
+        "file": "1John",
+        "name": "1 João",
+        "abbrev": "1Jo",
+        "canon": "NT",
+        "chapters": 5,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "2-joao",
+        "code": "2John",
+        "file": "2John",
+        "name": "2 João",
+        "abbrev": "2Jo",
+        "canon": "NT",
+        "chapters": 1,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "3-joao",
+        "code": "3John",
+        "file": "3John",
+        "name": "3 João",
+        "abbrev": "3Jo",
+        "canon": "NT",
+        "chapters": 1,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "judas",
+        "code": "Jude",
+        "file": "Jude",
+        "name": "Judas",
+        "abbrev": "Jd",
+        "canon": "NT",
+        "chapters": 1,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      },
+      {
+        "slug": "apocalipse",
+        "code": "Rev",
+        "file": "Rev",
+        "name": "Apocalipse",
+        "abbrev": "Ap",
+        "canon": "NT",
+        "chapters": 22,
+        "status": {
+          "formal": "checked"
+        },
+        "original": {
+          "language": "Grego"
+        }
+      }
+    ]
   }
 ]
