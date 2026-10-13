@@ -21,6 +21,7 @@ describe('SiteFooter', () => {
   it('renders the nav links', () => {
     renderFooter()
     expect(screen.getByRole('link', { name: 'Ler' })).toHaveAttribute('href', '/ler')
+    expect(screen.getByRole('link', { name: 'Privacidade' })).toHaveAttribute('href', '/privacy')
     expect(screen.getByRole('link', { name: 'Licença' })).toHaveAttribute(
       'href',
       'https://creativecommons.org/licenses/by/4.0/deed.pt-br',

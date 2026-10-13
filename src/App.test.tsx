@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import { beforeEach, describe, expect, it } from 'vitest'
 import App from './App'
@@ -17,6 +18,19 @@ describe('App routing', () => {
   it('renders the landing at /', () => {
     renderAt('/')
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('A Bíblia em português atual, livre para todos')
+  })
+
+  it('renders the privacy policy directly at /privacy without choosing an edition', () => {
+    renderAt('/privacy')
+    expect(screen.getByRole('heading', { level: 1, name: 'Política de privacidade' })).toBeInTheDocument()
+    expect(screen.getByRole('main')).toHaveTextContent('iPhone, iPad e Mac')
+  })
+
+  it('opens the privacy policy from the shared footer', async () => {
+    const user = userEvent.setup()
+    renderAt('/')
+    await user.click(screen.getByRole('link', { name: 'Privacidade' }))
+    expect(screen.getByRole('heading', { level: 1, name: 'Política de privacidade' })).toBeInTheDocument()
   })
 
   // The two editions differ by seven books and by the numbering of two more,

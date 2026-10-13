@@ -6,7 +6,7 @@ export interface SiteFooterProps {
   year: number
 }
 
-/** SiteFooter: wordmark, tagline, nav links (ler, GitHub, roadmap, licença) and the copyright line. */
+/** SiteFooter: wordmark, tagline, navigation links and the copyright line. */
 export function SiteFooter({ year }: SiteFooterProps) {
   return (
     <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
@@ -21,6 +21,7 @@ export function SiteFooter({ year }: SiteFooterProps) {
         </div>
         <nav className="flex flex-wrap gap-[var(--space-6)] font-sans text-[var(--text-sm)]">
           <Link to="/ler">Ler</Link>
+          <Link to="/privacy">Privacidade</Link>
           <a href={GITHUB_URL} target="_blank" rel="noreferrer">
             GitHub
           </a>

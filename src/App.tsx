@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router'
 import Landing from './pages/Landing'
+import Privacy from './pages/Privacy'
 import ReaderChapter from './pages/ReaderChapter'
 import ReaderIndex from './pages/ReaderIndex'
 import ReaderRedirect from './pages/ReaderRedirect'
@@ -27,6 +28,7 @@ function App() {
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       <Routes>
         <Route path="/" element={<Landing theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/privacy" element={<Privacy theme={theme} onToggleTheme={toggleTheme} />} />
         {/* The edition is part of the path because the two editions disagree
             about what a reference names, so a shared link has to carry it. The
             two-segment form is what links looked like before that, and is
